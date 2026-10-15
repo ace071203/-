@@ -1,0 +1,801 @@
+<title>22장 전기장 공부노트</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+  svg: { fontCache: 'global' },
+  startup: { typeset: true }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js" defer></script>
+<style>
+/* Layout: 한 줄로 읽는 노트. 왼쪽 여백에 절 번호, 본문은 65자 폭, 그림과 문제는 본문보다 넓게 */
+:root {
+  --paper: #f3f6fa;
+  --surface: #ffffff;
+  --ink: #17202d;
+  --muted: #586378;
+  --rule: #d6deea;
+  --pos: #c62f3a;
+  --neg: #2b5fc7;
+  --accent: #17706a;
+  --accent-soft: #e2f1ef;
+  --warn: #9a5b00;
+  --warn-soft: #fbf0dc;
+  --font-display: "Gowun Batang", "Nanum Myeongjo", "AppleMyungjo", serif;
+  --font-body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --step-0: 1rem;
+  --step-1: 1.2rem;
+  --step-2: 1.55rem;
+  --step-3: 2.2rem;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0f131a; --surface: #161c26; --ink: #e5e9f1; --muted: #98a3b7; --rule: #2a3343;
+    --pos: #ff6f73; --neg: #6ea2ff; --accent: #4cc2b5; --accent-soft: #15302e; --warn: #f0b45a; --warn-soft: #2f2516;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0f131a; --surface: #161c26; --ink: #e5e9f1; --muted: #98a3b7; --rule: #2a3343;
+  --pos: #ff6f73; --neg: #6ea2ff; --accent: #4cc2b5; --accent-soft: #15302e; --warn: #f0b45a; --warn-soft: #2f2516;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.7;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 64px;
+}
+.wrap { max-width: 980px; margin: 0 auto; }
+.prose { max-width: 68ch; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 700; text-wrap: balance; line-height: 1.3; margin: 0; }
+h1 { font-size: var(--step-3); }
+h2 { font-size: var(--step-2); }
+h3 { font-size: var(--step-1); }
+p { margin: 0; }
+a { color: var(--accent); }
+.eyebrow { font-family: var(--font-mono); font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+
+/* header */
+header.top { padding-block: 40px 24px; display: grid; gap: 14px; border-bottom: 1px solid var(--rule); }
+header.top .meta { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font-size: .82rem; padding: 3px 10px; border: 1px solid var(--rule); border-radius: 999px; color: var(--muted); background: var(--surface); }
+.chip.hot { border-color: var(--warn); color: var(--warn); background: var(--warn-soft); }
+nav.toc { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--paper); border-bottom: 1px solid var(--rule); display: flex; gap: 4px; overflow-x: auto; padding-block: 8px; }
+nav.toc a { white-space: nowrap; text-decoration: none; color: var(--muted); font-size: .9rem; padding: 4px 10px; border-radius: 6px; }
+nav.toc a:hover, nav.toc a:focus-visible { color: var(--ink); background: var(--surface); outline: none; }
+
+section.sec { padding-block: 44px 8px; display: grid; gap: 20px; }
+.sec-head { display: grid; grid-template-columns: 3.2rem 1fr; gap: 12px; align-items: baseline; }
+.sec-num { font-family: var(--font-mono); color: var(--accent); font-size: 1rem; }
+.sec-head p { grid-column: 2; color: var(--muted); }
+
+/* definitions */
+.def-tools { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+button { font: inherit; cursor: pointer; }
+.btn { border: 1px solid var(--rule); background: var(--surface); color: var(--ink); padding: 6px 14px; border-radius: 8px; font-size: .9rem; }
+.btn:hover { border-color: var(--accent); }
+.btn:focus-visible, summary:focus-visible, .seg button:focus-visible, canvas:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.btn.on { background: var(--accent); color: var(--surface); border-color: var(--accent); }
+.defs { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+.def { background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 16px 18px; display: grid; gap: 6px; min-width: 0; }
+.def dt { font-family: var(--font-display); font-weight: 700; font-size: 1.08rem; }
+.def dd { margin: 0; color: var(--ink); }
+.def .note { font-size: .88rem; color: var(--muted); }
+body.drill .def dd { filter: blur(6px); user-select: none; cursor: pointer; transition: filter .2s; }
+body.drill .def.revealed dd { filter: none; user-select: auto; }
+.star { color: var(--warn); font-family: var(--font-mono); font-size: .8rem; margin-left: 6px; }
+
+/* formula table */
+.formulas { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; }
+.formulas th, .formulas td { text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--rule); vertical-align: middle; }
+.formulas th { font-weight: 500; color: var(--muted); font-size: .9rem; width: 34%; }
+.formulas tr:last-child th, .formulas tr:last-child td { border-bottom: 0; }
+.table-scroll { overflow-x: auto; }
+
+/* figure panels */
+.panel { background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; padding: 18px; display: grid; gap: 14px; min-width: 0; }
+.panel-head { display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; align-items: center; }
+.seg { display: inline-flex; flex-wrap: wrap; border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; }
+.seg button { border: 0; background: transparent; color: var(--muted); padding: 6px 12px; font-size: .88rem; }
+.seg button + button { border-left: 1px solid var(--rule); }
+.seg button[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+.canvas-box { position: relative; width: 100%; aspect-ratio: 16 / 10; max-width: 100%; border-radius: 8px; background: var(--paper); overflow: hidden; }
+.canvas-box canvas { width: 100%; height: 100%; display: block; touch-action: none; }
+.caption { font-size: .9rem; color: var(--muted); }
+.readout { font-family: var(--font-mono); font-size: .88rem; font-variant-numeric: tabular-nums; color: var(--ink); }
+.svg-box { overflow-x: auto; }
+.svg-box svg { display: block; width: 100%; height: auto; min-width: 520px; }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: .86rem; color: var(--muted); }
+.legend i { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; }
+
+/* problems */
+.prob { background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; padding: 20px; display: grid; gap: 14px; min-width: 0; }
+.prob-head { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: baseline; }
+.tag { font-family: var(--font-mono); font-size: .76rem; padding: 2px 8px; border-radius: 4px; background: var(--accent-soft); color: var(--accent); }
+.tag.exam { background: var(--warn-soft); color: var(--warn); }
+.given { background: var(--paper); border-radius: 8px; padding: 12px 14px; font-size: .95rem; }
+details.sol { border-top: 1px dashed var(--rule); padding-top: 10px; }
+details.sol > summary { cursor: pointer; color: var(--accent); font-weight: 600; list-style: none; }
+details.sol > summary::-webkit-details-marker { display: none; }
+details.sol > summary::before { content: "▸ "; }
+details.sol[open] > summary::before { content: "▾ "; }
+ol.steps { margin: 12px 0 0; padding-left: 1.3em; display: grid; gap: 10px; }
+ol.steps li { padding-left: 4px; min-width: 0; }
+.math-scroll { overflow-x: auto; overflow-y: hidden; max-width: 100%; }
+.answer { border-left: 3px solid var(--accent); padding: 8px 12px; background: var(--accent-soft); border-radius: 0 8px 8px 0; }
+.trap { border-left: 3px solid var(--warn); padding: 8px 12px; background: var(--warn-soft); border-radius: 0 8px 8px 0; font-size: .95rem; }
+.method-table { width: 100%; border-collapse: collapse; font-size: .95rem; }
+.method-table th, .method-table td { border-bottom: 1px solid var(--rule); padding: 10px 12px; text-align: left; vertical-align: top; }
+.method-table thead th { color: var(--muted); font-weight: 500; font-size: .85rem; }
+
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+.grid-2 > * { min-width: 0; }
+
+/* checklist */
+.check { display: grid; gap: 8px; }
+.check label { display: flex; gap: 10px; align-items: flex-start; background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 10px 14px; cursor: pointer; }
+.check input { margin-top: 5px; accent-color: var(--accent); }
+.progress { font-family: var(--font-mono); color: var(--accent); }
+footer { margin-top: 48px; color: var(--muted); font-size: .85rem; border-top: 1px solid var(--rule); padding-top: 16px; }
+
+@media (max-width: 560px) {
+  .sec-head { grid-template-columns: 1fr; gap: 4px; }
+  .sec-head p { grid-column: 1; }
+  .formulas th { width: auto; display: block; border-bottom: 0; padding-bottom: 0; }
+  .formulas td { display: block; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <span class="eyebrow">일반물리 2 · 중간고사 1일차</span>
+    <h1>22장 전기장</h1>
+    <p class="prose">쿨롱 법칙에서 시작해 전기장을 정의하고, 균일한 전기장 안에서 전하가 어떻게 움직이는지까지 다룬다. 교수님이 이 장에서 짚은 건 <b>연습 10번</b>과 <b>예제 22.5의 풀이법 3가지</b>다.</p>
+    <div class="meta">
+      <span class="chip hot">시험 10/22(목) 오후 7시</span>
+      <span class="chip">단원당 1문항</span>
+      <span class="chip">용어 정의 먼저 묻는다</span>
+      <span class="chip">22장 과제: 연습 10, 11, 17, 20, 25</span>
+    </div>
+  </header>
+
+  <nav class="toc" aria-label="목차">
+    <a href="#defs">용어 정의</a>
+    <a href="#formulas">공식</a>
+    <a href="#lines">전기력선</a>
+    <a href="#p10">연습 10</a>
+    <a href="#ex225">예제 22.5</a>
+    <a href="#more">다른 예제</a>
+    <a href="#check">점검</a>
+  </nav>
+
+  <!-- 1. 용어 정의 -->
+  <section class="sec" id="defs">
+    <div class="sec-head">
+      <span class="sec-num">§1</span>
+      <h2>용어 정의</h2>
+      <p>시험은 "정의를 쓰고 → 계산"하는 순서로 나온다. 정의를 빼먹으면 답이 맞아도 감점이다. <b>가리고 외우기</b>를 켜면 정의가 흐려지고, 카드를 누르면 하나씩 보인다.</p>
+    </div>
+    <div class="def-tools">
+      <button class="btn" id="drillBtn" type="button" aria-pressed="false">가리고 외우기</button>
+      <button class="btn" id="revealAll" type="button">전부 보이기</button>
+    </div>
+    <dl class="defs">
+      <div class="def"><dt>쿨롱 법칙<span class="star">★</span></dt>
+        <dd>두 점전하 사이의 전기력은 두 전하량의 곱에 비례하고 거리의 제곱에 반비례하며, 두 전하를 잇는 직선 방향으로 작용한다.</dd>
+        <span class="note">\(F_e = k_e \dfrac{|q_1||q_2|}{r^2}\), 같은 부호는 척력, 다른 부호는 인력</span></div>
+      <div class="def"><dt>전하의 특성<span class="star">★</span></dt>
+        <dd>양전하와 음전하 두 종류가 있다. 같은 종류끼리는 밀어내고 다른 종류끼리는 당긴다. 고립계에서 전하량은 보존되고, 기본 전하 \(e\)의 정수배로만 존재한다(양자화).</dd>
+        <span class="note">\(e = 1.60\times10^{-19}\ \mathrm{C}\), \(Q = ne\)</span></div>
+      <div class="def"><dt>전기장<span class="star">★</span></dt>
+        <dd>원천 전하가 주변 공간에 만드는 영역. 그 점에 놓인 시험 전하가 받는 단위 전하당 전기력으로 정의한다.</dd>
+        <span class="note">\(\vec E \equiv \vec F_e / q_0\), 단위 N/C (= V/m)</span></div>
+      <div class="def"><dt>원천 전하와 시험 전하</dt>
+        <dd>전기장은 원천 전하가 만든다. 시험 전하는 전기장이 있는지 알아내는 검출기 역할만 하고, 전기장을 만들지 않는다.</dd>
+        <span class="note">아무 말이 없으면 그 점에 +1 C가 있다고 생각한다.</span></div>
+      <div class="def"><dt>전기력선</dt>
+        <dd>전기장을 눈으로 보이게 그린 선. 각 점의 접선이 전기장 방향이고, 선의 밀도가 전기장의 세기를 나타낸다.</dd>
+        <span class="note">+에서 나와 −로 들어간다. 나오는 선 수 ∝ 전하량. 서로 교차하지 않는다.</span></div>
+      <div class="def"><dt>전기적 차폐</dt>
+        <dd>전기장이 0이 되어 전기적 영향이 없는 빈 공간. 같은 부호 전하 사이에서 전기력선이 서로 밀어내 생긴다.</dd>
+        <span class="note">전자레인지 차폐 같은 응용</span></div>
+      <div class="def"><dt>일 (에너지 쪽 도구)</dt>
+        <dd>한 에너지가 다른 형태로 전환될 때, 전환되는 에너지의 양을 정량화한 것.</dd>
+        <span class="note">\(W = F\Delta x\). 운동 에너지로 바뀌면 \(W = \Delta K\)</span></div>
+      <div class="def"><dt>고립계와 비고립계</dt>
+        <dd>고립계는 에너지가 계 밖으로 드나들지 않아 역학적 에너지가 보존되는 계(\(\Delta K + \Delta U = 0\)). 비고립계는 외부가 일을 해 주는 계로, 일-에너지 정리(\(W = \Delta K\))를 쓴다.</dd>
+        <span class="note">22.5 풀이법 ②와 ③을 가르는 기준</span></div>
+    </dl>
+  </section>
+
+  <!-- 2. 공식 -->
+  <section class="sec" id="formulas">
+    <div class="sec-head">
+      <span class="sec-num">§2</span>
+      <h2>핵심 공식</h2>
+      <p>힘은 벡터다. 크기를 먼저 구하고, 방향(척력·인력)을 따로 정한 다음 성분별로 더한다.</p>
+    </div>
+    <div class="table-scroll">
+      <table class="formulas">
+        <tr><th>쿨롱 상수</th><td>\(k_e = \dfrac{1}{4\pi\varepsilon_0} = 8.99\times10^{9}\ \mathrm{N\,m^2/C^2},\quad \varepsilon_0 = 8.85\times10^{-12}\ \mathrm{C^2/N\,m^2}\)</td></tr>
+        <tr><th>두 전하 사이의 힘 (벡터)</th><td>\(\vec F_{12} = k_e\dfrac{q_1q_2}{r^2}\,\hat r_{12},\qquad \vec F_{12} = -\vec F_{21}\)</td></tr>
+        <tr><th>여러 전하 (중첩)</th><td>\(\vec F_1 = \vec F_{21} + \vec F_{31} + \vec F_{41} + \cdots\)</td></tr>
+        <tr><th>점전하의 전기장</th><td>\(\vec E = \dfrac{\vec F_e}{q_0} = k_e\dfrac{q}{r^2}\,\hat r\)</td></tr>
+        <tr><th>전기장 안의 전하</th><td>\(\vec F_e = q\vec E = m\vec a \;\Rightarrow\; \vec a = \dfrac{q\vec E}{m}\) (균일하면 등가속도)</td></tr>
+        <tr><th>등가속도 운동</th><td>\(v_f^2 = v_i^2 + 2a(x_f - x_i),\quad x_f = x_i + v_i t + \tfrac12 a t^2\)</td></tr>
+        <tr><th>평형</th><td>\(\sum \vec F = 0\) — "힘이 없다"보다 "평형이다"로 쓴다</td></tr>
+        <tr><th>쌍극자 (멀리, \(y \gg a\))</th><td>\(E \approx k_e\dfrac{2aq}{y^3}\)</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- 3. 전기력선 -->
+  <section class="sec" id="lines">
+    <div class="sec-head">
+      <span class="sec-num">§3</span>
+      <h2>전기력선 그려보기</h2>
+      <p>배치를 바꿔 보면서 세 가지를 확인하자. 선은 +에서 나와 −로 들어가고, 서로 교차하지 않으며, 같은 부호 사이에는 전기장이 0인 빈 공간(차폐)이 생긴다. 그림을 누르면 그 점에 +1 C 시험 전하를 놓았을 때 받는 힘의 방향이 화살표로 나온다.</p>
+    </div>
+    <div class="panel">
+      <div class="panel-head">
+        <div class="seg" role="group" aria-label="전하 배치">
+          <button type="button" data-cfg="single" aria-pressed="true">+q 하나</button>
+          <button type="button" data-cfg="neg" aria-pressed="false">−q 하나</button>
+          <button type="button" data-cfg="dipole" aria-pressed="false">쌍극자 +q, −q</button>
+          <button type="button" data-cfg="like" aria-pressed="false">+q, +q</button>
+          <button type="button" data-cfg="unequal" aria-pressed="false">+2q, −q</button>
+        </div>
+        <div class="legend"><span><i style="background:var(--pos)"></i>양전하</span><span><i style="background:var(--neg)"></i>음전하</span></div>
+      </div>
+      <div class="canvas-box"><canvas id="fieldCanvas" tabindex="0" aria-label="전기력선 그림. 누르면 시험 전하가 받는 힘의 방향을 표시"></canvas></div>
+      <p class="readout" id="fieldReadout">그림을 누르면 시험 전하(+1 C)에 작용하는 힘의 방향이 표시됩니다.</p>
+      <p class="caption" id="fieldCaption"></p>
+    </div>
+  </section>
+
+  <!-- 4. 연습 10 -->
+  <section class="sec" id="p10">
+    <div class="sec-head">
+      <span class="sec-num">§4</span>
+      <h2>연습 10(10) · 일직선 위의 세 점전하</h2>
+      <p>교재 필기에 찍어준 문제. 대상 전하 하나를 정하고, 나머지 두 전하가 주는 힘을 각각 구한 뒤 방향을 따져서 더한다.</p>
+    </div>
+    <div class="prob">
+      <div class="prob-head"><span class="tag exam">시험 후보</span><h3>세 전하 각각에 작용하는 전기력의 크기와 방향</h3></div>
+      <div class="given">\(q_1 = 6.00\ \mu\mathrm C,\ q_2 = 1.50\ \mu\mathrm C,\ q_3 = -2.00\ \mu\mathrm C\), \(d_1 = 3.00\ \mathrm{cm}\) (\(q_1\)–\(q_2\)), \(d_2 = 2.00\ \mathrm{cm}\) (\(q_2\)–\(q_3\)). (a) \(q_1\), (b) \(q_2\), (c) \(q_3\)에 작용하는 힘.</div>
+
+      <div class="panel" style="padding:14px">
+        <div class="panel-head">
+          <div class="seg" role="group" aria-label="대상 전하 선택">
+            <button type="button" data-target="0" aria-pressed="true">(a) q₁</button>
+            <button type="button" data-target="1" aria-pressed="false">(b) q₂</button>
+            <button type="button" data-target="2" aria-pressed="false">(c) q₃</button>
+          </div>
+          <span class="caption">화살표 길이는 힘의 크기에 비례 (같은 축척)</span>
+        </div>
+        <div class="svg-box"><svg id="p10svg" viewBox="0 0 640 230" role="img" aria-label="세 전하와 힘 벡터"></svg></div>
+        <p class="readout" id="p10readout"></p>
+      </div>
+
+      <details class="sol" open>
+        <summary>풀이</summary>
+        <ol class="steps">
+          <li>쌍마다 힘의 크기를 먼저 구한다 (부호는 빼고 크기만).
+            <div class="math-scroll">\[F_{12} = k_e\frac{|q_1||q_2|}{d_1^2} = (8.99\times10^9)\frac{(6.00\times10^{-6})(1.50\times10^{-6})}{(0.0300)^2} = 89.9\ \mathrm N \ \ (\text{척력})\]</div>
+            <div class="math-scroll">\[F_{13} = k_e\frac{|q_1||q_3|}{(d_1+d_2)^2} = (8.99\times10^9)\frac{(6.00\times10^{-6})(2.00\times10^{-6})}{(0.0500)^2} = 43.2\ \mathrm N \ \ (\text{인력})\]</div>
+            <div class="math-scroll">\[F_{23} = k_e\frac{|q_2||q_3|}{d_2^2} = (8.99\times10^9)\frac{(1.50\times10^{-6})(2.00\times10^{-6})}{(0.0200)^2} = 67.4\ \mathrm N \ \ (\text{인력})\]</div>
+          </li>
+          <li>오른쪽을 \(+\hat i\)로 잡고 대상마다 방향을 붙여 더한다.
+            <div class="math-scroll">\[\vec F_1 = \underbrace{-89.9\,\hat i}_{q_2\text{가 밀어냄}} + \underbrace{43.2\,\hat i}_{q_3\text{가 당김}} = -46.7\,\hat i\ \mathrm N\]</div>
+            <div class="math-scroll">\[\vec F_2 = \underbrace{+89.9\,\hat i}_{q_1\text{가 밀어냄}} + \underbrace{67.4\,\hat i}_{q_3\text{가 당김}} = +157\,\hat i\ \mathrm N\]</div>
+            <div class="math-scroll">\[\vec F_3 = \underbrace{-43.2\,\hat i}_{q_1\text{이 당김}} + \underbrace{(-67.4\,\hat i)}_{q_2\text{가 당김}} = -111\,\hat i\ \mathrm N\]</div>
+          </li>
+          <li>검산: 내력만 있으므로 세 힘의 합은 0이어야 한다. \(-46.7 + 157.3 - 110.6 \approx 0\) ✓</li>
+        </ol>
+        <p class="answer" style="margin-top:12px">(a) 46.7 N, 왼쪽 &nbsp;·&nbsp; (b) 157 N, 오른쪽 &nbsp;·&nbsp; (c) 111 N, 왼쪽</p>
+        <p class="trap" style="margin-top:10px">함정: 크기 계산에는 전하의 부호를 넣지 말고, 방향은 척력·인력으로 따로 정한다. 거리 \(r_{13} = d_1 + d_2 = 5.00\ \mathrm{cm}\)이고, cm는 m로 바꾼다.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- 5. 예제 22.5 -->
+  <section class="sec" id="ex225">
+    <div class="sec-head">
+      <span class="sec-num">§5</span>
+      <h2>예제 22.5 · 속도를 구하는 세 가지 방법</h2>
+      <p>교수님이 "다시 테스트할 확률이 80%"라고 한 문제. 24장 예제 24.2와 묶어서 비교 문제로 나올 수 있다. 같은 답을 세 가지 도구로 끌어내는 게 핵심이다.</p>
+    </div>
+    <div class="prob">
+      <div class="prob-head"><span class="tag exam">시험 후보 ★★</span><h3>평행판 사이에서 가속되는 양전하</h3></div>
+      <div class="given">간격 \(d\)인 평행판 사이에 균일한 전기장 \(E\)(+x 방향). 양전하 판 근처 A점에 질량 \(m\), 전하 \(q\)인 양전하를 정지 상태에서 놓으면 음전하 판 근처 B점으로 가속된다. B점에서의 속력은?</div>
+
+      <div class="panel" style="padding:14px">
+        <div class="panel-head">
+          <button class="btn" id="playBtn" type="button">▶ 놓아 보기</button>
+          <span class="readout" id="accReadout">t = 0 · x = 0 · v = 0</span>
+        </div>
+        <div class="canvas-box" style="aspect-ratio: 16 / 7"><canvas id="accCanvas" aria-label="평행판 사이에서 가속되는 양전하 애니메이션"></canvas></div>
+        <p class="caption">점 사이 간격이 갈수록 넓어진다: 같은 시간 간격 동안 더 멀리 간다는 뜻이다(등가속도). 전기장이 균일하면 어디서나 힘 \(qE\)가 같다.</p>
+      </div>
+
+      <div class="table-scroll">
+        <table class="method-table">
+          <thead><tr><th>방법</th><th>언제 쓰나</th><th>출발식 → 결과</th></tr></thead>
+          <tbody>
+            <tr><td><b>① 힘</b><br>등가속도 모형</td><td>가속도·시간을 물을 때</td><td>\(a = \dfrac{qE}{m}\), \(\ v_f^2 = 0 + 2a(d - 0)\) \(\Rightarrow v_f = \sqrt{2ad}\)</td></tr>
+            <tr><td><b>② 비고립계</b><br>일-에너지 정리</td><td>"계"에 대한 말이 없을 때</td><td>\(W = \Delta K\): \(\ qEd = \tfrac12 mv_f^2 - 0\)</td></tr>
+            <tr><td><b>③ 고립계</b><br>역학적 에너지 보존</td><td>"전하와 전기장이 한 계" (24장)</td><td>\(\Delta K + \Delta U = 0\): \(\ \tfrac12mv^2 + q\Delta V = 0,\ \Delta V = -Ed\)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="answer">세 방법 모두 \(\displaystyle v_B = \sqrt{\frac{2qEd}{m}}\)</p>
+
+      <details class="sol">
+        <summary>풀이 ①, ②를 답안처럼 써 보기</summary>
+        <ol class="steps">
+          <li><b>(A) 등가속도 모형.</b> 균일한 전기장이므로 힘이 일정하다.
+            <div class="math-scroll">\[F = qE = ma \;\Rightarrow\; a = \frac{qE}{m}\]</div>
+            <div class="math-scroll">\[v_f^2 = v_i^2 + 2a(x_f - x_i) = 0 + 2a(d - 0) = 2ad \;\Rightarrow\; v_f = \sqrt{2\left(\frac{qE}{m}\right)d} = \sqrt{\frac{2qEd}{m}}\]</div></li>
+          <li><b>(B) 비고립계 모형.</b> 전기장이 입자에 일을 해 준다. 위치 에너지는 쓰지 않는다.
+            <div class="math-scroll">\[W = \Delta K:\quad F_e\Delta x = K_B - K_A = \tfrac12 mv_f^2 - 0\]</div>
+            <div class="math-scroll">\[v_f = \sqrt{\frac{2F_e\Delta x}{m}} = \sqrt{\frac{2(qE)(d)}{m}} = \sqrt{\frac{2qEd}{m}}\]</div></li>
+        </ol>
+        <p class="trap" style="margin-top:12px">속도를 물으면 에너지로 바로 가는 게 좋다. ①은 가속도를 거쳐 한 단계를 더 건너간다. 숫자 없이 문자식으로 끝나도 되는 문제다.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- 6. 다른 예제 -->
+  <section class="sec" id="more">
+    <div class="sec-head">
+      <span class="sec-num">§6</span>
+      <h2>함께 볼 예제와 과제</h2>
+      <p>수업에서 풀어 준 예제들. 벡터 합(22.2), 평형점(22.3), 쌍극자 전기장(22.4), 전자의 포물선 운동(22.6)이다.</p>
+    </div>
+    <div class="grid-2">
+      <div class="prob">
+        <div class="prob-head"><span class="tag">예제 22.2</span><h3>직각삼각형 꼭짓점의 세 전하</h3></div>
+        <div class="given">\(q_1 = q_3 = 5.00\ \mu\mathrm C\), \(q_2 = -2.00\ \mu\mathrm C\), \(a = 0.100\ \mathrm m\). \(q_3\)에 작용하는 알짜힘.</div>
+        <details class="sol"><summary>풀이</summary>
+          <ol class="steps">
+            <li>\(F_{23} = k_e\dfrac{(2.00)(5.00)\times10^{-12}}{(0.100)^2} = 9.0\ \mathrm N\) (인력, \(-x\))</li>
+            <li>\(F_{13} = k_e\dfrac{(5.00)(5.00)\times10^{-12}}{2(0.100)^2} = 11\ \mathrm N\) (척력, 45° 방향)</li>
+            <li>\(F_{13x} = F_{13y} = 11\cos45^\circ = 7.9\ \mathrm N\)</li>
+            <li>\(F_{3x} = 7.9 - 9.0 = -1.1\ \mathrm N,\ F_{3y} = 7.9\ \mathrm N\)</li>
+          </ol>
+          <p class="answer" style="margin-top:10px">\(\vec F_3 = (-1.1\,\hat i + 7.9\,\hat j)\ \mathrm N\) — 최종 답은 이 벡터 형식으로</p>
+        </details>
+      </div>
+
+      <div class="prob">
+        <div class="prob-head"><span class="tag">예제 22.3</span><h3>알짜힘이 0인 위치</h3></div>
+        <div class="given">\(q_2 = 6.00\ \mu\mathrm C\)가 원점, \(q_1 = 15.0\ \mu\mathrm C\)가 \(x = 2.00\ \mathrm m\). \(q_3\)가 평형인 위치는?</div>
+        <details class="sol"><summary>풀이</summary>
+          <ol class="steps">
+            <li>두 전하 사이에서 크기가 같고 방향이 반대인 점을 찾는다. \(\sum F = 0\):
+              <div class="math-scroll">\[k_e\frac{q_2q_3}{x^2} = k_e\frac{q_1q_3}{(2.00 - x)^2}\]</div></li>
+            <li>\(q_3\)는 지워진다. \((2.00 - x)\sqrt{q_2} = x\sqrt{q_1}\)
+              <div class="math-scroll">\[x = \frac{2.00\sqrt{q_2}}{\sqrt{q_2} + \sqrt{q_1}} = \frac{2.00\sqrt{6.00}}{\sqrt{6.00} + \sqrt{15.0}} = 0.775\ \mathrm m\]</div></li>
+          </ol>
+          <p class="answer" style="margin-top:10px">\(x = 0.775\ \mathrm m\) (원점 기준). 이차방정식의 다른 근은 두 전하 바깥이라 힘이 같은 방향이므로 버린다.</p>
+        </details>
+      </div>
+
+      <div class="prob">
+        <div class="prob-head"><span class="tag">예제 22.4</span><h3>두 전하에 의한 전기장, 쌍극자</h3></div>
+        <div class="given">\(q_1\)이 \((-a,0)\), \(q_2\)가 \((b,0)\)에 있다. 점 \(P(0,y)\)에서의 전기장. (B) \(|q_1| = |q_2|,\ a = b\), (C) \(y \gg a\)</div>
+        <details class="sol"><summary>풀이</summary>
+          <ol class="steps">
+            <li>순서대로: 거리 \(r_1, r_2\) → 각 전기장의 크기 → 성분 분해 → 같은 성분끼리 더하기.
+              <div class="math-scroll">\[E_1 = k_e\frac{|q_1|}{a^2 + y^2},\quad E_2 = k_e\frac{|q_2|}{b^2 + y^2}\]</div></li>
+            <li>(B) +q, −q 쌍극자면 y성분은 상쇄되고 x성분만 남는다.
+              <div class="math-scroll">\[E_x = 2k_e\frac{q}{a^2 + y^2}\cos\theta,\quad \cos\theta = \frac{a}{\sqrt{a^2 + y^2}} \;\Rightarrow\; E = k_e\frac{2qa}{(a^2 + y^2)^{3/2}}\]</div></li>
+            <li>(C) 멀리서 보면 \(a^2\)을 무시: \(E \approx k_e\dfrac{2qa}{y^3}\). 거리의 3제곱에 반비례한다.</li>
+          </ol>
+          <p class="trap" style="margin-top:10px">교수님 요령: 크기 → 벡터 성분 → 합의 순서를 지킨다. 교재 풀이 순서를 그대로 믿지 말고 자기 순서로 정리할 것.</p>
+        </details>
+      </div>
+
+      <div class="prob">
+        <div class="prob-head"><span class="tag">예제 22.6</span><h3>전기장에 수평으로 들어온 전자</h3></div>
+        <div class="given">\(E = 200\ \mathrm{N/C}\), \(v_i = 3.00\times10^6\ \mathrm{m/s}\), 판 길이 \(\ell = 0.100\ \mathrm m\). 옥상에서 수평으로 던진 공과 같은 포물선 운동이다.</div>
+        <div class="svg-box"><svg id="ex226svg" viewBox="0 0 520 170" role="img" aria-label="전자의 포물선 궤적"></svg></div>
+        <details class="sol"><summary>풀이</summary>
+          <ol class="steps">
+            <li>(A) \(a_y = -\dfrac{eE}{m_e} = -\dfrac{(1.60\times10^{-19})(200)}{9.11\times10^{-31}} = -3.51\times10^{13}\ \mathrm{m/s^2}\)</li>
+            <li>(B) x방향은 등속: \(t = \dfrac{\ell}{v_x} = \dfrac{0.100}{3.00\times10^6} = 3.33\times10^{-8}\ \mathrm s\)</li>
+            <li>(C) \(y_f = \tfrac12 a_y t^2 = \tfrac12(-3.51\times10^{13})(3.33\times10^{-8})^2 = -1.95\ \mathrm{cm}\)</li>
+          </ol>
+          <p class="trap" style="margin-top:10px">좌표 원점을 들어오는 점에 잡았으므로 아래쪽이 음수다. 계산에서 마이너스가 나와도 당황하지 말 것.</p>
+        </details>
+      </div>
+
+      <div class="prob">
+        <div class="prob-head"><span class="tag">과제 11(11)</span><h3>세 전하 중 +Q가 받는 알짜힘</h3></div>
+        <div class="given">\(+2Q\)가 원점, \(-Q\)가 \((d, 0)\), \(+Q\)가 \((0, d)\). \(+Q\)가 받는 알짜힘의 식.</div>
+        <details class="sol"><summary>풀이</summary>
+          <ol class="steps">
+            <li>\(+2Q\)의 척력: 거리 \(d\), 방향 \(+\hat j\). \(\ \vec F_a = k_e\dfrac{2Q^2}{d^2}\,\hat j\)</li>
+            <li>\(-Q\)의 인력: 거리 \(\sqrt2 d\), \((0,d)\)에서 \((d,0)\)을 향함, 방향 \(\dfrac{\hat i - \hat j}{\sqrt2}\).
+              <div class="math-scroll">\[\vec F_b = k_e\frac{Q^2}{2d^2}\cdot\frac{\hat i - \hat j}{\sqrt2} = k_e\frac{Q^2}{2\sqrt2\,d^2}(\hat i - \hat j)\]</div></li>
+            <li>더하기: <div class="math-scroll">\[\vec F = k_e\frac{Q^2}{d^2}\left[\frac{1}{2\sqrt2}\,\hat i + \left(2 - \frac{1}{2\sqrt2}\right)\hat j\right] \approx k_e\frac{Q^2}{d^2}\left(0.354\,\hat i + 1.65\,\hat j\right)\]</div></li>
+          </ol>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. 점검 -->
+  <section class="sec" id="check">
+    <div class="sec-head">
+      <span class="sec-num">§7</span>
+      <h2>오늘 끝내기 전 점검</h2>
+      <p>정의는 책을 덮고 소리 내어 말해 보고, 문제는 풀이를 가리고 다시 풀어 본다. 체크한 항목은 이 브라우저에 저장된다.</p>
+    </div>
+    <div class="check" id="checklist">
+      <label><input type="checkbox" id="c1"> 쿨롱 법칙과 전하의 특성 3가지(두 종류, 보존, 양자화)를 문장으로 말할 수 있다</label>
+      <label><input type="checkbox" id="c2"> 전기장을 "단위 전하당 힘"으로 정의하고, 원천 전하와 시험 전하의 역할을 구분할 수 있다</label>
+      <label><input type="checkbox" id="c3"> 전기력선의 성질 3가지와 전기적 차폐를 설명할 수 있다</label>
+      <label><input type="checkbox" id="c4"> 연습 10번을 풀이를 보지 않고 세 힘의 크기와 방향까지 구했다</label>
+      <label><input type="checkbox" id="c5"> 예제 22.5를 ① 힘 ② W = ΔK 두 방법으로 쓰고, ③ 에너지 보존과 무엇이 다른지 말할 수 있다</label>
+      <label><input type="checkbox" id="c6"> 예제 22.2의 답을 벡터(î, ĵ) 형식으로 쓸 수 있다</label>
+      <label><input type="checkbox" id="c7"> 예제 22.6에서 x는 등속, y는 등가속도로 나누어 풀 수 있다</label>
+    </div>
+    <p class="progress" id="progress">0 / 7</p>
+  </section>
+
+  <footer>
+    출처: 22장 강의 슬라이드, 9/8·9/10·10/15 강의 녹취, 교재 684쪽 필기. 다음은 23장(가우스 법칙): 연습 11(15), 예제 23.3 ↔ 23.7 비교.
+  </footer>
+</div>
+
+<script>
+(function () {
+  const css = () => getComputedStyle(document.documentElement);
+  const tok = (n) => css().getPropertyValue(n).trim();
+
+  /* ---------- 정의 가리기 ---------- */
+  const drillBtn = document.getElementById('drillBtn');
+  drillBtn.addEventListener('click', () => {
+    const on = !document.body.classList.contains('drill');
+    document.body.classList.toggle('drill', on);
+    drillBtn.classList.toggle('on', on);
+    drillBtn.setAttribute('aria-pressed', String(on));
+    document.querySelectorAll('.def').forEach(d => d.classList.remove('revealed'));
+  });
+  document.getElementById('revealAll').addEventListener('click', () => {
+    document.querySelectorAll('.def').forEach(d => d.classList.add('revealed'));
+  });
+  document.querySelectorAll('.def').forEach(d => d.addEventListener('click', () => {
+    if (document.body.classList.contains('drill')) d.classList.toggle('revealed');
+  }));
+
+  /* ---------- 공통: 캔버스 크기 맞추기 ---------- */
+  function fit(canvas) {
+    const r = canvas.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = Math.max(1, Math.round(r.width * dpr));
+    canvas.height = Math.max(1, Math.round(r.height * dpr));
+    const ctx = canvas.getContext('2d');
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    return { ctx, w: r.width, h: r.height };
+  }
+  function arrowHead(ctx, x, y, ang, size) {
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x - size * Math.cos(ang - 0.45), y - size * Math.sin(ang - 0.45));
+    ctx.lineTo(x - size * Math.cos(ang + 0.45), y - size * Math.sin(ang + 0.45));
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  /* ---------- 전기력선 ---------- */
+  const configs = {
+    single: { charges: [{ x: 0.5, y: 0.5, q: 1 }], text: '양전하 하나: 전기력선이 사방으로 뻗어 나간다(발산). 멀어질수록 선 간격이 넓어진다 → 전기장이 약해진다(1/r²).' },
+    neg: { charges: [{ x: 0.5, y: 0.5, q: -1 }], text: '음전하 하나: 무한히 먼 곳에서 들어오는 선. 화살표가 전하를 향한다(수렴).' },
+    dipole: { charges: [{ x: 0.35, y: 0.5, q: 1 }, { x: 0.65, y: 0.5, q: -1 }], text: '쌍극자: +에서 나온 선이 모두 −로 들어간다. 선끼리 교차하지 않는다. 두 전하 사이에서 선이 가장 촘촘하다.' },
+    like: { charges: [{ x: 0.35, y: 0.5, q: 1 }, { x: 0.65, y: 0.5, q: 1 }], text: '같은 부호 두 개: 선이 서로 밀어내 가운데에 전기장이 0인 빈 공간이 생긴다 → 전기적 차폐.' },
+    unequal: { charges: [{ x: 0.37, y: 0.5, q: 2 }, { x: 0.63, y: 0.5, q: -1 }], text: '+2q, −q: +2q에서 나온 선의 절반만 −q로 들어가고 나머지는 무한히 멀리 간다. 선의 수는 전하량에 비례한다.' }
+  };
+  const fc = document.getElementById('fieldCanvas');
+  let cfgKey = 'single';
+  let probe = null;
+
+  function fieldAt(px, py, charges, w, h) {
+    let ex = 0, ey = 0;
+    for (const c of charges) {
+      const dx = px - c.x * w, dy = py - c.y * h;
+      const r2 = dx * dx + dy * dy + 1e-6;
+      const r3 = r2 * Math.sqrt(r2);
+      ex += c.q * dx / r3; ey += c.q * dy / r3;
+    }
+    return [ex, ey];
+  }
+
+  function drawField() {
+    const { ctx, w, h } = fit(fc);
+    const charges = configs[cfgKey].charges;
+    const scale = Math.min(w, h);
+    const R = Math.max(9, scale * 0.035);
+    ctx.clearRect(0, 0, w, h);
+    const ink = tok('--muted');
+    ctx.strokeStyle = ink; ctx.fillStyle = ink; ctx.lineWidth = 1.2;
+    const anyPos = charges.some(c => c.q > 0);
+    const seeds = charges.filter(c => anyPos ? c.q > 0 : c.q < 0);
+    const step = Math.max(1.5, scale / 260);
+    for (const s of seeds) {
+      const n = 12 * Math.abs(s.q);
+      const dir = s.q > 0 ? 1 : -1;
+      for (let k = 0; k < n; k++) {
+        const ang = (k + 0.5) / n * Math.PI * 2;
+        let x = s.x * w + Math.cos(ang) * R * 1.05, y = s.y * h + Math.sin(ang) * R * 1.05;
+        const pts = [[x, y]];
+        for (let i = 0; i < 4000; i++) {
+          const [ex, ey] = fieldAt(x, y, charges, w, h);
+          const m = Math.hypot(ex, ey);
+          if (m === 0) break;
+          x += dir * ex / m * step; y += dir * ey / m * step;
+          pts.push([x, y]);
+          if (x < -20 || x > w + 20 || y < -20 || y > h + 20) break;
+          let hit = false;
+          for (const c of charges) if (c !== s && Math.hypot(x - c.x * w, y - c.y * h) < R * 0.9) hit = true;
+          if (hit) break;
+        }
+        ctx.beginPath();
+        pts.forEach((p, i) => i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]));
+        ctx.stroke();
+        // 화살표: 선 길이의 1/3 지점, 실제 전기장 방향
+        const idx = Math.min(pts.length - 2, Math.max(1, Math.floor(Math.min(pts.length, 220) / 2.4)));
+        if (pts.length > 6) {
+          const [ax, ay] = pts[idx];
+          const [fx, fy] = fieldAt(ax, ay, charges, w, h);
+          arrowHead(ctx, ax, ay, Math.atan2(fy, fx), 7);
+        }
+      }
+    }
+    for (const c of charges) {
+      ctx.fillStyle = c.q > 0 ? tok('--pos') : tok('--neg');
+      ctx.beginPath(); ctx.arc(c.x * w, c.y * h, R, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = tok('--surface');
+      ctx.font = `600 ${Math.round(R * 1.1)}px ${tok('--font-mono')}`;
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText(c.q > 0 ? '+' : '−', c.x * w, c.y * h + 1);
+    }
+    if (probe) {
+      const px = probe[0] * w, py = probe[1] * h;
+      const [ex, ey] = fieldAt(px, py, charges, w, h);
+      const m = Math.hypot(ex, ey);
+      ctx.fillStyle = tok('--accent'); ctx.strokeStyle = tok('--accent'); ctx.lineWidth = 2.5;
+      ctx.beginPath(); ctx.arc(px, py, 5, 0, Math.PI * 2); ctx.fill();
+      if (m > 0) {
+        const L = 46;
+        const tx = px + ex / m * L, ty = py + ey / m * L;
+        ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(tx, ty); ctx.stroke();
+        arrowHead(ctx, tx, ty, Math.atan2(ey, ex), 10);
+      }
+      const ref = fieldAt(w / 2 + scale * 0.25, h / 2, [{ x: 0.5, y: 0.5, q: 1 }], w, h);
+      const rel = m / Math.hypot(ref[0], ref[1]);
+      document.getElementById('fieldReadout').textContent =
+        `시험 전하 +1 C 위치의 전기장 세기: 기준값(+q에서 화면 1/4 거리)의 ${rel < 0.01 ? '0.01배 미만 (거의 0, 차폐 영역)' : rel.toFixed(2) + '배'}. 화살표 = 시험 전하가 받는 힘의 방향.`;
+    }
+    document.getElementById('fieldCaption').textContent = configs[cfgKey].text;
+  }
+  document.querySelectorAll('[data-cfg]').forEach(b => b.addEventListener('click', () => {
+    cfgKey = b.dataset.cfg; probe = null;
+    document.querySelectorAll('[data-cfg]').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+    document.getElementById('fieldReadout').textContent = '그림을 누르면 시험 전하(+1 C)에 작용하는 힘의 방향이 표시됩니다.';
+    drawField();
+  }));
+  fc.addEventListener('pointerdown', e => {
+    const r = fc.getBoundingClientRect();
+    probe = [(e.clientX - r.left) / r.width, (e.clientY - r.top) / r.height];
+    drawField();
+  });
+
+  /* ---------- 연습 10: 힘 벡터 ---------- */
+  const k = 8.99e9;
+  const Q = [6.00e-6, 1.50e-6, -2.00e-6];
+  const X = [0, 0.03, 0.05];
+  function forceOn(i, j) { // j가 i에게 주는 힘 (x성분, +는 오른쪽)
+    const dx = X[i] - X[j];
+    const mag = k * Math.abs(Q[i] * Q[j]) / (dx * dx);
+    const repulsive = Q[i] * Q[j] > 0;
+    const awayFromJ = Math.sign(dx);
+    return (repulsive ? 1 : -1) * awayFromJ * mag;
+  }
+  const svg = document.getElementById('p10svg');
+  const NS = 'http://www.w3.org/2000/svg';
+  let target = 0;
+  function el(tag, attrs, text) {
+    const e = document.createElementNS(NS, tag);
+    for (const a in attrs) e.setAttribute(a, attrs[a]);
+    if (text != null) e.textContent = text;
+    return e;
+  }
+  function drawP10() {
+    svg.innerHTML = '';
+    const x0 = 120, sc = 8000; // px per m (1 cm = 80 px)
+    const px = X.map(x => x0 + x * sc);
+    const axisY = 160;
+    const defs = el('defs', {});
+    ['pos', 'neg', 'accent', 'muted'].forEach(n => {
+      const m = el('marker', { id: 'ah-' + n, viewBox: '0 0 10 10', refX: '9', refY: '5', markerWidth: '7', markerHeight: '7', orient: 'auto-start-reverse' });
+      m.appendChild(el('path', { d: 'M0,0 L10,5 L0,10 z', fill: `var(--${n})` }));
+      defs.appendChild(m);
+    });
+    svg.appendChild(defs);
+    svg.appendChild(el('line', { x1: 40, y1: axisY, x2: 600, y2: axisY, stroke: 'var(--rule)', 'stroke-width': 2 }));
+    // 거리 표시
+    const dimY = 200;
+    [[0, 1, 'd₁ = 3.00 cm'], [1, 2, 'd₂ = 2.00 cm']].forEach(([a, b, t]) => {
+      svg.appendChild(el('line', { x1: px[a], y1: dimY, x2: px[b], y2: dimY, stroke: 'var(--muted)', 'stroke-width': 1, 'marker-start': 'url(#ah-muted)', 'marker-end': 'url(#ah-muted)' }));
+      svg.appendChild(el('text', { x: (px[a] + px[b]) / 2, y: dimY + 18, 'text-anchor': 'middle', fill: 'var(--muted)', 'font-size': 13, 'font-family': 'var(--font-mono)' }, t));
+    });
+    // 힘 벡터 (1 N = 0.9 px)
+    const fs = 0.9;
+    const others = [0, 1, 2].filter(j => j !== target);
+    let net = 0, rowY = 52;
+    others.forEach((j, n) => {
+      const f = forceOn(target, j);
+      net += f;
+      const col = Q[j] > 0 ? 'pos' : 'neg';
+      const y = rowY + n * 30;
+      svg.appendChild(el('line', { x1: px[target], y1: y, x2: px[target] + f * fs, y2: y, stroke: `var(--${col})`, 'stroke-width': 3, 'marker-end': `url(#ah-${col})` }));
+      const lx = px[target] + f * fs + (f > 0 ? 8 : -8);
+      svg.appendChild(el('text', { x: lx, y: y + 4, 'text-anchor': f > 0 ? 'start' : 'end', fill: `var(--${col})`, 'font-size': 13, 'font-family': 'var(--font-mono)' },
+        `F${['₁', '₂', '₃'][j]}${['₁', '₂', '₃'][target]} = ${Math.abs(f).toFixed(1)} N ${Q[j] * Q[target] > 0 ? '척력' : '인력'}`));
+    });
+    const ny = rowY + 64;
+    svg.appendChild(el('line', { x1: px[target], y1: ny, x2: px[target] + net * fs, y2: ny, stroke: 'var(--accent)', 'stroke-width': 5, 'marker-end': 'url(#ah-accent)' }));
+    svg.appendChild(el('text', { x: px[target] + net * fs + (net > 0 ? 10 : -10), y: ny + 5, 'text-anchor': net > 0 ? 'start' : 'end', fill: 'var(--accent)', 'font-size': 14, 'font-weight': 600, 'font-family': 'var(--font-mono)' }, `알짜 ${Math.abs(net).toFixed(1)} N`));
+    svg.appendChild(el('line', { x1: px[target], y1: rowY - 14, x2: px[target], y2: axisY - 16, stroke: 'var(--rule)', 'stroke-dasharray': '3 4' }));
+    // 전하
+    X.forEach((_, i) => {
+      const col = Q[i] > 0 ? 'var(--pos)' : 'var(--neg)';
+      svg.appendChild(el('circle', { cx: px[i], cy: axisY, r: i === target ? 16 : 13, fill: col, stroke: i === target ? 'var(--ink)' : 'none', 'stroke-width': 2 }));
+      svg.appendChild(el('text', { x: px[i], y: axisY + 5, 'text-anchor': 'middle', fill: 'var(--surface)', 'font-size': 15, 'font-weight': 700 }, Q[i] > 0 ? '+' : '−'));
+    });
+    ['q₁ 6.00 μC', 'q₂ 1.50 μC', 'q₃ −2.00 μC'].forEach((t, i) => {
+      svg.appendChild(el('text', { x: px[i], y: axisY + 34, 'text-anchor': 'middle', fill: 'var(--muted)', 'font-size': 12, 'font-family': 'var(--font-mono)' }, t));
+    });
+    const dirTxt = net > 0 ? '오른쪽(+x)' : '왼쪽(−x)';
+    document.getElementById('p10readout').textContent =
+      `${['(a) q₁', '(b) q₂', '(c) q₃'][target]}: 알짜힘 ${Math.abs(net).toFixed(1)} N, ${dirTxt}  ·  F = ${net > 0 ? '+' : '−'}${Math.abs(net).toFixed(1)} î N`;
+  }
+  document.querySelectorAll('[data-target]').forEach(b => b.addEventListener('click', () => {
+    target = +b.dataset.target;
+    document.querySelectorAll('[data-target]').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+    drawP10();
+  }));
+
+  /* ---------- 예제 22.5 애니메이션 ---------- */
+  const ac = document.getElementById('accCanvas');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let tNorm = 0, anim = null;
+  function drawAcc(t) {
+    const { ctx, w, h } = fit(ac);
+    ctx.clearRect(0, 0, w, h);
+    const left = w * 0.12, right = w * 0.88, top = h * 0.12, bot = h * 0.88;
+    // 판
+    ctx.fillStyle = tok('--pos'); ctx.fillRect(left - 10, top, 8, bot - top);
+    ctx.fillStyle = tok('--neg'); ctx.fillRect(right + 2, top, 8, bot - top);
+    ctx.font = `600 14px ${tok('--font-mono')}`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillStyle = tok('--pos'); ctx.fillText('+', left - 24, h / 2);
+    ctx.fillStyle = tok('--neg'); ctx.fillText('−', right + 24, h / 2);
+    // 균일한 전기장선
+    ctx.strokeStyle = tok('--rule'); ctx.fillStyle = tok('--rule'); ctx.lineWidth = 1.2;
+    for (let i = 0; i < 5; i++) {
+      const y = top + (bot - top) * (i + 0.5) / 5;
+      if (Math.abs(y - h / 2) < 8) continue;
+      ctx.beginPath(); ctx.moveTo(left + 4, y); ctx.lineTo(right - 4, y); ctx.stroke();
+      arrowHead(ctx, (left + right) / 2 + 20, y, 0, 7);
+    }
+    ctx.fillStyle = tok('--muted'); ctx.font = `13px ${tok('--font-mono')}`;
+    ctx.fillText('E (균일)', (left + right) / 2 + 20, top - 2);
+    // 경로와 궤적 점 (같은 시간 간격)
+    const y = h / 2;
+    ctx.fillStyle = tok('--muted');
+    ctx.fillText('A', left + 14, y + 26); ctx.fillText('B', right - 14, y + 26);
+    const span = right - left - 28;
+    const N = 8;
+    for (let i = 1; i <= N; i++) {
+      const s = i / N;
+      if (s > t + 1e-9) break;
+      const x = left + 14 + span * s * s;
+      ctx.fillStyle = tok('--accent');
+      ctx.globalAlpha = 0.35;
+      ctx.beginPath(); ctx.arc(x, y, 4, 0, Math.PI * 2); ctx.fill();
+      ctx.globalAlpha = 1;
+    }
+    const xNow = left + 14 + span * t * t;
+    ctx.fillStyle = tok('--pos');
+    ctx.beginPath(); ctx.arc(xNow, y, 11, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = tok('--surface'); ctx.font = `700 14px ${tok('--font-mono')}`;
+    ctx.fillText('+', xNow, y + 1);
+    // 속도 화살표 (v ∝ t)
+    if (t > 0.02) {
+      ctx.strokeStyle = tok('--accent'); ctx.fillStyle = tok('--accent'); ctx.lineWidth = 3;
+      const L = 60 * t;
+      ctx.beginPath(); ctx.moveTo(xNow, y - 22); ctx.lineTo(xNow + L, y - 22); ctx.stroke();
+      arrowHead(ctx, xNow + L + 2, y - 22, 0, 8);
+      ctx.font = `12px ${tok('--font-mono')}`; ctx.textAlign = 'left';
+      ctx.fillText('v', xNow + L + 8, y - 22);
+    }
+    document.getElementById('accReadout').textContent =
+      `t = ${t.toFixed(2)} T · x = ${(t * t).toFixed(2)} d · v = ${t.toFixed(2)} v_B` + (t >= 1 ? '  →  v_B = √(2qEd/m)' : '');
+  }
+  document.getElementById('playBtn').addEventListener('click', () => {
+    if (anim) cancelAnimationFrame(anim);
+    if (reduce) { tNorm = 1; drawAcc(1); return; }
+    const start = performance.now(), dur = 2200;
+    const loop = (now) => {
+      tNorm = Math.min(1, (now - start) / dur);
+      drawAcc(tNorm);
+      if (tNorm < 1) anim = requestAnimationFrame(loop); else anim = null;
+    };
+    anim = requestAnimationFrame(loop);
+  });
+
+  /* ---------- 예제 22.6 궤적 (실제 비율) ---------- */
+  function drawTraj() {
+    const s = document.getElementById('ex226svg');
+    s.innerHTML = '';
+    const L = 400, x0 = 60, y0 = 50; // 0.100 m = 400 px → 1 cm = 40 px
+    s.appendChild(el('rect', { x: x0, y: 22, width: L, height: 6, fill: 'var(--neg)' }));
+    s.appendChild(el('rect', { x: x0, y: 132, width: L, height: 6, fill: 'var(--pos)' }));
+    s.appendChild(el('text', { x: x0 - 8, y: 30, 'text-anchor': 'end', fill: 'var(--neg)', 'font-size': 14, 'font-family': 'var(--font-mono)' }, '−'));
+    s.appendChild(el('text', { x: x0 - 8, y: 140, 'text-anchor': 'end', fill: 'var(--pos)', 'font-size': 14, 'font-family': 'var(--font-mono)' }, '+'));
+    s.appendChild(el('text', { x: x0 + L + 8, y: 82, fill: 'var(--muted)', 'font-size': 12, 'font-family': 'var(--font-mono)' }, 'E ↑'));
+    let d = '';
+    for (let i = 0; i <= 40; i++) {
+      const xm = 0.100 * i / 40;
+      const ym = -0.0195 * (xm / 0.100) ** 2;
+      d += (i ? 'L' : 'M') + (x0 + xm * 4000).toFixed(1) + ',' + (y0 - ym * 4000).toFixed(1);
+    }
+    s.appendChild(el('path', { d: d, fill: 'none', stroke: 'var(--accent)', 'stroke-width': 2.5 }));
+    s.appendChild(el('line', { x1: x0, y1: y0, x2: x0 + L, y2: y0, stroke: 'var(--rule)', 'stroke-dasharray': '4 4' }));
+    s.appendChild(el('circle', { cx: x0, cy: y0, r: 5, fill: 'var(--neg)' }));
+    s.appendChild(el('text', { x: x0 - 8, y: y0 + 4, 'text-anchor': 'end', fill: 'var(--muted)', 'font-size': 11, 'font-family': 'var(--font-mono)' }, 'e⁻ →'));
+    s.appendChild(el('line', { x1: x0 + L, y1: y0, x2: x0 + L, y2: y0 + 78, stroke: 'var(--muted)', 'stroke-width': 1 }));
+    s.appendChild(el('text', { x: x0 + L - 6, y: y0 + 44, 'text-anchor': 'end', fill: 'var(--ink)', 'font-size': 12, 'font-family': 'var(--font-mono)' }, 'y_f = −1.95 cm'));
+    s.appendChild(el('text', { x: x0 + L / 2, y: 160, 'text-anchor': 'middle', fill: 'var(--muted)', 'font-size': 12, 'font-family': 'var(--font-mono)' }, 'ℓ = 0.100 m (가로·세로 같은 축척)'));
+  }
+
+  /* ---------- 체크리스트 ---------- */
+  const boxes = document.querySelectorAll('#checklist input');
+  function updateProgress() {
+    const n = [...boxes].filter(b => b.checked).length;
+    document.getElementById('progress').textContent = `${n} / ${boxes.length}`;
+  }
+  boxes.forEach(b => {
+    try { b.checked = localStorage.getItem('ch22-' + b.id) === '1'; } catch (e) {}
+    b.addEventListener('change', () => {
+      try { localStorage.setItem('ch22-' + b.id, b.checked ? '1' : '0'); } catch (e) {}
+      updateProgress();
+    });
+  });
+  updateProgress();
+
+  /* ---------- 그리기 ---------- */
+  function redrawAll() { drawField(); drawP10(); drawAcc(tNorm); drawTraj(); }
+  redrawAll();
+  let rz;
+  window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { drawField(); drawAcc(tNorm); }, 120); });
+  const mq = window.matchMedia('(prefers-color-scheme: dark)');
+  if (mq.addEventListener) mq.addEventListener('change', () => { drawField(); drawAcc(tNorm); });
+  new MutationObserver(() => { drawField(); drawAcc(tNorm); }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+})();
+</script>
