@@ -1,0 +1,549 @@
+<title>물리 중간고사 용어장</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+  svg: { fontCache: 'global' },
+  startup: { typeset: true }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js" defer></script>
+<style>
+/* Layout: 폰 한 손 사용. 위에 고정된 장 탭, 아래로 용어 카드 한 줄씩. 비교는 마지막 탭 */
+:root {
+  --paper: #f3f6fa;
+  --surface: #ffffff;
+  --ink: #17202d;
+  --muted: #586378;
+  --rule: #d6deea;
+  --accent: #17706a;
+  --accent-soft: #e2f1ef;
+  --warn: #9a5b00;
+  --warn-soft: #fbf0dc;
+  --font-display: "Gowun Batang", "Nanum Myeongjo", "AppleMyungjo", serif;
+  --font-body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0f131a; --surface: #161c26; --ink: #e5e9f1; --muted: #98a3b7; --rule: #2a3343;
+    --accent: #4cc2b5; --accent-soft: #15302e; --warn: #f0b45a; --warn-soft: #2f2516;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0f131a; --surface: #161c26; --ink: #e5e9f1; --muted: #98a3b7; --rule: #2a3343;
+  --accent: #4cc2b5; --accent-soft: #15302e; --warn: #f0b45a; --warn-soft: #2f2516;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.7;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 72px;
+}
+.wrap { max-width: 720px; margin: 0 auto; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 700; text-wrap: balance; line-height: 1.3; margin: 0; }
+p { margin: 0; }
+button, input { font: inherit; color: inherit; }
+.eyebrow { font-family: var(--font-mono); font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+
+header.top { padding-block: 28px 14px; display: grid; gap: 8px; }
+header.top h1 { font-size: 1.75rem; }
+header.top p { color: var(--muted); font-size: .95rem; }
+
+/* sticky controls */
+.bar {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10;
+  background: var(--paper);
+  margin-left: calc(-1 * max(16px, env(safe-area-inset-left, 0px)));
+  margin-right: calc(-1 * max(16px, env(safe-area-inset-right, 0px)));
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 8px 10px;
+  border-bottom: 1px solid var(--rule);
+  display: grid; gap: 8px;
+}
+.tabs { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.tabs::-webkit-scrollbar { display: none; }
+.tab {
+  flex: 0 0 auto; border: 1px solid var(--rule); background: var(--surface);
+  border-radius: 999px; padding: 6px 13px; font-size: .9rem; color: var(--muted); cursor: pointer; min-height: 36px;
+}
+.tab[aria-selected="true"] { background: var(--accent); border-color: var(--accent); color: var(--surface); font-weight: 600; }
+.tab .n { font-family: var(--font-mono); font-size: .75rem; margin-left: 4px; opacity: .8; }
+.tools { display: flex; gap: 8px; align-items: center; }
+.search { flex: 1; min-width: 0; border: 1px solid var(--rule); background: var(--surface); border-radius: 8px; padding: 7px 11px; font-size: .95rem; }
+.toggle { flex: 0 0 auto; border: 1px solid var(--rule); background: var(--surface); border-radius: 8px; padding: 7px 11px; font-size: .88rem; cursor: pointer; white-space: nowrap; min-height: 38px; }
+.toggle[aria-pressed="true"] { background: var(--warn-soft); border-color: var(--warn); color: var(--warn); font-weight: 600; }
+.tab:focus-visible, .toggle:focus-visible, .search:focus-visible, .card:focus-visible, .done:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.meta-row { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; padding-block: 16px 8px; }
+.meta-row h2 { font-size: 1.25rem; }
+.progress { font-family: var(--font-mono); font-size: .82rem; color: var(--accent); white-space: nowrap; }
+.ch-note { font-size: .9rem; color: var(--muted); padding-bottom: 10px; }
+
+/* cards */
+.list { display: grid; gap: 10px; }
+.card { background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; padding: 14px 15px; display: grid; gap: 8px; min-width: 0; }
+.card.is-done { border-color: var(--accent); }
+.card-head { display: flex; align-items: flex-start; gap: 10px; }
+.term { font-family: var(--font-display); font-weight: 700; font-size: 1.08rem; flex: 1; min-width: 0; }
+.term .en { font-family: var(--font-body); font-weight: 400; font-size: .78rem; color: var(--muted); margin-left: 6px; }
+.star { color: var(--warn); font-size: .8rem; margin-left: 4px; }
+.done { flex: 0 0 auto; border: 1px solid var(--rule); background: transparent; border-radius: 6px; font-size: .78rem; padding: 3px 8px; cursor: pointer; color: var(--muted); min-height: 30px; }
+.done[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); font-weight: 600; }
+.def { font-size: .98rem; }
+.formula { background: var(--paper); border-radius: 8px; padding: 8px 10px; font-size: .92rem; overflow-x: auto; overflow-y: hidden; }
+.unit { color: var(--accent); font-family: var(--font-mono); font-size: .82rem; }
+.src { justify-self: start; font-family: var(--font-mono); font-size: .72rem; color: var(--muted); border: 1px solid var(--rule); border-radius: 4px; padding: 1px 7px; }
+.src.own { color: var(--warn); border-color: var(--warn); }
+.prof { font-size: .86rem; color: var(--warn); }
+
+body.drill .card .def, body.drill .card .formula { filter: blur(7px); user-select: none; transition: filter .15s; }
+body.drill .card.revealed .def, body.drill .card.revealed .formula { filter: none; user-select: auto; }
+body.drill .card { cursor: pointer; }
+.hint { font-size: .82rem; color: var(--muted); }
+
+/* compare */
+.cmp { background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; overflow: hidden; }
+.cmp summary { list-style: none; cursor: pointer; padding: 14px 15px; display: flex; gap: 10px; align-items: baseline; }
+.cmp summary::-webkit-details-marker { display: none; }
+.cmp summary h3 { font-size: 1.05rem; flex: 1; }
+.cmp summary .chev { color: var(--muted); font-family: var(--font-mono); }
+.cmp[open] summary .chev { transform: rotate(90deg); }
+.cmp .body { padding: 0 15px 15px; display: grid; gap: 10px; }
+.cmp-table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+.cmp-table th, .cmp-table td { border-top: 1px solid var(--rule); padding: 8px 6px; text-align: left; vertical-align: top; }
+.cmp-table thead th { border-top: 0; color: var(--muted); font-weight: 500; font-size: .8rem; }
+.cmp-table td:first-child { color: var(--muted); font-size: .82rem; width: 22%; }
+.table-scroll { overflow-x: auto; }
+.oneline { border-left: 3px solid var(--accent); background: var(--accent-soft); padding: 8px 11px; border-radius: 0 8px 8px 0; font-size: .92rem; }
+.empty { color: var(--muted); padding: 24px 0; text-align: center; }
+footer { margin-top: 36px; color: var(--muted); font-size: .82rem; border-top: 1px solid var(--rule); padding-top: 14px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <span class="eyebrow">일반물리 2 · 중간고사 10/22</span>
+    <h1>용어 정리</h1>
+    <p>교수님은 문제마다 용어 정의를 먼저 묻는다. 정의를 빼먹으면 답이 맞아도 감점이다. 카드마다 출처(슬라이드·녹취)와 단위를 붙였다.</p>
+  </header>
+
+  <div class="bar">
+    <div class="tabs" role="tablist" aria-label="장 선택" id="tabs"></div>
+    <div class="tools">
+      <input class="search" id="q" type="search" placeholder="용어 검색 (예: 선속, 비저항)" aria-label="용어 검색">
+      <button class="toggle" id="drill" type="button" aria-pressed="false">가리고 외우기</button>
+    </div>
+  </div>
+
+  <main id="main"></main>
+
+  <footer>
+    출처 표시: <b>슬라이드</b> = 강의 PDF 문장 그대로 · <b>녹취</b> = 수업에서 교수님이 한 말 · <span style="color:var(--warn)">주황 테두리</span> = 내용은 수업 자료, 문장은 정리본. "외움" 체크는 이 브라우저에만 저장된다.
+  </footer>
+</div>
+
+<script>
+(function () {
+  /* ---------------- 데이터 ---------------- */
+  const CH = {
+    22: { name: '22장 전기장', note: '쿨롱 법칙 → 전기장 정의 → 균일한 전기장 속 전하의 운동. 연습 10번, 예제 22.5와 연결된다.' },
+    23: { name: '23장 가우스 법칙', note: '23장이 가장 배점이 크다. 전기선속과 가우스 법칙은 공식만이 아니라 말로 설명할 수 있어야 한다.' },
+    24: { name: '24장 전위', note: '"전위와 전위차의 차이"를 물을 수 있다고 했다. 힘(전기장)에서 에너지(전위)로 넘어가는 장.' },
+    25: { name: '25장 전기용량과 유전체', note: '유전체 장점 3가지는 외우라고 직접 강조했다. 축전기 문제는 모두 Q = CΔV에서 출발한다.' },
+    26: { name: '26장 전류와 저항', note: '26장만 단독으로 내지는 않고 다른 장과 섞는다. 비저항 정의와 옴 법칙(물질→회로) 유도가 핵심.' },
+    27: { name: '27장 직류 회로', note: '키르히호프 법칙 2개는 정의를 따로 묻는다. RC 회로의 시상수가 첫 질문이 될 수 있다고 했다.' }
+  };
+
+  const T = [
+    /* ---- 22 ---- */
+    { ch: 22, id: 'coulomb', name: '쿨롱 법칙', en: "Coulomb's law", star: true,
+      def: '두 점전하 사이에 작용하는 정전기력의 크기는 \\(F_e = k_e\\dfrac{|q_1||q_2|}{r^2}\\)이다. 힘은 두 전하를 잇는 방향의 벡터이고 \\(\\vec F_{12} = -\\vec F_{21}\\)이다.',
+      f: '\\(\\vec F_{12} = k_e\\dfrac{q_1q_2}{r^2}\\hat r_{12},\\quad k_e = \\dfrac{1}{4\\pi\\varepsilon_0} = 8.99\\times10^9\\)', u: 'F: N · kₑ: N·m²/C²',
+      src: '슬라이드 22.3 · 수식 그대로' },
+    { ch: 22, id: 'charge', name: '전하의 특성', en: 'electric charge', star: true,
+      def: '전하에는 양(+)과 음(−) 두 종류가 있다. 같은 종류끼리는 밀어내고(척력) 다른 종류끼리는 당긴다(인력). 고립계에서 전하량은 항상 보존되고, 기본 전하량의 정수배로만 존재한다(양자화).',
+      f: '\\(Q = ne,\\quad e = 1.60\\times10^{-19}\\ \\mathrm{C}\\)', u: 'C = A·s',
+      src: '슬라이드 22.1 · 그대로' },
+    { ch: 22, id: 'conductor', name: '도체 · 절연체 · 반도체', en: 'conductor / insulator',
+      def: '도체는 원자에 구속되지 않고 비교적 자유롭게 움직이는 자유 전자가 있는 물질(철). 절연체는 모든 전자가 핵에 구속되어 자유롭게 움직일 수 없는 물질. 반도체는 전기적 성질이 둘의 중간인 물질(실리콘).',
+      src: '슬라이드 22.2 · 그대로' },
+    { ch: 22, id: 'field', name: '전기장', en: 'electric field', star: true,
+      def: '원천 전하 주변 공간에 형성되는 영역. 그 점에 놓인 시험 전하가 받는 단위 전하당 전기력으로 정의한다.',
+      f: '\\(\\vec E \\equiv \\dfrac{\\vec F_e}{q_0},\\qquad \\vec E = k_e\\dfrac{q}{r^2}\\hat r\\ (\\text{점전하})\\)', u: 'N/C = V/m',
+      src: '슬라이드 22.4 + 녹취 9/8·9/17' },
+    { ch: 22, id: 'testcharge', name: '원천 전하와 시험 전하', en: 'source / test charge',
+      def: '전기장은 시험 전하가 만드는 것이 아니라 원천 전하(또는 전하 분포)의 성질이다. 시험 전하는 전기장을 탐지하는 검출기 역할만 한다.',
+      prof: '아무 말이 없으면 그 점에 +1 C가 있다고 생각하고 푼다. 원천 전하는 관례적으로 양전하로 둔다.',
+      src: '슬라이드 22.4 + 녹취 9/8' },
+    { ch: 22, id: 'lines', name: '전기력선', en: 'electric field lines',
+      def: '전기장의 모양을 시각화한 선. 각 점의 접선이 전기장 방향이고, 수직인 면을 지나는 단위 면적당 선의 수가 전기장의 크기에 비례한다. 양전하에서 시작해 음전하에서 끝나고, 나오는 선의 수는 전하량에 비례하며, 두 선은 교차할 수 없다(꼬인 위치는 가능).',
+      src: '슬라이드 22.5 · 그대로' },
+    { ch: 22, id: 'shield', name: '전기적 차폐', en: 'electrical shielding',
+      def: '같은 부호(+, +) 전하의 전기력선이 서로 튕겨 나가 전기장이 존재하지 않는 빈 공간이 생기는 것. 전기장이 없으므로 전기적인 역할이 전혀 없다(수학적으로 \\(E = 0\\)).',
+      src: '녹취 9/8·9/10 · 교수님 표현' },
+    { ch: 22, id: 'work', name: '일', en: 'work',
+      def: '한 에너지가 다른 형태로 전환될 때, 전환되는 에너지의 양을 정량화한 것.',
+      f: '\\(W = F\\Delta x,\\qquad W = \\Delta K\\ (\\text{일-에너지 정리})\\)', u: 'J = N·m',
+      prof: '"노동"처럼 답하면 안 된다. 물리 정의는 결국 "정량화(수치화)한 것"이다.',
+      src: '녹취 9/10 · 교수님 정의' },
+    { ch: 22, id: 'isolated', name: '고립계와 비고립계', en: 'isolated / nonisolated system',
+      def: '고립계는 에너지가 계 밖으로 드나들지 않아 역학적 에너지가 보존되는 계로 \\(\\Delta K + \\Delta U = 0\\)을 쓴다. 비고립계는 외부가 계에 일을 해 주는 계로 일-에너지 정리 \\(W = \\Delta K\\)를 쓴다.',
+      prof: '"전하와 전기장이 한 계"라는 말이 있으면 보존 법칙, 아무 말이 없으면 일-에너지 정리.',
+      src: '녹취 9/10·9/22 · 문장은 정리본', own: true },
+
+    /* ---- 23 ---- */
+    { ch: 23, id: 'density', name: '전하 밀도 λ, σ, ρ', en: 'charge density',
+      def: '연속적으로 분포된 전하를 다루기 위한 양. 선 전하 밀도 λ는 단위 길이당, 면 전하 밀도 σ는 단위 넓이당, 부피 전하 밀도 ρ는 단위 부피당 전하량이다.',
+      f: '\\(\\lambda = \\dfrac{Q}{\\ell},\\ \\ \\sigma = \\dfrac{Q}{A},\\ \\ \\rho = \\dfrac{Q}{V},\\qquad dq = \\lambda\\,dx = \\sigma\\,dA = \\rho\\,dV\\)', u: 'C/m · C/m² · C/m³',
+      src: '슬라이드 23.1 + 녹취 9/10' },
+    { ch: 23, id: 'flux', name: '전기선속', en: 'electric flux', star: true,
+      def: '어떤 면을 통과하는 전기력선의 수에 비례하는 양. 단위 면적당 전기력선의 수는 전기장의 세기에 비례한다. 면이 기울어져 있으면 법선 방향 성분만 센다.',
+      f: '\\(\\Phi_E = EA\\cos\\theta = \\vec E\\cdot\\vec A,\\qquad \\Phi_E \\equiv \\oint \\vec E\\cdot d\\vec A\\)', u: 'N·m²/C',
+      prof: '선속은 스칼라다. θ < 90°면 +, θ = 90°면 0, θ > 90°면 −. 면적 벡터의 방향은 면의 법선(배의 돛대) 방향.',
+      src: '슬라이드 23.2 + 녹취 9/15' },
+    { ch: 23, id: 'closed', name: '폐곡면 (가우스면)', en: 'closed surface',
+      def: '어떤 표면이 내부 공간과 외부 공간을 분리하고, 이 표면을 지나지 않고는 한 공간에서 다른 공간으로 이동할 수 없는 표면. 전기장 문제에서는 가우스면이라고 부른다.',
+      prof: '전하에 바짝 붙여 포장할 필요는 없다. 전기장이 빠져나오는 쪽만 덮으면 된다(면 전하는 양쪽 뚜껑만).',
+      src: '슬라이드 23.2 + 녹취 9/15·10/6' },
+    { ch: 23, id: 'gauss', name: '가우스 법칙', en: "Gauss's law", star: true,
+      def: '폐곡면(가우스면)을 지나는 알짜 전기선속은 그 곡면 내부에 있는 알짜 전하량을 \\(\\varepsilon_0\\)로 나눈 값과 같다. 곡면의 모양(기하학적 의미)과 관계없이 내부 전하량만으로 정해진다.',
+      f: '\\(\\Phi_E = \\oint \\vec E\\cdot d\\vec A = \\dfrac{q_{\\text{in}}}{\\varepsilon_0}\\)', u: 'N·m²/C',
+      prof: '맥스웰 방정식 4개 중 첫 번째. 전하 분포가 대칭이면 전기장을 쉽게 구하게 해 준다. 이 식은 전하가 +와 −로 분리되어 있음(자석은 N·S가 분리 안 됨)을 의미한다.',
+      src: '슬라이드 23.3 + 녹취 9/15' },
+    { ch: 23, id: 'div', name: '발산 (가우스 법칙의 미분형)', en: 'divergence',
+      def: '전하에서 전기장이 사방으로 빠져나오는 것을 수학적으로 나타낸 것. 델 연산자에 점을 찍어 쓴다.',
+      f: '\\(\\nabla\\cdot\\vec E = \\dfrac{\\rho}{\\varepsilon_0}\\)', u: '',
+      prof: '가우스가 생각한 것은 결국 "발산한다"는 의미이고, 그래서 포장(가우스면)을 해야 셀 수 있다.',
+      src: '녹취 10/15 · 칠판 판서' },
+
+    /* ---- 24 ---- */
+    { ch: 24, id: 'pe', name: '전기적 위치 에너지', en: 'electric potential energy',
+      def: '전하가 전기장 속에서 A에서 B로 변위할 때 계가 갖는 위치 에너지의 변화. 전기력은 보존력이므로 선적분은 A와 B 사이의 경로에 무관하다.',
+      f: '\\(\\Delta U = -q\\int_A^B \\vec E\\cdot d\\vec s,\\qquad U = k_e\\dfrac{q_1q_2}{r_{12}}\\)', u: 'J',
+      prof: '위치 에너지는 음의 일(ΔU = −W), 운동 에너지는 양의 일(ΔK = W). 보존력이 아니면(마찰력) 위치 에너지는 없다.',
+      src: '슬라이드 24.1 + 녹취 9/17' },
+    { ch: 24, id: 'potential', name: '전위', en: 'electric potential', star: true,
+      def: '시험 전하를 전기장 내 어떤 위치에 놓았을 때 생기는 위치 에너지를 시험 전하로 나눈 값. 즉 그 위치에서의 단위 전하당 전기적 위치 에너지.',
+      f: '\\(V = \\dfrac{U}{q_0},\\qquad V = k_e\\dfrac{q}{r}\\ (\\text{점전하, } r\\to\\infty\\text{에서 } 0)\\)', u: 'V = J/C',
+      prof: '양전하(원천 전하)에 가까울수록 전위가 높다. 스칼라라서 여러 전하는 그냥 더한다.',
+      src: '슬라이드 24.1 + 녹취 9/17' },
+    { ch: 24, id: 'pdiff', name: '전위차', en: 'potential difference', star: true,
+      def: '시험 전하가 A점에서 B점으로 이동할 때 단위 전하당 위치 에너지의 변화. 나중 값에서 처음 값을 뺀다.',
+      f: '\\(\\Delta V = V_B - V_A = \\dfrac{\\Delta U}{q} = -\\int_A^B \\vec E\\cdot d\\vec s,\\qquad \\Delta V = -Ed\\ (\\text{균일})\\)', u: 'V',
+      prof: '실제로 쓰는 양은 전위가 아니라 전위차다(건전지 1.5 V). 회로에서는 전압이라고 부른다.',
+      src: '슬라이드 24.1 + 녹취 9/17·9/22' },
+    { ch: 24, id: 'ev', name: '전자볼트', en: 'electron volt',
+      def: '크기가 e인 전하(전자 또는 양성자) 한 개가 1 V의 전위차에서 가속될 때 전하-전기장계가 얻거나 잃는 에너지.',
+      f: '\\(1\\ \\mathrm{eV} = 1.60\\times10^{-19}\\ \\mathrm{C\\cdot V} = 1.60\\times10^{-19}\\ \\mathrm J\\)', u: 'eV',
+      src: '슬라이드 24.1 · 그대로' },
+    { ch: 24, id: 'equi', name: '등전위면', en: 'equipotential surface',
+      def: '균일한 전기장 내에서 전기장과 수직인 면 위의 모든 점은 전위가 같다. 이렇게 전위가 같은 점들로 이루어진 면이 등전위면이다.',
+      prof: '등전위면 위에서 움직이면 전위차가 0이라 일이 0이다. 전기장(전기력선)에 항상 수직.',
+      src: '슬라이드 24.2 · 그대로' },
+    { ch: 24, id: 'grad', name: '전위와 전기장의 관계', en: 'gradient',
+      def: '어떤 영역에서 전위를 알면 전위를 위치로 미분해 전기장을 구한다. 전기장은 전위의 기울기(변화율)에 마이너스를 붙인 것이다.',
+      f: '\\(E_x = -\\dfrac{dV}{dx},\\qquad \\vec E = -\\nabla V\\)', u: 'V/m = N/C',
+      prof: '같은 점에서 전위와 전기장을 한꺼번에 물을 수 있다. 전위를 먼저 구하고 미분한다.',
+      src: '슬라이드 24.4 + 녹취 9/22' },
+    { ch: 24, id: 'equil', name: '정전기적 평형', en: 'electrostatic equilibrium',
+      def: '도체 내에서 전하의 알짜 운동이 없는 상태. 이때 도체 내부의 전기장은 0이고, 대전된 도체 표면은 등전위면을 이루며, 내부의 모든 점의 전위는 표면 전위와 같다.',
+      prof: '도체를 대전시키면 전하가 표면으로 기어 나와 내부에는 아무것도 없다(전기장 0). 부도체는 내부에서 배열만 바뀌고 전기장이 존재한다.',
+      src: '슬라이드 24.6 + 녹취 9/17' },
+
+    /* ---- 25 ---- */
+    { ch: 25, id: 'capacitor', name: '축전기', en: 'capacitor',
+      def: '두 도체 판에 전지를 연결하면 판에 크기가 같고 부호가 반대인 전하가 쌓이는 배열로, 전하와 에너지를 저장하는 전기 회로 요소.',
+      src: '슬라이드 25.1 · 그대로' },
+    { ch: 25, id: 'capacitance', name: '전기용량', en: 'capacitance', star: true,
+      def: '축전기 한쪽 도체의 전하량과 두 도체 사이 전위차의 비.',
+      f: '\\(C \\equiv \\dfrac{Q}{\\Delta V},\\qquad C = \\dfrac{\\varepsilon_0 A}{d}\\ (\\text{평행판})\\)', u: 'F = C/V',
+      prof: '축전기 문제는 모두 Q = CΔV에서 출발한다. 평행판 C 유도는 알아 둘 것.',
+      src: '슬라이드 25.1 + 녹취 10/1' },
+    { ch: 25, id: 'equiv', name: '등가 전기용량', en: 'equivalent capacitance',
+      def: '여러 축전기를 하나의 축전기로 바꿨을 때의 전기용량. 병렬은 전위차가 같아 그대로 더하고, 직렬은 전하량이 같아 역수로 더한다.',
+      f: '\\(\\text{병렬 } C = C_1 + C_2,\\qquad \\text{직렬 } \\dfrac1C = \\dfrac1{C_1} + \\dfrac1{C_2}\\)', u: 'F',
+      prof: '"합성 전기용량"은 일상 용어고 정확한 용어는 "등가".',
+      src: '슬라이드 25.3 + 녹취 10/1' },
+    { ch: 25, id: 'energy', name: '축전기에 저장된 에너지', en: 'stored energy',
+      def: '축전기를 충전할 때 외부 기전력이 축전기에 일을 하고, 기전력이 소모한 만큼의 에너지가 전기장의 형태로 축전기에 저장된다.',
+      f: '\\(U = \\dfrac{Q^2}{2C} = \\tfrac12 Q\\Delta V = \\tfrac12 C(\\Delta V)^2,\\qquad u_E = \\tfrac12\\varepsilon_0E^2\\)', u: 'J · u: J/m³',
+      src: '슬라이드 25.4 + 녹취 10/1' },
+    { ch: 25, id: 'dielectric', name: '유전체', en: 'dielectric', star: true,
+      def: '고무, 유리, 왁스 칠을 한 종이 등과 같은 비전도성 물질. 축전기의 도체 판 사이에 끼우면 전기용량이 증가한다.',
+      f: '\\(C = \\kappa C_0,\\quad \\Delta V = \\dfrac{\\Delta V_0}{\\kappa},\\quad E = \\dfrac{E_0}{\\kappa},\\quad \\kappa > 1\\)', u: 'κ: 단위 없음',
+      src: '슬라이드 25.5 · 그대로' },
+    { ch: 25, id: 'strength', name: '유전 강도 · 유전 파괴', en: 'dielectric strength',
+      def: '유전 강도는 절연이 파괴되지 않고 버틸 수 있는 최대 전기장이다. 이 값을 넘으면 유전체가 버티지 못하고 전류가 뚫고 지나가는데, 이를 유전 파괴라 한다.',
+      u: 'V/m',
+      src: '슬라이드 25.5 + 녹취 10/1' },
+    { ch: 25, id: 'advantage', name: '유전체 사용의 장점 3가지', en: '', star: true,
+      def: '① 축전기의 전기용량이 증가한다. ② 축전기의 최대 작동 전압이 증가한다. ③ 도체 극판 사이를 역학적으로(기계적으로) 지지해 준다.',
+      prof: '"꼭 기억하라"고 직접 강조했다. 그래서 현실의 축전기는 판 사이를 빈 공간으로 두지 않는다.',
+      src: '슬라이드 25.5 · 그대로 + 녹취 10/1·10/15' },
+    { ch: 25, id: 'dipole', name: '전기 쌍극자 · 극성 분자', en: 'electric dipole',
+      def: '크기가 같고 부호가 반대인 두 전하가 거리 2a만큼 떨어진 것이 전기 쌍극자다. 극성 분자는 분자 안에서 양전하와 음전하의 중심이 분리되어 있는 분자다(물 분자).',
+      f: '\\(p \\equiv 2aq\\ (-q\\text{에서 }+q\\text{ 방향})\\)', u: 'C·m',
+      prof: '전자레인지는 극성 분자(물)를 마이크로파로 흔들어 마찰열을 낸다.',
+      src: '슬라이드 25.6 + 녹취 10/1' },
+
+    /* ---- 26 ---- */
+    { ch: 26, id: 'current', name: '전류', en: 'current', star: true,
+      def: '단위 시간당 주어진 단면을 통과하는 전하량의 흐름률. 방향은 양전하가 움직이는 방향으로 약속한다.',
+      f: '\\(I_{\\text{avg}} = \\dfrac{\\Delta Q}{\\Delta t},\\qquad I = \\dfrac{dQ}{dt}\\)', u: 'A = C/s',
+      prof: '실제로 움직이는 것은 자유 전자이므로 전자 흐름과 전류 방향은 반대다. +와 −가 섞여 움직이면 상쇄하지 말고 각각 전류에 더한다.',
+      src: '슬라이드 26.1 + 녹취 10/6' },
+    { ch: 26, id: 'drift', name: '유동 속도', en: 'drift speed',
+      def: '전기장이 걸렸을 때 전하 운반자가 무질서하게 충돌하면서도 평균적으로 한 방향으로 흘러가는 평균 속도.',
+      f: '\\(I = nqv_dA\\quad (n: \\text{단위 부피당 전하 운반자 수})\\)', u: 'm/s',
+      prof: '약 \\(10^{-4}\\) m/s로 매우 느리다. 그래서 스위치를 멀리 둬도 전기가 바로 켜지는 것은 전자가 빨리 와서가 아니다.',
+      src: '슬라이드 26.1 + 녹취 10/6' },
+    { ch: 26, id: 'jdensity', name: '전류 밀도', en: 'current density',
+      def: '단위 면적당 흐르는 전류. 단면적과 무관하게 물질 속 전류를 밀도로 나타낸 것이다.',
+      f: '\\(J \\equiv \\dfrac{I}{A} = nqv_d\\)', u: 'A/m²',
+      src: '슬라이드 26.2 · 그대로' },
+    { ch: 26, id: 'sigma', name: '전기 전도도', en: 'conductivity', star: true,
+      def: '도체 양단에 전위차가 유지될 때 전류 밀도는 전기장에 비례하는데, 그 비례 상수. 전기가 잘 통하는 정도를 수치화한 값이다.',
+      f: '\\(J = \\sigma E\\)', u: '1/(Ω·m)',
+      prof: '물질 분석에서 굉장히 중요한 값이라고 했다. "전기가 잘 통하는지를 수치화한 것"처럼 문장을 만들어 둘 것.',
+      src: '슬라이드 26.2 + 녹취 10/8' },
+    { ch: 26, id: 'rho', name: '비저항', en: 'resistivity', star: true,
+      def: '전류의 흐름을 방해하는 정도를 수치화한 값으로 전기 전도도의 역수다. 물질마다 고유한 값을 가진다(물질의 대표값).',
+      f: '\\(\\rho = \\dfrac{1}{\\sigma},\\qquad R = \\rho\\dfrac{\\ell}{A}\\)', u: 'Ω·m',
+      prof: '"그 물질의 고유 특성"이 핵심 단어. 비저항을 재면 어떤 물질인지 거꾸로 알 수 있다. 단위 Ω·m도 꼭 기억.',
+      src: '슬라이드 26.2 + 녹취 10/6·10/8·10/15' },
+    { ch: 26, id: 'resistance', name: '저항', en: 'resistance',
+      def: '도체 양단의 전위차와 도체에 흐르는 전류의 비. 전류의 흐름을 방해하는 성질이다.',
+      f: '\\(R \\equiv \\dfrac{\\Delta V}{I}\\)', u: 'Ω = V/A',
+      prof: '회로에 저항을 다는 진짜 이유: 전압을 낮춰 회로가 원점(0)으로 돌아오며 정상적으로 흐르게 하려고.',
+      src: '슬라이드 26.2 + 녹취 10/6·10/15' },
+    { ch: 26, id: 'ohm', name: '옴의 법칙', en: "Ohm's law", star: true,
+      def: '전류 밀도가 전기장에 비례한다는, 특정 물질에서 성립하는 실험식(물질의 옴 법칙). 길이 ℓ, 단면적 A인 도선에 적용하면 전위차가 전류에 비례한다는 회로의 옴 법칙이 된다.',
+      f: '\\(J = \\sigma E\\ \\ \\Rightarrow\\ \\ \\Delta V = \\left(\\dfrac{\\ell}{\\sigma A}\\right)I = RI\\)', u: '',
+      prof: '교재 필기 "물질 → 회로 유도". J = σE는 옷을 입혀 놓은 오옴의 법칙이고, 펼치면 ΔV = IR이 나온다.',
+      src: '슬라이드 26.2 + 녹취 10/6' },
+    { ch: 26, id: 'ohmic', name: '오옴 물질과 비오옴 물질', en: 'ohmic / nonohmic',
+      def: '전류나 전압이 변해도 저항이 변하지 않는 물질이 오옴 물질이다(일반 도체: Cu, Pt). I–V 그래프가 직선이 아닌 물질이 비오옴 물질이다(반도체: Si, Ge, 다이오드).',
+      src: '슬라이드 26.2 + 녹취 10/6' },
+    { ch: 26, id: 'super', name: '초전도체', en: 'superconductor',
+      def: '임계 온도 \\(T_c\\)라고 하는 어떤 온도 이하에서 저항이 갑자기 0으로 감소하는 금속이나 화합물.',
+      src: '슬라이드 26.5 · 그대로' },
+    { ch: 26, id: 'power', name: '전력', en: 'electrical power',
+      def: '전기 일률. 단위 시간당 전달되는 전기 에너지다.',
+      f: '\\(P = I\\Delta V = I^2R = \\dfrac{(\\Delta V)^2}{R}\\)', u: 'W = J/s',
+      prof: '전기 요금은 P × Δt (kWh)로 계산한다.',
+      src: '슬라이드 26.6 + 녹취 10/8' },
+
+    /* ---- 27 ---- */
+    { ch: 27, id: 'dc', name: '직류', en: 'direct current',
+      def: '전류의 방향과 크기가 일정한 전류.',
+      src: '슬라이드 27.1 · 그대로' },
+    { ch: 27, id: 'emf', name: '기전력', en: 'emf', star: true,
+      def: '전지의 양단에 공급할 수 있는 최대의 전압. 물리에서는 전지 자체의 전위차를 뜻한다.',
+      f: '\\(\\Delta V = \\varepsilon - Ir\\)', u: 'V',
+      prof: '보통 내부 저항은 무시하고 기전력을 그대로 쓴다. 건전지의 1.5 V가 기전력이다.',
+      src: '슬라이드 27.1 + 녹취 10/8' },
+    { ch: 27, id: 'internal', name: '내부 저항 · 단자 전압', en: 'internal resistance',
+      def: '전지는 화합물로 채워져 있어 내부에 전하 흐름을 방해하는 저항이 존재하는데 이를 내부 저항이라 한다. 실제 회로에 걸리는 전압(기전력에서 내부 저항에 의한 강하를 뺀 값)이 단자 전압이다.',
+      u: 'r: Ω · ΔV: V',
+      src: '슬라이드 27.1 + 녹취 10/8' },
+    { ch: 27, id: 'drop', name: '전압 강하', en: 'voltage drop',
+      def: '회로에서 소자(저항)를 지날 때마다 전위가 계단처럼 떨어지는 것. 한 바퀴를 돌면 원점(0)으로 돌아온다.',
+      prof: '"소자를 거치면 무조건 전압 강하"라고 알면 된다. 반대로 올라가면 전압 상승.',
+      src: '녹취 10/1·10/8·10/15 · 문장은 정리본', own: true },
+    { ch: 27, id: 'junction', name: '키르히호프 분기점 법칙', en: 'junction rule', star: true,
+      def: '모든 분기점에서 전류의 합은 0이다. 즉 분기점으로 들어오는 전류의 합은 나가는 전류의 합과 같다(전하 보존).',
+      f: '\\(\\sum_{\\text{분기점}} I = 0,\\qquad I_{\\text{in}} = I_{\\text{out}}\\)', u: 'A',
+      src: '슬라이드 27.3 · 그대로' },
+    { ch: 27, id: 'loop', name: '키르히호프 고리 법칙', en: 'loop rule', star: true,
+      def: '모든 닫힌 회로에서 각 소자를 지나갈 때 전위차의 합은 0이다(에너지 보존).',
+      f: '\\(\\sum_{\\text{닫힌 고리}} \\Delta V = 0\\)', u: 'V',
+      prof: '부호: 저항을 전류 방향으로 지나면 −IR, 반대면 +IR. 전지를 −극→+극으로 지나면 +ε, 반대면 −ε. 교수님은 키르히호프 법칙을 "회로 분석의 도구"라고 했다.',
+      src: '슬라이드 27.3 + 녹취 10/15' },
+    { ch: 27, id: 'tau', name: '시간 상수 (시상수)', en: 'time constant', star: true,
+      def: '전류가 처음 값의 1/e로 감소하는 데 걸리는 시간. 충전에서는 이 시간에 최대 전하의 약 63%가 채워진다.',
+      f: '\\(\\tau = RC\\)', u: 's (Ω·F = s)',
+      prof: '"시상수 구하세요"가 첫 질문이 될 수 있다. RC가 시간과 같은 차원이라는 것도 알아 둘 것.',
+      src: '슬라이드 27.4 + 녹취 10/15' },
+    { ch: 27, id: 'rc', name: 'RC 회로 충전과 방전', en: 'RC circuit',
+      def: '충전: 전하는 0에서 증가해 Q = Cε에 수렴하고, 전류는 ε/R에서 지수적으로 감소한다. 다 차면 전류가 흐르지 않는다(등전위). 방전: 전하와 전류가 모두 지수적으로 감소한다.',
+      f: '\\(\\text{충전 } q = C\\varepsilon(1 - e^{-t/RC}),\\ I = \\tfrac{\\varepsilon}{R}e^{-t/RC}\\qquad \\text{방전 } q = Qe^{-t/RC}\\)', u: 'C · A',
+      prof: '수식을 안 줄 수도 있다. 결과식은 외워 갈 것.',
+      src: '슬라이드 27.4 + 녹취 10/15' }
+  ];
+
+  const CMP = [
+    { title: '전위 vs 전위차', why: '"차이점이 뭐냐"고 물을 수 있다고 직접 말했다 (10/15)',
+      rows: [['정의', '한 위치에서 단위 전하당 위치 에너지', '두 점 사이 단위 전하당 위치 에너지의 차'], ['식', '\\(V = U/q_0\\)', '\\(\\Delta V = V_B - V_A = -\\int \\vec E\\cdot d\\vec s\\)'], ['기준점', '기준(보통 ∞에서 0)이 필요', '기준과 무관, 차이만 의미'], ['실제 사용', '정의용', '실제로 쓰는 양 = 전압 (전지 1.5 V)']],
+      one: '전위는 "어느 위치의 값", 전위차는 "두 위치 값의 차이".' },
+    { title: '전기장 vs 전위', why: '같은 점에서 둘을 한꺼번에 물을 수 있다 (9/22)',
+      rows: [['물리량', '단위 전하당 힘', '단위 전하당 위치 에너지'], ['종류', '벡터 (방향 있음)', '스칼라 (그냥 더함)'], ['점전하', '\\(k_e q/r^2\\)', '\\(k_e q/r\\)'], ['단위', 'N/C = V/m', 'V = J/C'], ['관계', '\\(E_x = -dV/dx\\)', '\\(\\Delta V = -\\int E\\,ds\\)']],
+      one: '전위를 위치로 미분하면 전기장, 전기장을 적분하면 전위차.' },
+    { title: '고립계 vs 비고립계 (예제 22.5 ↔ 24.2)', why: '"속도 구하는 3가지 방법" 비교 문제 예고 (10/15)',
+      rows: [['출발식', '\\(\\Delta K + \\Delta U = 0\\)', '\\(W = \\Delta K\\)'], ['쓰는 에너지', '운동 + 위치 에너지', '운동 에너지만'], ['언제', '"전하-전기장계" 언급', '아무 말이 없을 때'], ['결과', '\\(v = \\sqrt{2qEd/m}\\)', '\\(v = \\sqrt{2qEd/m}\\)']],
+      one: '세 번째 방법은 힘(F = qE = ma)으로 가속도를 구해 등가속도 공식에 넣는 것. 셋 다 답이 같다.' },
+    { title: '직접 적분 (예제 23.3) vs 가우스 법칙 (예제 23.7)', why: '전기장 계산법 비교 문제 예고 (10/15)',
+      rows: [['대상', '원판 전하 (반지름 R)', '무한 평면 전하'], ['방법', '\\(dq = \\sigma 2\\pi r\\,dr\\)를 고리로 적분', '원통 가우스면, 양쪽 뚜껑만'], ['결과', '\\(2\\pi k_e\\sigma\\left[1 - \\frac{x}{\\sqrt{R^2 + x^2}}\\right]\\)', '\\(\\dfrac{\\sigma}{2\\varepsilon_0}\\)'], ['연결', 'R ≫ x 극한 → \\(\\sigma/2\\varepsilon_0\\)', '같은 값']],
+      one: '직접 적분은 복잡하지만 극한을 취하면 가우스 결과와 일치한다. 대칭 분포는 가우스가 훨씬 쉽다.' },
+    { title: '도체 vs 부도체를 대전시킬 때', why: '정전기적 평형 설명 (9/17)',
+      rows: [['전하 위치', '표면으로 모두 이동', '내부에서 배열(분극)만 바뀜'], ['내부 전기장', '0', '존재한다'], ['전위', '내부와 표면이 모두 같음 (등전위)', '일정하지 않음']],
+      one: '도체는 "기어 나와서 안이 비고", 부도체는 "제자리에서 줄을 선다".' },
+    { title: '물질의 옴 법칙 vs 회로의 옴 법칙', why: '교재 필기 "물질 → 회로 유도"',
+      rows: [['식', '\\(J = \\sigma E\\)', '\\(\\Delta V = IR\\)'], ['다루는 양', '밀도(J), 장(E), 물질 상수(σ)', '전류, 전위차, 저항'], ['연결', '\\(\\Delta V = E\\ell,\\ J = I/A\\) 대입', '\\(R = \\ell/\\sigma A = \\rho\\ell/A\\)']],
+      one: 'J = σE가 근본이고, 도선의 길이와 단면적을 넣어 펼치면 ΔV = IR이 된다.' },
+    { title: '전기 전도도 vs 비저항', why: '용어 정의 단골',
+      rows: [['의미', '전기가 잘 통하는 정도', '흐름을 방해하는 정도 (물질 고유)'], ['식', '\\(J = \\sigma E\\)의 비례상수', '\\(\\rho = 1/\\sigma\\)'], ['단위', '1/(Ω·m)', 'Ω·m']],
+      one: '서로 역수. 비저항은 "물질의 고유한 값"이라는 말을 꼭 넣는다.' },
+    { title: '축전기 연결 vs 저항 연결', why: '공식이 서로 반대라 헷갈리기 쉽다',
+      rows: [['병렬', '\\(C = C_1 + C_2\\) (전위차 같음)', '\\(\\frac1R = \\frac1{R_1} + \\frac1{R_2}\\) (전압 같음)'], ['직렬', '\\(\\frac1C = \\frac1{C_1} + \\frac1{C_2}\\) (전하량 같음)', '\\(R = R_1 + R_2\\) (전류 같음)']],
+      one: '축전기는 병렬이 그냥 합, 저항은 직렬이 그냥 합.' },
+    { title: 'RC 충전 vs 방전', why: 'RC 기본 모델만 알면 크게 문제없다고 했다 (10/15)',
+      rows: [['전하', '\\(q = C\\varepsilon(1 - e^{-t/RC})\\) 증가 → Cε', '\\(q = Qe^{-t/RC}\\) 감소 → 0'], ['전류', '\\(I = \\frac{\\varepsilon}{R}e^{-t/RC}\\) 감소', '\\(I = -\\frac{Q}{RC}e^{-t/RC}\\) 감소'], ['t = τ', '최대의 약 63% 충전', '처음의 1/e(약 37%) 남음']],
+      one: '두 경우 모두 시간 상수는 τ = RC. 비율 문제는 양변에 ln을 취한다.' }
+  ];
+
+  /* ---------------- 상태 ---------------- */
+  const store = {
+    get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+    set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  };
+  let done = {};
+  try { done = JSON.parse(store.get('terms-done') || '{}') || {}; } catch (e) { done = {}; }
+  let tab = store.get('terms-tab') || '22';
+  let query = '';
+
+  const TABS = [['22', '22장'], ['23', '23장'], ['24', '24장'], ['25', '25장'], ['26', '26장'], ['27', '27장'], ['cmp', '비교'], ['star', '★만']];
+  const main = document.getElementById('main');
+  const tabsEl = document.getElementById('tabs');
+
+  function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+  function renderTabs() {
+    tabsEl.innerHTML = '';
+    TABS.forEach(([key, label]) => {
+      const b = document.createElement('button');
+      b.className = 'tab'; b.type = 'button'; b.setAttribute('role', 'tab');
+      b.setAttribute('aria-selected', String(key === tab));
+      let count = '';
+      if (/^\d+$/.test(key)) {
+        const list = T.filter(t => t.ch === +key);
+        count = `${list.filter(t => done[t.id]).length}/${list.length}`;
+      }
+      b.innerHTML = label + (count ? `<span class="n">${count}</span>` : '');
+      b.addEventListener('click', () => { tab = key; store.set('terms-tab', tab); render(); window.scrollTo({ top: 0 }); });
+      tabsEl.appendChild(b);
+      if (key === tab) setTimeout(() => b.scrollIntoView({ inline: 'center', block: 'nearest' }), 0);
+    });
+  }
+
+  function cardHTML(t) {
+    return `<article class="card${done[t.id] ? ' is-done' : ''}" data-id="${t.id}" tabindex="0">
+      <div class="card-head">
+        <div class="term">${esc(t.name)}${t.star ? '<span class="star">★</span>' : ''}${t.en ? `<span class="en">${esc(t.en)}</span>` : ''}</div>
+        <button class="done" type="button" aria-pressed="${!!done[t.id]}" data-done="${t.id}">${done[t.id] ? '외움 ✓' : '외움'}</button>
+      </div>
+      <p class="def">${t.def}</p>
+      ${t.f || t.u ? `<div class="formula">${t.f || ''}${t.u ? `${t.f ? '<br>' : ''}<span class="unit">단위 ${esc(t.u)}</span>` : ''}</div>` : ''}
+      ${t.prof ? `<p class="prof">교수님: ${t.prof}</p>` : ''}
+      <span class="src${t.own ? ' own' : ''}">${esc(t.src)}</span>
+    </article>`;
+  }
+
+  function matches(t) {
+    if (!query) return true;
+    const hay = (t.name + ' ' + t.en + ' ' + t.def + ' ' + (t.prof || '')).toLowerCase();
+    return hay.includes(query);
+  }
+
+  function render() {
+    renderTabs();
+    let html = '';
+    if (query) {
+      const list = T.filter(matches);
+      html += `<div class="meta-row"><h2>검색 결과</h2><span class="progress">${list.length}개</span></div>`;
+      html += list.length ? `<div class="list">${list.map(t => `<p class="ch-note" style="padding:0">${CH[t.ch].name}</p>` + cardHTML(t)).join('')}</div>` : '<p class="empty">찾는 용어가 없어요.</p>';
+    } else if (tab === 'cmp') {
+      html += `<div class="meta-row"><h2>헷갈리는 짝 비교</h2><span class="progress">${CMP.length}쌍</span></div>
+        <p class="ch-note">교수님이 비교 문제로 낼 수 있다고 한 것들. 표를 보고 한 줄 요약을 말로 설명할 수 있으면 된다.</p><div class="list">`;
+      CMP.forEach((c, i) => {
+        html += `<details class="cmp"${i < 2 ? ' open' : ''}><summary><h3>${c.title}</h3><span class="chev">›</span></summary><div class="body">
+          <p class="hint">${c.why}</p>
+          <div class="table-scroll"><table class="cmp-table"><thead><tr><th></th><th>${c.title.split(' vs ')[0].replace(/\s*\(.*\)/, '')}</th><th>${(c.title.split(' vs ')[1] || '').replace(/\s*\(.*\)/, '')}</th></tr></thead><tbody>
+          ${c.rows.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join('')}
+          </tbody></table></div>
+          <p class="oneline">${c.one}</p></div></details>`;
+      });
+      html += '</div>';
+    } else if (tab === 'star') {
+      const list = T.filter(t => t.star);
+      html += `<div class="meta-row"><h2>★ 시험 단골 용어</h2><span class="progress">${list.filter(t => done[t.id]).length} / ${list.length} 외움</span></div>
+        <p class="ch-note">교재 필기에 적힌 용어(쿨롱·전하·전기선속·가우스·전위(차)·저항·키르히호프)와 수업에서 강조한 것만 모았다. 시험 전날 이것만 다시 본다.</p>
+        <div class="list">${list.map(cardHTML).join('')}</div>`;
+    } else {
+      const ch = +tab;
+      const list = T.filter(t => t.ch === ch);
+      html += `<div class="meta-row"><h2>${CH[ch].name}</h2><span class="progress">${list.filter(t => done[t.id]).length} / ${list.length} 외움</span></div>
+        <p class="ch-note">${CH[ch].note}</p><div class="list">${list.map(cardHTML).join('')}</div>`;
+    }
+    main.innerHTML = html;
+    if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([main]).catch(() => {});
+  }
+
+  main.addEventListener('click', e => {
+    const btn = e.target.closest('[data-done]');
+    if (btn) {
+      const id = btn.dataset.done;
+      done[id] = !done[id];
+      if (!done[id]) delete done[id];
+      store.set('terms-done', JSON.stringify(done));
+      const card = btn.closest('.card');
+      card.classList.toggle('is-done', !!done[id]);
+      btn.setAttribute('aria-pressed', String(!!done[id]));
+      btn.textContent = done[id] ? '외움 ✓' : '외움';
+      renderTabs();
+      const prog = main.querySelector('.meta-row .progress');
+      if (prog && tab !== 'cmp' && !query) {
+        const list = tab === 'star' ? T.filter(t => t.star) : T.filter(t => t.ch === +tab);
+        prog.textContent = `${list.filter(t => done[t.id]).length} / ${list.length} 외움`;
+      }
+      return;
+    }
+    const card = e.target.closest('.card');
+    if (card && document.body.classList.contains('drill')) card.classList.toggle('revealed');
+  });
+  main.addEventListener('keydown', e => {
+    if ((e.key === 'Enter' || e.key === ' ') && e.target.classList.contains('card') && document.body.classList.contains('drill')) {
+      e.preventDefault(); e.target.classList.toggle('revealed');
+    }
+  });
+
+  const drill = document.getElementById('drill');
+  drill.addEventListener('click', () => {
+    const on = !document.body.classList.contains('drill');
+    document.body.classList.toggle('drill', on);
+    drill.setAttribute('aria-pressed', String(on));
+    drill.textContent = on ? '가리는 중' : '가리고 외우기';
+    main.querySelectorAll('.card').forEach(c => c.classList.remove('revealed'));
+  });
+
+  let qt;
+  document.getElementById('q').addEventListener('input', e => {
+    clearTimeout(qt);
+    qt = setTimeout(() => { query = e.target.value.trim().toLowerCase(); render(); }, 150);
+  });
+
+  render();
+})();
+</script>
