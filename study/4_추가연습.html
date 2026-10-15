@@ -1,0 +1,683 @@
+<title>추가 연습문제</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+  svg: { fontCache: 'global' },
+  startup: { typeset: true }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js" defer></script>
+<style>
+/* Layout: 폰. 위에 장 탭, 문제 카드 하나씩. 카드 안 순서 = 원문 → 그림 → 먼저 쓸 정의 → 단계별 풀이(한 단계씩 열기) → 답 → 단위 검산 → 함정 */
+:root {
+  --paper: #f3f6fa;
+  --surface: #ffffff;
+  --ink: #17202d;
+  --muted: #586378;
+  --rule: #d6deea;
+  --accent: #17706a;
+  --accent-soft: #e2f1ef;
+  --warn: #9a5b00;
+  --warn-soft: #fbf0dc;
+  --pos: #c62f3a;
+  --neg: #2b5fc7;
+  --font-display: "Gowun Batang", "Nanum Myeongjo", "AppleMyungjo", serif;
+  --font-body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0f131a; --surface: #161c26; --ink: #e5e9f1; --muted: #98a3b7; --rule: #2a3343;
+    --accent: #4cc2b5; --accent-soft: #15302e; --warn: #f0b45a; --warn-soft: #2f2516; --pos: #ff6f73; --neg: #6ea2ff;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0f131a; --surface: #161c26; --ink: #e5e9f1; --muted: #98a3b7; --rule: #2a3343;
+  --accent: #4cc2b5; --accent-soft: #15302e; --warn: #f0b45a; --warn-soft: #2f2516; --pos: #ff6f73; --neg: #6ea2ff;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  background: var(--paper); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.7;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 72px;
+}
+.wrap { max-width: 720px; margin: 0 auto; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 700; text-wrap: balance; line-height: 1.3; margin: 0; }
+p { margin: 0; }
+button { font: inherit; color: inherit; }
+.eyebrow { font-family: var(--font-mono); font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+header.top { padding-block: 28px 14px; display: grid; gap: 8px; }
+header.top h1 { font-size: 1.75rem; }
+header.top p { color: var(--muted); font-size: .95rem; }
+
+.bar {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; background: var(--paper);
+  margin-left: calc(-1 * max(16px, env(safe-area-inset-left, 0px)));
+  margin-right: calc(-1 * max(16px, env(safe-area-inset-right, 0px)));
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 8px 10px; border-bottom: 1px solid var(--rule);
+}
+.tabs { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; }
+.tabs::-webkit-scrollbar { display: none; }
+.tab { flex: 0 0 auto; border: 1px solid var(--rule); background: var(--surface); border-radius: 999px; padding: 6px 13px; font-size: .9rem; color: var(--muted); cursor: pointer; min-height: 36px; }
+.tab[aria-selected="true"] { background: var(--accent); border-color: var(--accent); color: var(--surface); font-weight: 600; }
+.tab .n { font-family: var(--font-mono); font-size: .75rem; margin-left: 4px; opacity: .85; }
+.tab:focus-visible, .btn:focus-visible, .solved:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.meta-row { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; padding-block: 16px 6px; }
+.meta-row h2 { font-size: 1.25rem; }
+.count { font-family: var(--font-mono); font-size: .8rem; color: var(--accent); }
+.ch-note { font-size: .9rem; color: var(--muted); padding-bottom: 10px; }
+.list { display: grid; gap: 14px; }
+
+.prob { background: var(--surface); border: 1px solid var(--rule); border-radius: 14px; padding: 16px 15px; display: grid; gap: 12px; min-width: 0; }
+.prob.is-solved { border-color: var(--accent); }
+.p-head { display: flex; gap: 10px; align-items: flex-start; }
+.p-head .titles { flex: 1; min-width: 0; display: grid; gap: 4px; }
+.p-head h3 { font-size: 1.08rem; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag { font-family: var(--font-mono); font-size: .72rem; padding: 1px 7px; border-radius: 4px; background: var(--accent-soft); color: var(--accent); }
+.tag.hot { background: var(--warn-soft); color: var(--warn); }
+.solved { flex: 0 0 auto; border: 1px solid var(--rule); background: transparent; border-radius: 6px; font-size: .78rem; padding: 3px 8px; cursor: pointer; color: var(--muted); min-height: 30px; }
+.solved[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); font-weight: 600; }
+.why { font-size: .86rem; color: var(--warn); }
+.text { background: var(--paper); border-radius: 10px; padding: 11px 13px; font-size: .95rem; }
+.fig { overflow-x: auto; }
+.fig svg { display: block; width: 100%; height: auto; max-width: 560px; margin: 0 auto; }
+.fig-cap { font-size: .8rem; color: var(--muted); text-align: center; }
+.block-title { font-family: var(--font-mono); font-size: .74rem; letter-spacing: .06em; color: var(--muted); }
+.defs { display: grid; gap: 6px; border-left: 3px solid var(--warn); padding: 6px 0 6px 11px; }
+.defs p { font-size: .92rem; }
+.steps { display: grid; gap: 8px; }
+.step { display: grid; grid-template-columns: 1.6rem 1fr; gap: 6px; align-items: start; }
+.step .num { font-family: var(--font-mono); font-size: .8rem; color: var(--surface); background: var(--accent); border-radius: 50%; width: 1.4rem; height: 1.4rem; display: grid; place-items: center; margin-top: 3px; }
+.step .body { min-width: 0; overflow-x: auto; overflow-y: hidden; font-size: .95rem; }
+.step[hidden] { display: none; }
+.step-ctrl { display: flex; flex-wrap: wrap; gap: 8px; }
+.btn { border: 1px solid var(--rule); background: var(--surface); border-radius: 8px; padding: 6px 12px; font-size: .88rem; cursor: pointer; min-height: 36px; }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--surface); font-weight: 600; }
+.btn[disabled] { opacity: .45; cursor: default; }
+.answer { border-left: 3px solid var(--accent); background: var(--accent-soft); padding: 9px 12px; border-radius: 0 8px 8px 0; font-size: .95rem; overflow-x: auto; overflow-y: hidden; }
+.answer[hidden], .after[hidden] { display: none; }
+.ucheck { font-size: .88rem; color: var(--muted); overflow-x: auto; overflow-y: hidden; }
+.trap { border-left: 3px solid var(--warn); background: var(--warn-soft); padding: 8px 11px; border-radius: 0 8px 8px 0; font-size: .9rem; }
+.after { display: grid; gap: 10px; }
+.mini { width: 100%; border-collapse: collapse; font-size: .9rem; }
+.mini th, .mini td { border-bottom: 1px solid var(--rule); padding: 6px 8px; text-align: left; }
+.mini thead th { color: var(--muted); font-weight: 500; font-size: .8rem; }
+.table-scroll { overflow-x: auto; }
+footer { margin-top: 36px; color: var(--muted); font-size: .82rem; border-top: 1px solid var(--rule); padding-top: 14px; }
+
+/* svg classes */
+.s-ink { stroke: var(--ink); fill: none; }
+.s-mut { stroke: var(--muted); fill: none; }
+.s-acc { stroke: var(--accent); fill: none; }
+.s-warn { stroke: var(--warn); fill: none; }
+.s-pos { stroke: var(--pos); fill: none; }
+.f-ink { fill: var(--ink); }
+.f-mut { fill: var(--muted); }
+.f-acc { fill: var(--accent); }
+.f-pos { fill: var(--pos); }
+.f-neg { fill: var(--neg); }
+.f-warn { fill: var(--warn); }
+.f-surf { fill: var(--surface); }
+.f-soft { fill: var(--warn-soft); }
+.f-paper { fill: var(--paper); }
+.t { font-family: var(--font-mono); font-size: 12px; }
+.t-s { font-family: var(--font-mono); font-size: 10.5px; }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <span class="eyebrow">일반물리 2 · 중간고사 10/22</span>
+    <h1>추가 연습문제</h1>
+    <p>보내 준 교재 사진에서 교수님이 찍은 유형과 이어지는 문제를 장마다 4개씩 골랐다. 찍은 문제(③)를 먼저 끝내고, 같은 방법을 숫자만 바꿔 다시 써 보는 용도다. 답안은 <b>정의 → 식 세우기 → 계산 → 단위</b> 순서로 쓴다.</p>
+  </header>
+
+  <div class="bar"><div class="tabs" role="tablist" aria-label="장 선택" id="tabs"></div></div>
+
+  <main id="main"></main>
+
+  <footer>출처: 교재 연습문제 사진(장별 번호는 카드 제목에 표기), 강의 슬라이드, 수업 녹취. 수치는 직접 계산한 값이라 교재 뒤 정답과 한 번 대조할 것. 24장 10번, 25장 10번, 27장 12번의 회로·배치 그림은 사진을 보고 다시 그린 것이니 교재 그림과 연결 구조가 같은지 확인할 것.</footer>
+</div>
+
+<script>
+(function () {
+  const NS = 'http://www.w3.org/2000/svg';
+  function el(tag, a, txt) { const e = document.createElementNS(NS, tag); for (const k in a) e.setAttribute(k, a[k]); if (txt != null) e.textContent = txt; return e; }
+  function svg(w, h, label) { return el('svg', { viewBox: `0 0 ${w} ${h}`, role: 'img', 'aria-label': label }); }
+  function txt(s, x, y, str, cls, anchor) { s.appendChild(el('text', { x, y, class: cls || 't f-ink', 'text-anchor': anchor || 'middle' }, str)); }
+  function line(s, x1, y1, x2, y2, cls, w) { s.appendChild(el('line', { x1, y1, x2, y2, class: cls || 's-ink', 'stroke-width': w || 2 })); }
+  function arrowHead(s, x, y, ang, cls, size) {
+    size = size || 8;
+    const p = `M${x},${y} L${x - size * Math.cos(ang - .45)},${y - size * Math.sin(ang - .45)} L${x - size * Math.cos(ang + .45)},${y - size * Math.sin(ang + .45)} Z`;
+    s.appendChild(el('path', { d: p, class: cls || 'f-ink' }));
+  }
+  function arrow(s, x1, y1, x2, y2, sc, fc, w) { line(s, x1, y1, x2, y2, sc, w || 2); arrowHead(s, x2, y2, Math.atan2(y2 - y1, x2 - x1), fc); }
+  // 회로 부품
+  function resH(s, x1, x2, y) { // 가로 저항: x1~x2 구간에 지그재그
+    const L = x2 - x1, n = 6, seg = L / n; let d = `M${x1},${y}`;
+    for (let i = 0; i < n; i++) d += ` L${x1 + seg * (i + .5)},${y + (i % 2 ? 6 : -6)}`;
+    d += ` L${x2},${y}`; s.appendChild(el('path', { d, class: 's-warn', 'stroke-width': 2 }));
+  }
+  function resV(s, x, y1, y2) {
+    const L = y2 - y1, n = 6, seg = L / n; let d = `M${x},${y1}`;
+    for (let i = 0; i < n; i++) d += ` L${x + (i % 2 ? 6 : -6)},${y1 + seg * (i + .5)}`;
+    d += ` L${x},${y2}`; s.appendChild(el('path', { d, class: 's-warn', 'stroke-width': 2 }));
+  }
+  function batH(s, x, y, plusLeft) { // 긴 선 = +, 짧은 선 = −
+    const xl = x - 4, xr = x + 4;
+    const longX = plusLeft ? xl : xr, shortX = plusLeft ? xr : xl;
+    line(s, longX, y - 13, longX, y + 13, 's-ink', 2.5); line(s, shortX, y - 7, shortX, y + 7, 's-ink', 4);
+    txt(s, longX + (plusLeft ? -7 : 7), y - 14, '+', 't f-pos'); txt(s, shortX + (plusLeft ? 7 : -7), y - 14, '−', 't f-neg');
+  }
+  function batV(s, x, y, plusTop) {
+    const yt = y - 4, yb = y + 4;
+    const longY = plusTop ? yt : yb, shortY = plusTop ? yb : yt;
+    line(s, x - 13, longY, x + 13, longY, 's-ink', 2.5); line(s, x - 7, shortY, x + 7, shortY, 's-ink', 4);
+  }
+  function wire(s, pts) { s.appendChild(el('polyline', { points: pts.map(p => p.join(',')).join(' '), class: 's-ink', 'stroke-width': 2, fill: 'none' })); }
+
+  /* ================= 그림들 ================= */
+  const FIGS = {
+    e2212() {
+      const s = svg(560, 230, '세 전하의 위치');
+      const ox = 110, oy = 190, sc = 75;
+      line(s, ox - 30, oy, ox + 5 * sc, oy, 's-mut', 1); line(s, ox, oy + 20, ox, oy - 3.8 * sc, 's-mut', 1);
+      txt(s, ox + 5 * sc, oy + 18, 'x (m)', 't-s f-mut', 'end'); txt(s, ox + 8, oy - 3.7 * sc, 'y (m)', 't-s f-mut', 'start');
+      const pts = [[0, 0, 'A +3.00×10⁻⁴ C', 'f-pos'], [4, 0, 'B −6.00×10⁻⁴ C', 'f-neg'], [0, 3, 'C +1.00×10⁻⁴ C', 'f-pos']];
+      line(s, ox + 4 * sc, oy, ox, oy - 3 * sc, 's-mut', 1); txt(s, ox + 2 * sc + 14, oy - 1.5 * sc - 6, '5.00 m', 't-s f-mut', 'start');
+      pts.forEach(([x, y, l, c]) => { s.appendChild(el('circle', { cx: ox + x * sc, cy: oy - y * sc, r: 10, class: c })); txt(s, ox + x * sc + (x ? 0 : 16), oy - y * sc + (y ? -16 : 28), l, 't-s f-ink', x ? 'middle' : 'start'); });
+      arrow(s, ox, oy - 3 * sc - 12, ox, oy - 3 * sc - 50, 's-pos', 'f-pos', 2); txt(s, ox - 8, oy - 3 * sc - 30, 'F_AC', 't-s f-pos', 'end');
+      arrow(s, ox + 12, oy - 3 * sc + 9, ox + 12 + 0.8 * 45, oy - 3 * sc + 9 + 0.6 * 45, 's-neg', 'f-neg', 2); txt(s, ox + 60, oy - 3 * sc + 46, 'F_BC', 't-s f-neg', 'start');
+      return s;
+    },
+    e2220() {
+      const s = svg(560, 200, '두 전하와 y축 위의 점');
+      const ox = 280, oy = 160, sc = 170;
+      line(s, 60, oy, 500, oy, 's-mut', 1); line(s, ox, oy + 20, ox, 20, 's-mut', 1);
+      [-1, 1].forEach(x => { s.appendChild(el('circle', { cx: ox + x * sc, cy: oy, r: 11, class: 'f-pos' })); txt(s, ox + x * sc, oy + 4, '+', 't f-surf'); txt(s, ox + x * sc, oy + 30, `2.00 μC (x = ${x > 0 ? '+' : '−'}1.00 m)`, 't-s f-ink'); line(s, ox + x * sc, oy, ox, oy - 0.5 * sc, 's-mut', .8); });
+      s.appendChild(el('circle', { cx: ox, cy: oy - 0.5 * sc, r: 4, class: 'f-acc' })); txt(s, ox + 10, oy - 0.5 * sc - 6, 'P (0, 0.500 m)', 't-s f-acc', 'start');
+      arrow(s, ox, oy - 0.5 * sc, ox - 50, oy - 0.5 * sc - 25, 's-mut', 'f-mut', 1.5); arrow(s, ox, oy - 0.5 * sc, ox + 50, oy - 0.5 * sc - 25, 's-mut', 'f-mut', 1.5);
+      arrow(s, ox, oy - 0.5 * sc - 4, ox, oy - 0.5 * sc - 56, 's-acc', 'f-acc', 2.5); txt(s, ox + 8, oy - 0.5 * sc - 46, 'E (x성분 상쇄)', 't-s f-acc', 'start');
+      return s;
+    },
+    e2410() {
+      const s = svg(560, 220, '정사각형 꼭짓점의 두 전하');
+      const x1 = 180, x2 = 380, yT = 40, yB = 180;
+      s.appendChild(el('rect', { x: x1, y: yT, width: x2 - x1, height: yB - yT, class: 's-mut', 'stroke-width': 1, 'stroke-dasharray': '4 4' }));
+      [[x1, yT, 'A'], [x2, yT, 'B']].forEach(([x, y, l]) => { s.appendChild(el('circle', { cx: x, cy: y, r: 4, class: 'f-ink' })); txt(s, x, y - 10, l); });
+      s.appendChild(el('circle', { cx: x1, cy: yB, r: 12, class: 'f-pos' })); txt(s, x1 - 20, yB + 4, 'Q', 't f-ink', 'end');
+      s.appendChild(el('circle', { cx: x2, cy: yB, r: 12, class: 'f-pos' })); txt(s, x2 + 20, yB + 4, '2Q', 't f-ink', 'start');
+      txt(s, (x1 + x2) / 2, yB + 30, 'd = 2.00 cm', 't-s f-mut'); txt(s, x1 - 10, (yT + yB) / 2, 'd', 't-s f-mut', 'end');
+      txt(s, (x1 + x2) / 2 - 30, (yT + yB) / 2, '√2 d', 't-s f-mut');
+      line(s, x1, yT, x2, yB, 's-mut', .6); line(s, x2, yT, x1, yB, 's-mut', .6);
+      return s;
+    },
+    e2510() {
+      const s = svg(560, 230, '네 축전기 연결');
+      const a = 50, b = 520, yT = 60, yB = 170, xL = 120, xR = 360;
+      function cap(x, y, label) { line(s, x - 5, y - 14, x - 5, y + 14, 's-ink', 2.5); line(s, x + 5, y - 14, x + 5, y + 14, 's-ink', 2.5); txt(s, x, y - 20, label, 't-s f-ink'); }
+      wire(s, [[a, 115], [xL, 115]]); s.appendChild(el('circle', { cx: a, cy: 115, r: 4, class: 'f-ink' })); txt(s, a, 100, 'a');
+      wire(s, [[xL, yT], [xL, yB]]);
+      wire(s, [[xL, yT], [185, yT]]); cap(190, yT, '15.0 μF'); wire(s, [[195, yT], [265, yT]]); cap(270, yT, '3.00 μF'); wire(s, [[275, yT], [xR, yT]]);
+      wire(s, [[xL, yB], [235, yB]]); cap(240, yB, '6.00 μF'); wire(s, [[245, yB], [xR, yB]]);
+      wire(s, [[xR, yT], [xR, yB]]); wire(s, [[xR, 115], [425, 115]]); cap(430, 115, '20.0 μF'); wire(s, [[435, 115], [b, 115]]);
+      s.appendChild(el('circle', { cx: b, cy: 115, r: 4, class: 'f-ink' })); txt(s, b, 100, 'b');
+      txt(s, 280, 215, '(15 과 3 직렬) ∥ 6 → 20 과 직렬', 't-s f-acc');
+      return s;
+    },
+    e2712() {
+      const s = svg(560, 230, '그림 P27.12 회로');
+      const L = 90, R = 430, T = 40, B = 190;
+      wire(s, [[L, T], [L, 100]]); batV(s, L, 115, true); wire(s, [[L, 130], [L, B]]); txt(s, L - 24, 120, '18.0 V', 't-s f-ink', 'end');
+      wire(s, [[L, T], [200, T]]); resH(s, 200, 280, T); wire(s, [[280, T], [R, T]]); txt(s, 240, T - 14, '2.00 Ω');
+      wire(s, [[L, B], [200, B]]); resH(s, 200, 280, B); wire(s, [[280, B], [R, B]]); txt(s, 240, B + 24, '4.00 Ω');
+      const x3 = 340; wire(s, [[x3, T], [x3, 80]]); resV(s, x3, 80, 150); wire(s, [[x3, 150], [x3, B]]); txt(s, x3 - 14, 120, '3.00 Ω', 't-s f-ink', 'end');
+      wire(s, [[R, T], [R, 80]]); resV(s, R, 80, 150); wire(s, [[R, 150], [R, B]]); txt(s, R + 14, 120, '1.00 Ω', 't-s f-ink', 'start');
+      return s;
+    },
+    e2729() {
+      const s = svg(560, 230, '그림 P27.29 회로');
+      const xa = 50, n1 = 260, yT = 50, yB = 180;
+      s.appendChild(el('circle', { cx: xa, cy: yT, r: 4, class: 'f-ink' })); txt(s, xa - 10, yT + 4, 'a', 't f-ink', 'end');
+      s.appendChild(el('circle', { cx: xa, cy: yB, r: 4, class: 'f-ink' })); txt(s, xa - 10, yB + 4, 'b', 't f-ink', 'end');
+      wire(s, [[xa, yT], [110, yT]]); resH(s, 110, 190, yT); wire(s, [[190, yT], [n1, yT]]); txt(s, 150, yT - 14, '2.40 Ω');
+      wire(s, [[xa, yB], [110, yB]]); resH(s, 110, 190, yB); wire(s, [[190, yB], [n1, yB]]); txt(s, 150, yB + 24, '3.60 Ω');
+      wire(s, [[n1, yT], [n1, 85]]); resV(s, n1, 85, 145); wire(s, [[n1, 145], [n1, yB]]); txt(s, n1 - 14, 120, '1.80 Ω', 't-s f-ink', 'end');
+      wire(s, [[n1, yT], [330, yT]]); resH(s, 330, 410, yT); wire(s, [[410, yT], [480, yT], [480, 85]]); txt(s, 370, yT - 14, '5.10 Ω');
+      resV(s, 480, 85, 145); wire(s, [[480, 145], [480, yB], [n1, yB]]); txt(s, 494, 120, '3.50 Ω', 't-s f-ink', 'start');
+      return s;
+    }
+  };
+
+  /* ================= 문제 데이터 ================= */
+  const P = [
+    /* ---------------- 22 ---------------- */
+    { ch: 22, id: 'e2212', tag: '연습 22장 12(12)', title: '평면 위 세 전하: 성분으로 알짜힘 구하기', fig: 'e2212',
+      why: '연결: 예제 22.2(벡터 합)와 연습 10번(척력·인력). 교수님이 "최종 답은 î, ĵ 벡터 형식으로"라고 한 유형.',
+      text: '전하량 \\(3.00\\times10^{-4}\\ \\mathrm C\\)의 입자 A는 원점, \\(-6.00\\times10^{-4}\\ \\mathrm C\\)의 입자 B는 (4.00 m, 0), \\(1.00\\times10^{-4}\\ \\mathrm C\\)의 입자 C는 (0, 3.00 m)에 있다. C에 작용하는 알짜 전기력을 구하고자 한다. (a)(b) A가 C에 작용하는 힘의 x, y 성분 (c) B가 C에 작용하는 힘의 크기 (d)(e) 그 x, y 성분 (f)(g) 합력의 x, y 성분 (h) C에 작용하는 합성 전기력의 크기와 방향.',
+      defs: ['쿨롱 법칙: \\(F = k_e|q_1||q_2|/r^2\\), 두 전하를 잇는 방향. 같은 부호 척력, 다른 부호 인력.', '중첩 원리: 알짜 힘은 각 힘의 벡터 합 → 성분끼리 더한다.'],
+      steps: [
+        '(a)(b) A–C 거리 3.00 m, 같은 부호 → 척력(+y): \\(F_{AC} = k_e\\dfrac{(3.00\\times10^{-4})(1.00\\times10^{-4})}{(3.00)^2} = 30.0\\ \\mathrm N\\). x성분 0, y성분 +30.0 N',
+        '(c) B–C 거리 \\(\\sqrt{4.00^2 + 3.00^2} = 5.00\\ \\mathrm m\\), 다른 부호 → 인력(C에서 B 쪽): \\(F_{BC} = k_e\\dfrac{(6.00\\times10^{-4})(1.00\\times10^{-4})}{(5.00)^2} = 21.6\\ \\mathrm N\\)',
+        '(d)(e) C → B 방향 단위벡터 \\(\\dfrac{(4.00,\\ -3.00)}{5.00} = (0.800,\\ -0.600)\\): \\(F_{BCx} = +17.3\\ \\mathrm N,\\ F_{BCy} = -12.9\\ \\mathrm N\\)',
+        '(f) \\(F_x = 0 + 17.3 = 17.3\\ \\mathrm N\\), (g) \\(F_y = 30.0 - 12.9 = 17.0\\ \\mathrm N\\)',
+        '(h) \\(F = \\sqrt{17.3^2 + 17.0^2} = 24.2\\ \\mathrm N\\), \\(\\theta = \\tan^{-1}\\dfrac{17.0}{17.3} = 44.6^\\circ\\) (+x축에서 위로)'
+      ],
+      answer: '\\(\\vec F_C = (17.3\\,\\hat i + 17.0\\,\\hat j)\\ \\mathrm N\\), 크기 24.2 N, +x축에서 44.6°',
+      check: '\\(\\dfrac{\\mathrm{N\\,m^2}}{\\mathrm{C^2}}\\cdot\\dfrac{\\mathrm{C^2}}{\\mathrm{m^2}} = \\mathrm N\\)',
+      trap: '인력의 방향은 "C에서 B를 향하는" 쪽이다. 크기는 부호 없이 계산하고 방향 벡터에서 부호를 붙인다.' },
+    { ch: 22, id: 'e2220', tag: '연습 22장 20(20)', title: '두 전하가 만든 전기장과 그 점에 놓인 전하의 힘', fig: 'e2220',
+      why: '교재 사진에 동그라미 친 문제. 연결: 예제 22.4(두 전하의 전기장, 대칭으로 한 성분 상쇄)와 F = qE.',
+      text: '두 개의 \\(2.00\\ \\mu\\mathrm C\\) 점전하가 x축의 x = 1.00 m와 x = −1.00 m에 있다. (a) y축의 y = 0.500 m에서의 전기장을 구하라. (b) 그 점에 놓인 전하량 \\(-3.00\\ \\mu\\mathrm C\\)에 작용하는 전기력을 계산하라.',
+      defs: ['전기장: 그 점에 놓인 시험 전하가 받는 단위 전하당 힘. 점전하는 \\(E = k_eq/r^2\\).', '전기장 안의 전하가 받는 힘: \\(\\vec F = q\\vec E\\) (q가 음수면 반대 방향).'],
+      steps: [
+        '각 전하까지 거리: \\(r = \\sqrt{1.00^2 + 0.500^2} = 1.118\\ \\mathrm m\\), \\(r^2 = 1.25\\ \\mathrm{m^2}\\)',
+        '각 전기장 크기: \\(E_1 = E_2 = k_e\\dfrac{2.00\\times10^{-6}}{1.25} = 1.44\\times10^4\\ \\mathrm{N/C}\\)',
+        '대칭: x성분은 크기가 같고 방향이 반대라 상쇄, y성분만 더한다. \\(\\sin\\theta = \\dfrac{0.500}{1.118} = 0.447\\)',
+        '(a) \\(E_y = 2(1.44\\times10^4)(0.447) = 1.29\\times10^4\\ \\mathrm{N/C}\\) (+y 방향)',
+        '(b) \\(\\vec F = q\\vec E = (-3.00\\times10^{-6})(1.29\\times10^4\\,\\hat j) = -3.86\\times10^{-2}\\,\\hat j\\ \\mathrm N\\)'
+      ],
+      answer: '(a) \\(1.29\\times10^4\\,\\hat j\\ \\mathrm{N/C}\\) · (b) \\(-3.86\\times10^{-2}\\,\\hat j\\ \\mathrm N\\) (−y 방향, 크기 0.0386 N)',
+      check: '\\(E:\\ \\dfrac{\\mathrm{N\\,m^2}}{\\mathrm{C^2}}\\cdot\\dfrac{\\mathrm C}{\\mathrm{m^2}} = \\mathrm{N/C}\\); \\(F:\\ \\mathrm C\\cdot\\mathrm{N/C} = \\mathrm N\\)',
+      trap: '전기장은 시험 전하(+1 C) 기준으로 먼저 구하고, 그다음에 실제 전하 −3.00 μC를 곱한다. 음전하라 힘은 E와 반대.' },
+    { ch: 22, id: 'e2224', tag: '연습 22장 24(24)', title: '균일한 전기장에서 정지 상태로부터 가속되는 양성자',
+      why: '연결: 예제 22.5. 가속도(힘) → 시간·거리(등가속도) → 운동 에너지(W = ΔK)를 한 문제에서 모두 쓴다.',
+      text: '640 N/C의 균일한 전기장 내에서 양성자가 정지 상태로부터 가속된다. 잠시 후 양성자의 속력은 1.20 Mm/s가 되었다(비상대론적). (a) 양성자의 가속도 (b) 이 속력에 도달하는 데 걸리는 시간 (c) 그동안 이동한 거리 (d) 이 시간 끝에서의 운동 에너지를 구하라.',
+      defs: ['전기장 속 전하: \\(F = qE = ma\\), 균일하면 등가속도 운동.', '일-에너지 정리: \\(W = \\Delta K\\).'],
+      steps: [
+        '(a) \\(a = \\dfrac{eE}{m_p} = \\dfrac{(1.60\\times10^{-19})(640)}{1.67\\times10^{-27}} = 6.13\\times10^{10}\\ \\mathrm{m/s^2}\\)',
+        '(b) \\(v = 0 + at\\Rightarrow t = \\dfrac{v}{a} = \\dfrac{1.20\\times10^6}{6.13\\times10^{10}} = 1.96\\times10^{-5}\\ \\mathrm s\\)',
+        '(c) \\(v^2 = 2ax\\Rightarrow x = \\dfrac{v^2}{2a} = \\dfrac{(1.20\\times10^6)^2}{2(6.13\\times10^{10})} = 11.7\\ \\mathrm m\\)',
+        '(d) \\(K = \\tfrac12m_pv^2 = \\tfrac12(1.67\\times10^{-27})(1.20\\times10^6)^2 = 1.20\\times10^{-15}\\ \\mathrm J\\)',
+        '검산(W = ΔK): \\(eEx = (1.60\\times10^{-19})(640)(11.7) = 1.20\\times10^{-15}\\ \\mathrm J\\) ✓'
+      ],
+      answer: '(a) \\(6.13\\times10^{10}\\ \\mathrm{m/s^2}\\) · (b) \\(1.96\\times10^{-5}\\ \\mathrm s\\) · (c) 11.7 m · (d) \\(1.20\\times10^{-15}\\ \\mathrm J\\)',
+      check: '\\(a:\\ \\mathrm{C\\cdot(N/C)/kg = m/s^2}\\); \\(t:\\ \\dfrac{\\mathrm{m/s}}{\\mathrm{m/s^2}} = \\mathrm s\\); \\(K:\\ \\mathrm{kg\\,(m/s)^2 = J}\\)',
+      trap: 'Mm/s = 10⁶ m/s. 양성자 질량 1.67×10⁻²⁷ kg(전자 9.11×10⁻³¹ kg와 헷갈리지 말 것).' },
+    { ch: 22, id: 'e2225', tag: '연습 22장 25(25)', title: '수평으로 들어온 양성자의 포물선 운동',
+      why: '교재 사진에 동그라미 친 문제. 연결: 예제 22.6(전자의 포물선 운동). x는 등속, y는 등가속.',
+      text: '양성자가 \\(4.50\\times10^5\\ \\mathrm{m/s}\\)로 수평 방향으로 이동하여 균일한 연직 전기장 \\(9.60\\times10^3\\ \\mathrm{N/C}\\) 안으로 들어간다. 중력은 무시한다. (a) 수평으로 5.00 cm 이동하는 데 걸린 시간 (b) 그동안의 연직 변위 (c) 그 순간 속도의 수평 성분과 연직 성분을 구하라.',
+      defs: ['균일한 전기장 속 전하는 \\(a = qE/m\\)의 일정한 가속도를 받는다. 전기장에 수직인 방향은 힘이 없어 등속 운동.'],
+      steps: [
+        '(a) x방향 등속: \\(t = \\dfrac{\\Delta x}{v_x} = \\dfrac{0.0500}{4.50\\times10^5} = 1.11\\times10^{-7}\\ \\mathrm s\\)',
+        'y방향 가속도: \\(a_y = \\dfrac{eE}{m_p} = \\dfrac{(1.60\\times10^{-19})(9.60\\times10^3)}{1.67\\times10^{-27}} = 9.20\\times10^{11}\\ \\mathrm{m/s^2}\\)',
+        '(b) \\(\\Delta y = \\tfrac12a_yt^2 = \\tfrac12(9.20\\times10^{11})(1.11\\times10^{-7})^2 = 5.68\\times10^{-3}\\ \\mathrm m = 5.68\\ \\mathrm{mm}\\)',
+        '(c) \\(v_x = 4.50\\times10^5\\ \\mathrm{m/s}\\) (변하지 않음), \\(v_y = a_yt = (9.20\\times10^{11})(1.11\\times10^{-7}) = 1.02\\times10^5\\ \\mathrm{m/s}\\)'
+      ],
+      answer: '(a) \\(1.11\\times10^{-7}\\ \\mathrm s\\) · (b) 5.68 mm (전기장 방향) · (c) \\(v_x = 4.50\\times10^5\\), \\(v_y = 1.02\\times10^5\\ \\mathrm{m/s}\\)',
+      check: '\\((\\mathrm{m/s^2})\\cdot\\mathrm s^2 = \\mathrm m\\), \\((\\mathrm{m/s^2})\\cdot\\mathrm s = \\mathrm{m/s}\\)',
+      trap: '수평 성분은 처음 속력 그대로다. 5.00 cm → 0.0500 m.' },
+
+    /* ---------------- 23 ---------------- */
+    { ch: 23, id: 'e2312', tag: '연습 23장 12(16)', title: '정육면체 중심의 전하: 면 하나와 전체의 선속',
+      why: '연결: 연습 11(15). "가우스면 모양과 상관없이 안의 전하만"을 숫자로 확인하는 문제.',
+      text: '한 변의 길이가 80.0 cm인 정육면체의 중심에 170 μC인 전하가 있다. 근처에 다른 전하가 없을 때 (a) 각 면을 통과하는 전기선속 (b) 전체 면을 통과하는 전기선속을 구하라. (c) 전하가 중심에 있지 않으면 (a)나 (b)의 답이 달라지는가?',
+      defs: ['가우스 법칙: 닫힌 곡면을 지나는 알짜 전기선속 = 내부 알짜 전하 / ε₀. 곡면의 모양·크기와 무관.'],
+      steps: [
+        '(b) 전체: \\(\\Phi = \\dfrac{q}{\\varepsilon_0} = \\dfrac{170\\times10^{-6}}{8.85\\times10^{-12}} = 1.92\\times10^7\\ \\mathrm{N\\,m^2/C}\\)',
+        '(a) 중심에 있으면 여섯 면이 대칭 → 똑같이 나눈다: \\(\\Phi_{\\text{면}} = \\dfrac{1.92\\times10^7}{6} = 3.20\\times10^6\\ \\mathrm{N\\,m^2/C}\\)',
+        '(c) 전체 선속(b)은 안에 든 전하만으로 정해지므로 그대로다. 면마다의 선속(a)은 대칭이 깨지므로 달라진다.',
+        '한 변 80.0 cm는 답에 쓰이지 않는다 — 가우스 법칙은 크기와 무관.'
+      ],
+      answer: '(a) \\(3.20\\times10^6\\ \\mathrm{N\\,m^2/C}\\) · (b) \\(1.92\\times10^7\\ \\mathrm{N\\,m^2/C}\\) · (c) (a)는 달라지고 (b)는 같다',
+      check: '\\(\\dfrac{\\mathrm C}{\\mathrm{C^2/(N\\,m^2)}} = \\mathrm{N\\,m^2/C}\\)',
+      trap: '주어진 길이를 꼭 써야 한다고 생각하면 함정에 빠진다.' },
+    { ch: 23, id: 'e2320', tag: '연습 23장 20(27)', title: '무한 평면 바로 위의 전기장',
+      why: '연결: 예제 23.7을 숫자로. σ/2ε₀ 공식과 가우스면(양쪽 뚜껑)을 그대로 쓴다.',
+      text: '단위 넓이당 전하가 \\(9.00\\ \\mu\\mathrm C/\\mathrm m^2\\)로 대전된 무한 평면이 수평으로 있을 때, 이 평면의 중앙 바로 위에서의 전기장을 구하라.',
+      defs: ['가우스 법칙: \\(\\oint\\vec E\\cdot d\\vec A = q_{\\text{in}}/\\varepsilon_0\\).', '면 전하 밀도 σ: 단위 넓이당 전하량.'],
+      steps: [
+        '평면을 꿰뚫는 원통 가우스면, 양쪽 뚜껑(넓이 A)만 선속이 있다: \\(2EA = \\dfrac{\\sigma A}{\\varepsilon_0}\\)',
+        '\\(E = \\dfrac{\\sigma}{2\\varepsilon_0} = \\dfrac{9.00\\times10^{-6}}{2(8.85\\times10^{-12})} = 5.08\\times10^5\\ \\mathrm{N/C}\\)',
+        '방향: 양전하이므로 평면에서 멀어지는 쪽(위)'
+      ],
+      answer: '\\(5.08\\times10^5\\ \\mathrm{N/C}\\), 위쪽(평면에서 멀어지는 방향). 높이와 무관.',
+      check: '\\(\\dfrac{\\mathrm{C/m^2}}{\\mathrm{C^2/(N\\,m^2)}} = \\mathrm{N/C}\\)',
+      trap: '판 한 장은 σ/2ε₀, 평행판 사이는 σ/ε₀.' },
+    { ch: 23, id: 'e2326', tag: '연습 23장 26(33)', title: '속이 찬 균일 대전 구: 안과 밖의 전기장',
+      why: '연결: 예제 23.5(구 대칭). 9/15 수업에서 "내부는 직선, 외부는 1/r², 경계는 첨점"이라고 그래프까지 설명한 유형.',
+      text: '반지름이 40.0 cm인 속이 찬 구 내부에 전체 양전하 26.0 μC가 균일하게 분포되어 있다. 구의 중심으로부터 (a) 0 cm (b) 10.0 cm (c) 40.0 cm (d) 60.0 cm 떨어진 곳에서 전기장의 크기를 구하라.',
+      defs: ['가우스 법칙: 동심 구 가우스면에서 \\(E\\cdot4\\pi r^2 = q_{\\text{in}}/\\varepsilon_0\\).', '내부(r < a): \\(q_{\\text{in}} = Q(r^3/a^3)\\) → \\(E = k_eQr/a^3\\). 외부(r ≥ a): \\(E = k_eQ/r^2\\).'],
+      steps: [
+        '\\(k_eQ = (8.99\\times10^9)(26.0\\times10^{-6}) = 2.34\\times10^5\\ \\mathrm{N\\,m^2/C}\\), \\(a = 0.400\\ \\mathrm m\\)',
+        '(a) r = 0: 가우스면 안 전하 0 → \\(E = 0\\)',
+        '(b) r = 0.100 m (내부): \\(E = \\dfrac{k_eQr}{a^3} = \\dfrac{(2.34\\times10^5)(0.100)}{(0.400)^3} = 3.65\\times10^5\\ \\mathrm{N/C}\\)',
+        '(c) r = 0.400 m (표면): \\(E = \\dfrac{k_eQ}{a^2} = \\dfrac{2.34\\times10^5}{0.160} = 1.46\\times10^6\\ \\mathrm{N/C}\\) (최대)',
+        '(d) r = 0.600 m (외부): \\(E = \\dfrac{2.34\\times10^5}{0.360} = 6.49\\times10^5\\ \\mathrm{N/C}\\)'
+      ],
+      answer: '(a) 0 · (b) \\(3.65\\times10^5\\) · (c) \\(1.46\\times10^6\\) · (d) \\(6.49\\times10^5\\ \\mathrm{N/C}\\)',
+      check: '내부식: \\(\\dfrac{\\mathrm{N\\,m^2}}{\\mathrm{C^2}}\\cdot\\mathrm C\\cdot\\dfrac{\\mathrm m}{\\mathrm{m^3}} = \\mathrm{N/C}\\)',
+      trap: '내부에서 전체 Q를 그대로 쓰면 틀린다. 가우스면 안에 든 만큼만(부피 비율 r³/a³).' },
+    { ch: 23, id: 'e2322', tag: '연습 23장 22(29)', title: '긴 직선 필라멘트를 감싼 원통: 전기장과 선속',
+      why: '연결: 예제 23.6(원통 대칭)과 연습 11(15)(선속 = q_in/ε₀). 두 결과를 함께 쓴다.',
+      text: '길이가 7.00 m인 직선 필라멘트에 전체 양전하 2.00 μC가 균일하게 분포되어 있다. 길이가 2.00 cm이고 반지름이 10.0 cm인 대전되지 않은 마분지 원통이 필라멘트를 중심축으로 하면서 감싸고 있다. 합리적인 근사를 이용하여 (a) 원통 표면에서의 전기장과 (b) 원통에서 나오는 알짜 전기선속을 구하라.',
+      defs: ['선 전하 밀도 λ = Q/ℓ.', '무한 직선의 전기장(원통 가우스면, 옆면만): \\(E = \\dfrac{\\lambda}{2\\pi\\varepsilon_0r}\\).'],
+      steps: [
+        '근사: 필라멘트(7.00 m)가 원통(2.00 cm)보다 훨씬 길다 → 무한 직선으로 본다.',
+        '\\(\\lambda = \\dfrac{2.00\\times10^{-6}}{7.00} = 2.86\\times10^{-7}\\ \\mathrm{C/m}\\)',
+        '(a) \\(E = \\dfrac{\\lambda}{2\\pi\\varepsilon_0r} = \\dfrac{2.86\\times10^{-7}}{2\\pi(8.85\\times10^{-12})(0.100)} = 5.14\\times10^4\\ \\mathrm{N/C}\\) (바깥 방향)',
+        '(b) 원통 안의 전하 \\(q_{\\text{in}} = \\lambda(0.0200) = 5.71\\times10^{-9}\\ \\mathrm C\\) → \\(\\Phi = \\dfrac{q_{\\text{in}}}{\\varepsilon_0} = 646\\ \\mathrm{N\\,m^2/C}\\)',
+        '검산: \\(\\Phi = E(2\\pi rL) = (5.14\\times10^4)(2\\pi)(0.100)(0.0200) = 646\\) ✓'
+      ],
+      answer: '(a) \\(5.14\\times10^4\\ \\mathrm{N/C}\\) · (b) \\(646\\ \\mathrm{N\\,m^2/C}\\)',
+      check: '\\(\\dfrac{\\mathrm{C/m}}{\\mathrm{C^2/(N\\,m^2)}\\cdot\\mathrm m} = \\mathrm{N/C}\\)',
+      trap: '선속에는 원통 길이(2.00 cm) 안의 전하만 넣는다. 전체 2.00 μC를 넣으면 틀린다.' },
+
+    /* ---------------- 24 ---------------- */
+    { ch: 24, id: 'e243', tag: '연습 24장 3(3)', title: '평행판 사이의 전기장, 힘, 일',
+      why: '연결: 예제 24.1·24.2. ΔV = Ed와 W = Fd를 같이 쓰는 기본형.',
+      text: '서로 다른 부호로 대전된 평행한 판 두 개가 5.33 mm 떨어져 있다. 판 사이의 전위차는 600 V이다. (a) 판 사이의 전기장의 크기 (b) 판 사이에 전자가 한 개 있다면 이 전자가 받는 힘 (c) 처음에 이 전자가 양전하 극판에서 2.90 mm 떨어져 있다면, 음전하 극판으로 옮기려면 얼마만큼의 일을 해야 하는가?',
+      defs: ['전위차: 두 점 사이 단위 전하당 위치 에너지의 차. 균일한 전기장에서 \\(|\\Delta V| = Ed\\).', '전기장 속 전하가 받는 힘: \\(F = qE\\).'],
+      steps: [
+        '(a) \\(E = \\dfrac{\\Delta V}{d} = \\dfrac{600}{5.33\\times10^{-3}} = 1.13\\times10^5\\ \\mathrm{V/m}\\)',
+        '(b) \\(F = eE = (1.60\\times10^{-19})(1.13\\times10^5) = 1.80\\times10^{-14}\\ \\mathrm N\\) (양극판 쪽으로)',
+        '(c) 음극판까지 남은 거리 \\(5.33 - 2.90 = 2.43\\ \\mathrm{mm}\\). 전자는 양극판 쪽으로 끌리므로 반대로 밀어야 한다.',
+        '\\(W = Fd = (1.80\\times10^{-14})(2.43\\times10^{-3}) = 4.38\\times10^{-17}\\ \\mathrm J\\)'
+      ],
+      answer: '(a) \\(1.13\\times10^5\\ \\mathrm{N/C}\\) · (b) \\(1.80\\times10^{-14}\\ \\mathrm N\\) · (c) \\(4.38\\times10^{-17}\\ \\mathrm J\\)',
+      check: '\\(\\dfrac{\\mathrm V}{\\mathrm m} = \\dfrac{\\mathrm N}{\\mathrm C}\\); \\(\\mathrm C\\cdot\\mathrm{N/C} = \\mathrm N\\); \\(\\mathrm N\\cdot\\mathrm m = \\mathrm J\\)',
+      trap: '(c)의 거리는 2.90 mm가 아니라 남은 거리 2.43 mm. mm → m.' },
+    { ch: 24, id: 'e2410', tag: '연습 24장 10(12)', title: '정사각형 꼭짓점의 전위와 전위차', fig: 'e2410',
+      why: '연결: 연습 7(8). 점전하 전위를 스칼라로 더하고, 전위차 = 나중 − 처음.',
+      text: '\\(Q = +5.00\\ \\mathrm{nC}\\)인 전하 Q와 2Q가 그림처럼 거리 d = 2.00 cm 떨어져 있다(한 변 d인 정사각형의 아래 두 꼭짓점). 이때 (a) A에서의 전위 (b) B에서의 전위 (c) B와 A 사이의 전위차를 구하라.',
+      defs: ['전위: 그 위치에서의 단위 전하당 위치 에너지. 점전하 \\(V = k_eq/r\\), 여러 개는 스칼라 합.', '전위차: \\(\\Delta V = V_B - V_A\\) (나중 − 처음).'],
+      steps: [
+        '\\(\\dfrac{k_eQ}{d} = \\dfrac{(8.99\\times10^9)(5.00\\times10^{-9})}{0.0200} = 2.25\\times10^3\\ \\mathrm V\\)',
+        '(a) A: Q까지 d, 2Q까지 \\(\\sqrt2 d\\). \\(V_A = \\dfrac{k_eQ}{d}\\left(1 + \\dfrac{2}{\\sqrt2}\\right) = (2.25\\times10^3)(2.414) = 5.43\\times10^3\\ \\mathrm V\\)',
+        '(b) B: Q까지 \\(\\sqrt2 d\\), 2Q까지 d. \\(V_B = \\dfrac{k_eQ}{d}\\left(\\dfrac{1}{\\sqrt2} + 2\\right) = (2.25\\times10^3)(2.707) = 6.08\\times10^3\\ \\mathrm V\\)',
+        '(c) \\(\\Delta V_{BA} = V_B - V_A = 6.08 - 5.43 = 0.658\\ \\mathrm{kV} = 658\\ \\mathrm V\\)'
+      ],
+      answer: '(a) 5.43 kV · (b) 6.08 kV · (c) 658 V',
+      check: '\\(\\dfrac{\\mathrm{N\\,m^2}}{\\mathrm{C^2}}\\cdot\\dfrac{\\mathrm C}{\\mathrm m} = \\mathrm{J/C} = \\mathrm V\\)',
+      trap: '그림의 어느 꼭짓점이 Q, 2Q인지 교재 그림 P24.10과 한 번 대조할 것(여기서는 A가 Q 위, B가 2Q 위). 대각선 거리 √2 d.' },
+    { ch: 24, id: 'e246', tag: '연습 24장 6(7)', title: '정삼각형 중심의 전위',
+      why: '연결: 예제 24.3. "P점에 아무것도 없다고 보고 전위부터" 계산하는 연습.',
+      text: '세 개의 양전하 Q, Q, 2Q가 한 변 d인 정삼각형의 꼭짓점에 놓여 있다. 삼각형 중심에서의 전위를 구하라. (전위의 기준은 r = ∞에서 V = 0)',
+      defs: ['점전하 전위: \\(V = k_eq/r\\), 여러 전하는 스칼라 합(방향 없음).'],
+      steps: [
+        '정삼각형 중심에서 꼭짓점까지 거리: \\(r = \\dfrac{d}{\\sqrt3}\\)',
+        '세 거리가 같으므로 전하만 더하면 된다: \\(V = k_e\\dfrac{Q + Q + 2Q}{d/\\sqrt3} = \\dfrac{4\\sqrt3\\,k_eQ}{d}\\)',
+        '\\(V = 6.93\\,\\dfrac{k_eQ}{d}\\)'
+      ],
+      answer: '\\(V = \\dfrac{4\\sqrt3\\,k_eQ}{d} \\approx 6.93\\,\\dfrac{k_eQ}{d}\\)',
+      check: '\\(\\dfrac{\\mathrm{N\\,m^2}}{\\mathrm{C^2}}\\cdot\\dfrac{\\mathrm C}{\\mathrm m} = \\mathrm V\\)',
+      trap: '전기장이었다면 벡터라 상쇄를 따져야 하지만, 전위는 스칼라라 그냥 더한다. 중심 거리 d/√3을 외워 두면 빠르다.' },
+    { ch: 24, id: 'e2417', tag: '연습 24장 17(22)', title: 'V–x 그래프에서 E_x 그래프 (18(24)의 쌍둥이)',
+      why: '연결: 찍은 문제 18(24). 같은 쪽 바로 위 문제라 같이 연습.',
+      text: '전기장이 x축과 평행할 때 x 좌표에 따른 전위 변화 그래프가 0~1 cm에서 0 → 20 V, 1~3 cm에서 20 V 일정, 3~4 cm에서 20 → 0 V이다. 이 영역에서 x 좌표에 따른 전기장의 x 성분을 그래프로 그리라.',
+      defs: ['전위와 전기장의 관계: \\(E_x = -\\dfrac{dV}{dx}\\) (기울기에 마이너스).'],
+      steps: [
+        '0~1 cm: 기울기 \\(\\dfrac{20}{0.01} = +2000\\ \\mathrm{V/m}\\) → \\(E_x = -2000\\ \\mathrm{V/m}\\)',
+        '1~3 cm: 기울기 0 → \\(E_x = 0\\)',
+        '3~4 cm: 기울기 −2000 → \\(E_x = +2000\\ \\mathrm{V/m}\\)'
+      ],
+      answer: '\\(E_x\\) = −2000 V/m (0~1 cm), 0 (1~3 cm), +2000 V/m (3~4 cm) — 계단 그래프',
+      check: '\\(\\mathrm{V/m} = \\mathrm{N/C}\\)',
+      trap: '전위가 일정한 구간(등전위)에서는 전기장이 0이다.' },
+
+    /* ---------------- 25 ---------------- */
+    { ch: 25, id: 'e254', tag: '연습 25장 4(4)', title: '평행판 축전기의 용량, 전하, 전기장',
+      why: '연결: Q = CΔV와 평행판 C = ε₀A/d. 25장 모든 문제의 출발점.',
+      text: '공기가 채워져 있는 평행판 축전기에서 판의 넓이는 2.30 cm²이고 판 사이의 거리는 1.50 mm이다. (a) 전기용량 (b) 축전기의 전위차가 12.0 V일 때 축전기의 전하량 (c) 판 사이의 균일한 전기장의 크기를 구하라.',
+      defs: ['전기용량: \\(C = Q/\\Delta V\\). 평행판 \\(C = \\varepsilon_0A/d\\).'],
+      steps: [
+        '단위 변환: \\(A = 2.30\\ \\mathrm{cm^2} = 2.30\\times10^{-4}\\ \\mathrm{m^2}\\), \\(d = 1.50\\times10^{-3}\\ \\mathrm m\\)',
+        '(a) \\(C = \\dfrac{\\varepsilon_0A}{d} = \\dfrac{(8.85\\times10^{-12})(2.30\\times10^{-4})}{1.50\\times10^{-3}} = 1.36\\times10^{-12}\\ \\mathrm F = 1.36\\ \\mathrm{pF}\\)',
+        '(b) \\(Q = C\\Delta V = (1.36\\times10^{-12})(12.0) = 1.63\\times10^{-11}\\ \\mathrm C = 16.3\\ \\mathrm{pC}\\)',
+        '(c) \\(E = \\dfrac{\\Delta V}{d} = \\dfrac{12.0}{1.50\\times10^{-3}} = 8.00\\times10^3\\ \\mathrm{V/m}\\)'
+      ],
+      answer: '(a) 1.36 pF · (b) 16.3 pC · (c) \\(8.00\\times10^3\\ \\mathrm{V/m}\\)',
+      check: '\\(\\dfrac{\\mathrm{C^2}}{\\mathrm{N\\,m^2}}\\cdot\\dfrac{\\mathrm{m^2}}{\\mathrm m} = \\dfrac{\\mathrm C}{\\mathrm V} = \\mathrm F\\); \\(\\mathrm{F\\cdot V = C}\\)',
+      trap: 'cm² → ×10⁻⁴ m² (×10⁻²가 아니다).' },
+    { ch: 25, id: 'e2510', tag: '연습 25장 10(11)', title: '네 축전기의 등가 용량과 각 전하량', fig: 'e2510',
+      why: '연결: 예제 25.3(부분부분 합산). 10/1: "부분적으로 가서 병렬은 더하고 직렬은 역수로."',
+      text: '그림 P25.10과 같이 네 개의 축전기(15.0 μF, 3.00 μF, 6.00 μF, 20.0 μF)가 연결되어 있다. (a) 점 a와 b 사이의 등가 전기용량을 계산하라. (b) 점 a와 b 사이의 전위차 \\(\\Delta V_{ab}\\)가 15.0 V일 때 각 축전기의 전하량을 구하라.',
+      defs: ['등가 전기용량: 병렬은 \\(C = C_1 + C_2\\)(전위차 같음), 직렬은 \\(1/C = 1/C_1 + 1/C_2\\)(전하량 같음).'],
+      steps: [
+        '15.0 μF와 3.00 μF 직렬: \\(\\dfrac{1}{C_s} = \\dfrac1{15.0} + \\dfrac1{3.00}\\Rightarrow C_s = 2.50\\ \\mu\\mathrm F\\)',
+        '그것과 6.00 μF 병렬: \\(C_p = 2.50 + 6.00 = 8.50\\ \\mu\\mathrm F\\)',
+        '(a) 20.0 μF와 직렬: \\(\\dfrac1{C} = \\dfrac1{8.50} + \\dfrac1{20.0}\\Rightarrow C = 5.96\\ \\mu\\mathrm F\\)',
+        '(b) 전체 전하 \\(Q = C\\Delta V = (5.96)(15.0) = 89.5\\ \\mu\\mathrm C\\) → 직렬인 20.0 μF에도 89.5 μC',
+        '병렬 묶음의 전위차: \\(\\dfrac{89.5}{8.50} = 10.5\\ \\mathrm V\\) → 6.00 μF: \\(Q = (6.00)(10.5) = 63.2\\ \\mu\\mathrm C\\)',
+        '15.0 μF와 3.00 μF(직렬, 2.50 μF): \\(Q = (2.50)(10.5) = 26.3\\ \\mu\\mathrm C\\) — 둘 다 같은 전하'
+      ],
+      answer: '(a) 5.96 μF · (b) 20.0 μF: 89.5 μC, 6.00 μF: 63.2 μC, 15.0 μF와 3.00 μF: 각 26.3 μC',
+      check: 'μF × V = μC',
+      trap: '연결 구조는 교재 그림 P25.10과 대조할 것(여기서는 15와 3이 직렬, 그것이 6과 병렬, 다시 20과 직렬). 직렬이면 전하가 같고 병렬이면 전위차가 같다.' },
+    { ch: 25, id: 'e2516', tag: '연습 25장 16(18)', title: '직렬 축전기에 저장된 에너지',
+      why: '연결: U = Q²/2C = ½CΔV² (유도 강조, 10/1).',
+      text: '전기용량이 각각 \\(C_1 = 18.0\\ \\mu\\mathrm F\\)와 \\(C_2 = 36.0\\ \\mu\\mathrm F\\)인 두 개의 축전기를 직렬 연결하고, 12.0 V 전지를 연결하여 충전시킨다. (a) 등가 전기용량 (b) 등가 전기용량에 저장된 에너지 (c) 각 축전기에 저장된 에너지 (d) 두 에너지를 더하면 (b)와 같음을 보이라.',
+      defs: ['직렬: 전하량이 같고 \\(1/C = 1/C_1 + 1/C_2\\).', '저장 에너지: \\(U = \\dfrac{Q^2}{2C} = \\tfrac12C(\\Delta V)^2\\).'],
+      steps: [
+        '(a) \\(\\dfrac1C = \\dfrac1{18.0} + \\dfrac1{36.0}\\Rightarrow C = 12.0\\ \\mu\\mathrm F\\)',
+        '(b) \\(U = \\tfrac12C(\\Delta V)^2 = \\tfrac12(12.0\\times10^{-6})(12.0)^2 = 8.64\\times10^{-4}\\ \\mathrm J = 864\\ \\mu\\mathrm J\\)',
+        '직렬이라 전하가 같다: \\(Q = C\\Delta V = (12.0)(12.0) = 144\\ \\mu\\mathrm C\\)',
+        '(c) \\(U_1 = \\dfrac{Q^2}{2C_1} = \\dfrac{(144\\times10^{-6})^2}{2(18.0\\times10^{-6})} = 576\\ \\mu\\mathrm J\\), \\(U_2 = \\dfrac{(144\\times10^{-6})^2}{2(36.0\\times10^{-6})} = 288\\ \\mu\\mathrm J\\)',
+        '(d) \\(576 + 288 = 864\\ \\mu\\mathrm J\\) ✓'
+      ],
+      answer: '(a) 12.0 μF · (b) 864 μJ · (c) 576 μJ, 288 μJ · (d) 합 864 μJ',
+      check: '\\(\\mathrm F\\cdot\\mathrm V^2 = \\mathrm{C\\,V} = \\mathrm J\\); \\(\\mathrm{C^2/F} = \\mathrm{C\\,V} = \\mathrm J\\)',
+      trap: '직렬에서는 전하가 같으므로 Q²/2C 형태가 편하다(병렬이면 ½CΔV²가 편하다).' },
+    { ch: 25, id: 'e2522', tag: '연습 25장 22(26)', title: '유전체를 넣었을 때 전압 변화로 유전 상수 구하기',
+      why: '연결: 유전체 효과 ΔV = ΔV₀/κ (10/1 "전이차는 κ에 반비례").',
+      text: '공기가 차 있는 평행판 축전기에 걸린 전압이 85.0 V이다. 판 사이에 유전체를 삽입하면 전압이 25.0 V로 떨어진다. (a) 삽입된 물질의 유전 상수는 얼마인가? (b) 이 물질은 무엇일까?',
+      defs: ['유전체: 비전도성 물질. 고립된(전하가 일정한) 축전기에 넣으면 \\(\\Delta V = \\Delta V_0/\\kappa\\)로 감소, \\(C = \\kappa C_0\\)로 증가.'],
+      steps: [
+        '전지에 연결되지 않은 상태라 전하 Q가 일정하다.',
+        '(a) \\(\\kappa = \\dfrac{\\Delta V_0}{\\Delta V} = \\dfrac{85.0}{25.0} = 3.40\\)',
+        '(b) 표 25.1에서 κ ≈ 3.4인 물질 → 나일론'
+      ],
+      answer: '(a) κ = 3.40 · (b) 나일론',
+      check: 'V/V → 단위 없음 (유전 상수는 무차원)',
+      trap: '전지에 계속 연결되어 있었다면 ΔV가 일정하고 Q가 κ배로 늘어난다. 어느 쪽이 일정한지 먼저 판단.' },
+
+    /* ---------------- 26 ---------------- */
+    { ch: 26, id: 'e269', tag: '연습 26장 9(10)', title: '저항 측정으로 금속 알아내기',
+      why: '연결: 비저항은 "물질 고유의 값"(10/8). "비저항을 재면 어떤 물질인지 거꾸로 알 수 있다"를 그대로 계산.',
+      text: '길이가 50.0 m이고 지름이 2.00 mm인 도선을 전위차가 9.11 V인 전원에 연결하니 36.0 A의 전류가 흐른다. 온도가 20.0°C라고 가정하고 표 26.2를 사용하여 이 도선이 어떤 금속으로 만들어졌는지 알아보라.',
+      defs: ['저항: \\(R = \\Delta V/I\\).', '비저항: 전류 흐름을 방해하는 정도를 수치화한 물질 고유의 값. \\(R = \\rho\\ell/A\\).'],
+      steps: [
+        '\\(R = \\dfrac{\\Delta V}{I} = \\dfrac{9.11}{36.0} = 0.253\\ \\Omega\\)',
+        '단면적(반지름 1.00 mm): \\(A = \\pi(1.00\\times10^{-3})^2 = 3.14\\times10^{-6}\\ \\mathrm{m^2}\\)',
+        '\\(\\rho = \\dfrac{RA}{\\ell} = \\dfrac{(0.253)(3.14\\times10^{-6})}{50.0} = 1.59\\times10^{-8}\\ \\Omega\\cdot\\mathrm m\\)',
+        '표 26.2에서 \\(1.59\\times10^{-8}\\ \\Omega\\cdot\\mathrm m\\) → 은(Ag)'
+      ],
+      answer: '\\(\\rho = 1.59\\times10^{-8}\\ \\Omega\\cdot\\mathrm m\\) → 은',
+      check: '\\(\\Omega\\cdot\\dfrac{\\mathrm{m^2}}{\\mathrm m} = \\Omega\\cdot\\mathrm m\\)',
+      trap: '지름 2.00 mm → 반지름 1.00 mm. 지름을 그대로 넣으면 4배 틀린다.' },
+    { ch: 26, id: 'e264', tag: '연습 26장 4(4)', title: '구리 도선 속 전자의 유동 속력',
+      why: '연결: 예제 26.1, I = nqv_dA(10/6 수업에서 "실제로는 이렇게 느리다"를 강조).',
+      text: '어떤 구리 도선의 단면은 반지름이 1.25 mm인 원형이다. (a) 이 도선에 3.70 A의 전류가 흐를 때 도선 내 전자의 유동 속력을 구하라. (b) 다른 조건이 동일하지만 도선이 원자 하나당 자유 전자 수가 구리보다 많은 다른 금속으로 만들어져 있으면 유동 속력은 어떻게 변하는가?',
+      defs: ['유동 속도: 전기장이 걸렸을 때 전하 운반자가 충돌하면서도 평균적으로 한 방향으로 흘러가는 평균 속도.', '미시적 전류: \\(I = nqv_dA\\).'],
+      steps: [
+        '구리의 자유 전자 밀도(예제 26.1): \\(n = 8.46\\times10^{28}\\ \\mathrm{m^{-3}}\\)',
+        '\\(A = \\pi(1.25\\times10^{-3})^2 = 4.91\\times10^{-6}\\ \\mathrm{m^2}\\)',
+        '(a) \\(v_d = \\dfrac{I}{nqA} = \\dfrac{3.70}{(8.46\\times10^{28})(1.60\\times10^{-19})(4.91\\times10^{-6})} = 5.57\\times10^{-5}\\ \\mathrm{m/s}\\)',
+        '(b) n이 커지면 같은 전류에서 \\(v_d = I/(nqA)\\)는 작아진다.'
+      ],
+      answer: '(a) \\(5.57\\times10^{-5}\\ \\mathrm{m/s}\\) · (b) 더 느려진다 (n에 반비례)',
+      check: '\\(\\dfrac{\\mathrm A}{\\mathrm{m^{-3}}\\cdot\\mathrm C\\cdot\\mathrm{m^2}} = \\dfrac{\\mathrm{C/s}}{\\mathrm{C/m}} = \\mathrm{m/s}\\)',
+      trap: 'n을 주지 않으면 밀도·몰 질량·아보가드로수로 계산한다(1원자당 자유 전자 1개).' },
+    { ch: 26, id: 'e2617', tag: '연습 26장 17(18)', title: '온도에 따른 저항 변화로 필라멘트 온도 구하기',
+      why: '연결: 저항의 온도 의존성(10/8 "온도에 따라 저항이 바뀐다, 금속은 늘어난다").',
+      text: '전구 안 텅스텐 필라멘트의 저항이 20.0°C에서는 19.0 Ω이고, 뜨거울 때는 140 Ω이다. 매우 높은 온도에서도 텅스텐 필라멘트의 비저항이 온도에 따라 선형으로 변한다고 할 때, 뜨거운 필라멘트의 온도를 구하라. (텅스텐 \\(\\alpha = 4.5\\times10^{-3}\\ /^\\circ\\mathrm C\\))',
+      defs: ['저항의 온도 의존: \\(R = R_0[1 + \\alpha(T - T_0)]\\). 금속은 온도가 오르면 저항이 증가한다.'],
+      steps: [
+        '\\(140 = 19.0[1 + (4.5\\times10^{-3})(T - 20.0)]\\)',
+        '\\(\\dfrac{140}{19.0} - 1 = 6.37 = (4.5\\times10^{-3})(T - 20.0)\\)',
+        '\\(T - 20.0 = 1.42\\times10^3\\ ^\\circ\\mathrm C\\) → \\(T = 1.44\\times10^3\\ ^\\circ\\mathrm C\\)'
+      ],
+      answer: '\\(T \\approx 1.44\\times10^3\\ ^\\circ\\mathrm C\\)',
+      check: 'α[1/°C] × ΔT[°C] → 무차원. 괄호 안이 무차원이어야 한다.',
+      trap: 'ΔT를 구한 뒤 처음 온도 20.0°C를 더하는 것을 잊지 말 것.' },
+    { ch: 26, id: 'e2622', tag: '연습 26장 22(25)', title: '전압이 올라갈 때 전력 변화율',
+      why: '연결: P = (ΔV)²/R(10/8 "병렬일 때는 전압이 일정해서 이 형태를 쓴다").',
+      text: '120 V의 전원에 연결된 100 W짜리 전구에 순간적으로 전압이 140 V로 급증한다. 전구의 전력은 몇 %나 변하는가? 저항은 변하지 않는다고 가정한다.',
+      defs: ['전력: 단위 시간당 전달되는 전기 에너지. \\(P = I\\Delta V = (\\Delta V)^2/R\\).'],
+      steps: [
+        'R이 일정하면 \\(P\\propto(\\Delta V)^2\\)',
+        '\\(\\dfrac{P_2}{P_1} = \\left(\\dfrac{140}{120}\\right)^2 = 1.36\\)',
+        '변화율 = 1.36 − 1 = 0.361 → 36.1% 증가 (P₂ ≈ 136 W)'
+      ],
+      answer: '약 36.1% 증가',
+      check: '\\(\\mathrm{V^2/\\Omega = V\\cdot A = W}\\)',
+      trap: '전압이 16.7% 올랐다고 전력도 16.7%가 아니다. 제곱에 비례.' },
+
+    /* ---------------- 27 ---------------- */
+    { ch: 27, id: 'e2729', tag: '연습 27장 29(33)', title: '직·병렬이 섞인 회로의 등가 저항', fig: 'e2729',
+      why: '교재 필기가 바로 이 문제 옆에 적혀 있다. 연결: 저항 합성(축전기와 반대).',
+      text: '그림 P27.29의 회로에서 점 a와 b 사이의 등가 저항을 구하라.',
+      defs: ['직렬: \\(R = R_1 + R_2\\) (전류 같음). 병렬: \\(1/R = 1/R_1 + 1/R_2\\) (전압 같음).'],
+      steps: [
+        '오른쪽 5.10 Ω과 3.50 Ω은 직렬: \\(8.60\\ \\Omega\\)',
+        '그것과 1.80 Ω이 같은 두 마디 사이 → 병렬: \\(\\dfrac{(1.80)(8.60)}{1.80 + 8.60} = 1.49\\ \\Omega\\)',
+        '2.40 Ω, 1.49 Ω, 3.60 Ω 직렬: \\(R_{ab} = 2.40 + 1.49 + 3.60 = 7.49\\ \\Omega\\)'
+      ],
+      answer: '\\(R_{ab} = 7.49\\ \\Omega\\)',
+      check: 'Ω끼리 합. 병렬 결과(1.49 Ω)는 두 저항 중 작은 것(1.80 Ω)보다 작아야 한다 ✓',
+      trap: '안쪽부터 묶는다. 같은 두 마디 사이에 있는지로 병렬을 판단한다.' },
+    { ch: 27, id: 'e2712', tag: '연습 27장 12(13)', title: '각 저항기에 공급되는 전력', fig: 'e2712',
+      why: '연결: 등가 저항 → 전체 전류 → P = I²R. 직렬은 I²R, 병렬은 V²/R이 편하다(10/8).',
+      text: '그림 P27.12의 회로에서 각 저항기에 공급되는 전력을 계산하라.',
+      defs: ['직렬 R = R₁ + R₂, 병렬 1/R = 1/R₁ + 1/R₂.', '전력: \\(P = I^2R = (\\Delta V)^2/R\\).'],
+      steps: [
+        '3.00 Ω과 1.00 Ω 병렬: \\(\\dfrac{(3.00)(1.00)}{4.00} = 0.750\\ \\Omega\\)',
+        '전체: \\(2.00 + 0.750 + 4.00 = 6.75\\ \\Omega\\), \\(I = \\dfrac{18.0}{6.75} = 2.67\\ \\mathrm A\\)',
+        '2.00 Ω: \\(P = I^2R = (2.67)^2(2.00) = 14.2\\ \\mathrm W\\); 4.00 Ω: \\((2.67)^2(4.00) = 28.4\\ \\mathrm W\\)',
+        '병렬부 전압: \\((2.67)(0.750) = 2.00\\ \\mathrm V\\) → 3.00 Ω: \\(\\dfrac{2.00^2}{3.00} = 1.33\\ \\mathrm W\\); 1.00 Ω: \\(\\dfrac{2.00^2}{1.00} = 4.00\\ \\mathrm W\\)',
+        '검산: 합 14.2 + 28.4 + 1.33 + 4.00 = 48.0 W = εI = (18.0)(2.67) ✓'
+      ],
+      answer: '2.00 Ω: 14.2 W · 4.00 Ω: 28.4 W · 3.00 Ω: 1.33 W · 1.00 Ω: 4.00 W',
+      check: '\\(\\mathrm A^2\\cdot\\Omega = \\mathrm W\\), \\(\\mathrm V^2/\\Omega = \\mathrm W\\)',
+      trap: '회로 연결은 교재 그림 P27.12와 대조할 것(2.00 Ω과 4.00 Ω 직렬, 3.00 Ω과 1.00 Ω 병렬). 전체 전력 = 전지가 공급한 전력으로 검산.' },
+    { ch: 27, id: 'e2721', tag: '연습 27장 21(23)', title: 'RC 충전: 시간 상수, 최대 전하, τ 후 전하',
+      why: '연결: 연습 23(25)·예제 27.7. 10/15: "시상수 구하라 → 최대 전하 → 함수" 순서로 물어본다.',
+      text: '충전되지 않은 축전기와 저항기가 기전력원에 직렬 연결되어 있다. ε = 9.00 V, C = 20.0 μF, R = 100 Ω일 때 (a) 회로의 시간 상수 (b) 축전기에 충전된 최대 전하량 (c) 전지에 연결된 후 시간 상수만큼 시간이 지났을 때 축전기에 충전된 전하량을 구하라.',
+      defs: ['시간 상수: 전류가 처음 값의 1/e로 감소하는 데 걸리는 시간. τ = RC.', 'RC 충전: \\(q(t) = C\\varepsilon(1 - e^{-t/RC})\\).'],
+      steps: [
+        '(a) \\(\\tau = RC = (100)(20.0\\times10^{-6}) = 2.00\\times10^{-3}\\ \\mathrm s = 2.00\\ \\mathrm{ms}\\)',
+        '(b) \\(Q_{\\max} = C\\varepsilon = (20.0\\times10^{-6})(9.00) = 1.80\\times10^{-4}\\ \\mathrm C = 180\\ \\mu\\mathrm C\\)',
+        '(c) t = τ: \\(q = Q_{\\max}(1 - e^{-1}) = (180)(0.632) = 114\\ \\mu\\mathrm C\\)'
+      ],
+      answer: '(a) 2.00 ms · (b) 180 μC · (c) 114 μC (최대의 63.2%)',
+      check: '\\(\\Omega\\cdot\\mathrm F = \\mathrm s\\); \\(\\mathrm{F\\cdot V = C}\\)',
+      trap: '"시간 상수만큼 지나면 63%"를 외워 두면 (c)는 바로 나온다.' },
+    { ch: 27, id: 'e2725', tag: '연습 27장 25(27)', title: '충전 중 전위차로 저항값 구하기 (ln 쓰기)',
+      why: '연결: 예제 27.8의 비율 문제. 10/15: "지수를 없애려면 거꾸로 로그를 취하는 수밖에 없다."',
+      text: '전기용량이 10.0 μF인 축전기에 저항이 R인 저항기를 직렬로 연결하고 10.0 V 전지로 충전한다. 충전이 시작된 지 3.00 s 후 축전기 양단의 전위차는 4.00 V가 된다. R 값을 계산하라.',
+      defs: ['RC 충전: \\(q = C\\varepsilon(1 - e^{-t/RC})\\), 축전기 전압 \\(\\Delta V_C = q/C = \\varepsilon(1 - e^{-t/RC})\\).'],
+      steps: [
+        '\\(4.00 = 10.0(1 - e^{-3.00/RC})\\Rightarrow e^{-3.00/RC} = 0.600\\)',
+        '양변에 ln: \\(-\\dfrac{3.00}{RC} = \\ln0.600 = -0.511\\Rightarrow RC = 5.87\\ \\mathrm s\\)',
+        '\\(R = \\dfrac{5.87}{10.0\\times10^{-6}} = 5.87\\times10^5\\ \\Omega = 587\\ \\mathrm{k\\Omega}\\)'
+      ],
+      answer: '\\(R = 5.87\\times10^5\\ \\Omega\\) (587 kΩ)',
+      check: '\\(\\dfrac{\\mathrm s}{\\mathrm F} = \\dfrac{\\mathrm s}{\\mathrm{C/V}} = \\dfrac{\\mathrm V}{\\mathrm{C/s}} = \\dfrac{\\mathrm V}{\\mathrm A} = \\Omega\\)',
+      trap: '4.00 V는 축전기 전압이다(충전식). 저항 전압(10.0 − 4.00)과 헷갈리지 말 것.' }
+  ];
+
+  /* ================= 렌더 ================= */
+  const store = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
+  let solved = {}; try { solved = JSON.parse(store.get('extra-solved') || '{}') || {}; } catch (e) { solved = {}; }
+  let tab = store.get('extra-tab') || '22';
+  const NOTES = {
+    22: '고른 기준: 쿨롱 힘의 벡터 합(찍은 22.10 유형), 대칭으로 한 성분이 상쇄되는 전기장, 균일 전기장 속 전하 운동(예제 22.5의 연장).',
+    23: '고른 기준: 선속 계산과 가우스 법칙(찍은 23.11·23.7 유형). 23장이 배점이 가장 크니 4개 모두 풀 것.',
+    24: '고른 기준: 균일 전기장의 ΔV = −Ed, 점전하 전위의 합, V(x) 그래프에서 E = −dV/dx 읽기(찍은 24.18 유형).',
+    25: '고른 기준: 평행판 C, 직렬·병렬 합성, 저장 에너지, 유전 상수(찍은 25.18·25.8 유형).',
+    26: '고른 기준: R = ρL/A, 유동 속도, 저항의 온도 의존. 26장은 단독보다 섞여 나오므로 식과 단위를 정확히.',
+    27: '고른 기준: 합성 저항, 키르히호프·전력, RC 충전·방전(찍은 27.20·27.23 유형). RC 식은 시험지에 안 줄 수 있으니 유도까지.'
+  };
+  const TABS = ['22', '23', '24', '25', '26', '27'];
+  const main = document.getElementById('main');
+  const tabsEl = document.getElementById('tabs');
+  const progress = {}; // id -> shown steps
+
+  function renderTabs() {
+    tabsEl.innerHTML = '';
+    TABS.forEach(k => {
+      const list = P.filter(p => p.ch === +k);
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'tab'; b.setAttribute('role', 'tab'); b.setAttribute('aria-selected', String(k === tab));
+      b.innerHTML = `${k}장<span class="n">${list.filter(p => solved[p.id]).length}/${list.length}</span>`;
+      b.addEventListener('click', () => { tab = k; store.set('extra-tab', k); render(); window.scrollTo({ top: 0 }); });
+      tabsEl.appendChild(b);
+      if (k === tab) setTimeout(() => b.scrollIntoView({ inline: 'center', block: 'nearest' }), 0);
+    });
+  }
+
+  function probHTML(p) {
+    return `<article class="prob${solved[p.id] ? ' is-solved' : ''}" id="${p.id}">
+      <div class="p-head"><div class="titles"><div class="tags"><span class="tag${p.hot ? ' hot' : ''}">${p.tag}</span></div><h3>${p.title}</h3></div>
+        <button class="solved" type="button" data-solved="${p.id}" aria-pressed="${!!solved[p.id]}">${solved[p.id] ? '풀었음 ✓' : '풀었음'}</button></div>
+      <p class="why">${p.why}</p>
+      <div class="text">${p.text}</div>
+      ${p.fig ? `<div class="fig" data-fig="${p.fig}"></div>` : ''}
+      <div class="block-title">답안 첫 줄에 쓸 정의</div>
+      <div class="defs">${p.defs.map(d => `<p>${d}</p>`).join('')}</div>
+      <div class="block-title">풀이 (한 단계씩)</div>
+      <div class="steps">${p.steps.map((s, i) => `<div class="step" data-i="${i}"${i > 0 ? ' hidden' : ''}><span class="num">${i + 1}</span><div class="body">${s}</div></div>`).join('')}</div>
+      <div class="step-ctrl"><button class="btn primary" type="button" data-next="${p.id}">다음 단계 (1/${p.steps.length})</button><button class="btn" type="button" data-all="${p.id}">전부 보기</button><button class="btn" type="button" data-reset="${p.id}">가리기</button></div>
+      <div class="after" hidden>
+        <div class="answer"><b>답</b> ${p.answer}</div>
+        <p class="ucheck">단위 검산: ${p.check}</p>
+        <p class="trap">${p.trap}</p>
+      </div>
+    </article>`;
+  }
+
+  function setShown(card, id, n) {
+    const p = P.find(x => x.id === id);
+    const steps = card.querySelectorAll('.step');
+    steps.forEach((s, i) => { s.hidden = i >= n; });
+    const nb = card.querySelector('[data-next]');
+    nb.textContent = n >= p.steps.length ? '풀이 끝' : `다음 단계 (${n}/${p.steps.length})`;
+    nb.disabled = n >= p.steps.length;
+    card.querySelector('.after').hidden = n < p.steps.length;
+    progress[id] = n;
+  }
+
+  function render() {
+    renderTabs();
+    const ch = +tab;
+    const list = P.filter(p => p.ch === ch);
+    main.innerHTML = `<div class="meta-row"><h2>${ch}장</h2><span class="count">${list.filter(p => solved[p.id]).length} / ${list.length} 풀었음</span></div>
+      <p class="ch-note">${NOTES[ch]}</p><div class="list">${list.map(probHTML).join('')}</div>`;
+    main.querySelectorAll('[data-fig]').forEach(f => { const fn = FIGS[f.dataset.fig]; if (fn) f.appendChild(fn()); });
+    list.forEach(p => { const card = document.getElementById(p.id); setShown(card, p.id, progress[p.id] || 1); });
+    if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([main]).catch(() => {});
+  }
+
+  main.addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    if (b.dataset.solved) {
+      const id = b.dataset.solved; solved[id] = !solved[id]; if (!solved[id]) delete solved[id];
+      store.set('extra-solved', JSON.stringify(solved));
+      b.setAttribute('aria-pressed', String(!!solved[id])); b.textContent = solved[id] ? '풀었음 ✓' : '풀었음';
+      b.closest('.prob').classList.toggle('is-solved', !!solved[id]);
+      renderTabs();
+      const list = P.filter(p => p.ch === +tab);
+      main.querySelector('.count').textContent = `${list.filter(p => solved[p.id]).length} / ${list.length} 풀었음`;
+      return;
+    }
+    const id = b.dataset.next || b.dataset.all || b.dataset.reset; if (!id) return;
+    const card = document.getElementById(id); const p = P.find(x => x.id === id);
+    if (b.dataset.next) setShown(card, id, Math.min(p.steps.length, (progress[id] || 1) + 1));
+    if (b.dataset.all) setShown(card, id, p.steps.length);
+    if (b.dataset.reset) setShown(card, id, 1);
+  });
+
+  render();
+})();
+</script>
