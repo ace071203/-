@@ -1,0 +1,231 @@
+<title>중간고사 준비</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+
+:root {
+  --paper: #f3f6fa;
+  --surface: #ffffff;
+  --ink: #17202d;
+  --muted: #586378;
+  --rule: #d6deea;
+  --accent: #17706a;
+  --accent-soft: #e2f1ef;
+  --warn: #9a5b00;
+  --warn-soft: #fbf0dc;
+  --pos: #c62f3a;
+  --neg: #2b5fc7;
+  --font-display: "Gowun Batang", "Nanum Myeongjo", "AppleMyungjo", serif;
+  --font-body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0f131a; --surface: #161c26; --ink: #e5e9f1; --muted: #98a3b7; --rule: #2a3343;
+    --accent: #4cc2b5; --accent-soft: #15302e; --warn: #f0b45a; --warn-soft: #2f2516; --pos: #ff6f73; --neg: #6ea2ff;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0f131a; --surface: #161c26; --ink: #e5e9f1; --muted: #98a3b7; --rule: #2a3343;
+  --accent: #4cc2b5; --accent-soft: #15302e; --warn: #f0b45a; --warn-soft: #2f2516; --pos: #ff6f73; --neg: #6ea2ff;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  background: var(--paper); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.7;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 72px;
+}
+.wrap { max-width: 720px; margin: 0 auto; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 700; text-wrap: balance; line-height: 1.3; margin: 0; }
+p { margin: 0; }
+button { font: inherit; color: inherit; }
+.eyebrow { font-family: var(--font-mono); font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+header.top { padding-block: 28px 14px; display: grid; gap: 8px; }
+header.top h1 { font-size: 1.75rem; }
+header.top p { color: var(--muted); font-size: .95rem; }
+
+/* 허브: 시험 정보 → 교수님 말 → 페이지 4개 → 3일 체크리스트 */
+section { margin-top: 26px; display: grid; gap: 12px; }
+section > h2 { font-size: 1.2rem; }
+.card { background: var(--surface); border: 1px solid var(--rule); border-radius: 14px; padding: 16px; }
+.dday { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.dday b { font-family: var(--font-mono); font-size: 2.2rem; color: var(--accent); line-height: 1; font-weight: 500; }
+.dday span { color: var(--muted); font-size: .92rem; }
+.info { display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; margin-top: 12px; font-size: .95rem; }
+.info dt { color: var(--muted); }
+.info dd { margin: 0; }
+.rooms { display: grid; gap: 6px; margin-top: 12px; }
+.room { display: flex; justify-content: space-between; gap: 10px; padding: 8px 12px; border-radius: 10px; background: var(--accent-soft); font-size: .93rem; }
+.room .r { font-family: var(--font-mono); font-weight: 500; }
+.hints { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.hints li { background: var(--surface); border: 1px solid var(--rule); border-left: 4px solid var(--accent); border-radius: 10px; padding: 10px 12px; font-size: .94rem; }
+.hints li.w { border-left-color: var(--warn); background: var(--warn-soft); }
+.hints q { color: var(--muted); font-size: .86rem; display: block; margin-top: 2px; quotes: "“" "”"; }
+.pages { display: grid; gap: 10px; }
+a.page { display: grid; grid-template-columns: 44px 1fr auto; gap: 12px; align-items: center; text-decoration: none; color: inherit; background: var(--surface); border: 1px solid var(--rule); border-radius: 14px; padding: 14px; min-height: 64px; }
+a.page:active { background: var(--accent-soft); }
+.page .n { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent); font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; }
+.page h3 { font-size: 1.05rem; }
+.page p { color: var(--muted); font-size: .86rem; line-height: 1.5; }
+.page .go { color: var(--accent); font-size: 1.2rem; }
+.order { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: .92rem; }
+.order span { background: var(--accent-soft); color: var(--accent); padding: 4px 10px; border-radius: 999px; font-weight: 600; }
+.order i { color: var(--muted); font-style: normal; }
+.prog { display: flex; align-items: center; gap: 10px; font-family: var(--font-mono); font-size: .85rem; color: var(--muted); }
+.prog .track { flex: 1; height: 8px; border-radius: 999px; background: var(--rule); overflow: hidden; }
+.prog .fill { height: 100%; background: var(--accent); width: 0; transition: width .2s; }
+.day { display: grid; gap: 4px; }
+.day-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.day-head h3 { font-size: 1.05rem; }
+.day-head .cnt { font-family: var(--font-mono); font-size: .8rem; color: var(--muted); white-space: nowrap; }
+.day > p { color: var(--muted); font-size: .88rem; margin-bottom: 4px; }
+label.item { display: grid; grid-template-columns: 24px 1fr; gap: 10px; align-items: start; padding: 9px 2px; border-top: 1px solid var(--rule); cursor: pointer; font-size: .94rem; line-height: 1.55; }
+label.item input { width: 20px; height: 20px; margin: 2px 0 0; accent-color: var(--accent); }
+label.item small { display: block; color: var(--muted); font-size: .82rem; }
+label.item.done > span { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--rule); }
+.tag { font-family: var(--font-mono); font-size: .72rem; color: var(--accent); border: 1px solid var(--accent); border-radius: 6px; padding: 0 5px; margin-right: 4px; }
+.reset { justify-self: start; background: none; border: 1px solid var(--rule); border-radius: 999px; padding: 6px 14px; color: var(--muted); font-size: .85rem; min-height: 40px; }
+footer { margin-top: 32px; color: var(--muted); font-size: .8rem; line-height: 1.6; }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <span class="eyebrow">일반물리 2 · 중간고사</span>
+    <h1>중간고사 준비</h1>
+    <p>시험 정보, 교수님이 짚어 준 것, 공부 페이지 4개, 3일 체크리스트를 한곳에 모았다. 매일 여기서 시작하자.</p>
+  </header>
+
+  <div class="card">
+    <div class="dday"><b id="dday">D-?</b><span id="ddayText">10월 22일 목요일 오후 7시</span></div>
+    <dl class="info">
+      <dt>범위</dt><dd>22–27장</dd>
+      <dt>문항</dt><dd>단원당 1문항 (6문항)</dd>
+      <dt>배점</dt><dd>23장이 가장 크다</dd>
+    </dl>
+    <div class="rooms">
+      <div class="room"><span>6반</span><span class="r">명진관 A224</span></div>
+      <div class="room"><span>14반</span><span class="r">사회과학관·경영관 M117</span></div>
+      <div class="room"><span>8시</span><span class="r">과학관 D202</span></div>
+    </div>
+  </div>
+
+  <section>
+    <h2>답안 쓰는 순서</h2>
+    <div class="card">
+      <div class="order"><span>정의</span><i>→</i><span>식 세우기</span><i>→</i><span>계산</span><i>→</i><span>단위</span></div>
+      <p style="margin-top:10px;color:var(--muted);font-size:.9rem">용어를 먼저 정의하라고 하고 그다음 계산을 시킨다. 정의 한 줄을 빼먹으면 부분 점수를 잃는다. 답에는 반드시 단위를 붙인다.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>교수님이 짚어 준 것</h2>
+    <ul class="hints">
+      <li>속도를 세 가지 방법으로 구해 비교하는 문제: 예제 22.5 ↔ 24.2<q>속도 구하는 세 가지 방법을 비교하는 문제가 나올 것 (10/15)</q></li>
+      <li>직접 적분과 가우스 법칙 비교: 예제 23.3 ↔ 23.7<q>순수하게 계산한 방법과 가우스 법칙을 이용한 방법을 비교 (10/15)</q></li>
+      <li class="w">RC 회로 식은 시험지에 안 줄 수 있다. 충전·방전 식과 시상수를 유도까지 외워 갈 것.</li>
+      <li>26장은 단독 문제보다 다른 장과 섞여 나온다. J = σE에서 ΔV = IR까지 유도할 수 있어야 한다.<q>26장에서 별도로 낼 수 있는 문제는 없고 엮이게 된다 (10/15)</q></li>
+      <li>직육면체 저항: 어느 면으로 전류를 흘리느냐에 따라 R = ρL/A가 달라진다.<q>문제를 노출하는 거 같아서… 그래도 설명을 하자 (10/6)</q></li>
+      <li>25.8 유전체 일부 채움은 f에 숫자를 넣어 연습할 것.<q>2분의 1이든 3분의 1이든 숫자로 줄 것 같다 (10/1)</q></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>공부 페이지</h2>
+    <div class="pages">
+      <a class="page" href="https://claude.ai/artifact/LWMGSVLqCeCWqCM4TwsZhk" target="_blank" rel="noopener"><span class="n">①</span><div><h3>용어 정리</h3><p>정의 47개, 출처 표시, 비교 9쌍. 가리고 외우기 모드.</p></div><span class="go">›</span></a>
+      <a class="page" href="https://claude.ai/artifact/NoYmgrVrAzys6TLX8awmZJ" target="_blank" rel="noopener"><span class="n">②</span><div><h3>공식·단위 유도</h3><p>시험 직전 요약, 단위표, 장별 공식 53개와 유도.</p></div><span class="go">›</span></a>
+      <a class="page" href="https://claude.ai/artifact/6hMKhbEu9kShSjuMPT9ocf" target="_blank" rel="noopener"><span class="n">③</span><div><h3>교수님 찍은 문제</h3><p>12문제, 한 단계씩 여는 풀이. 가장 먼저 볼 것.</p></div><span class="go">›</span></a>
+      <a class="page" href="https://claude.ai/artifact/8THyNo3W2KGQ4D1qUSXHbY" target="_blank" rel="noopener"><span class="n">④</span><div><h3>추가 연습문제</h3><p>교재에서 고른 24문제, 장마다 4개.</p></div><span class="go">›</span></a>
+    </div>
+  </section>
+
+  <section>
+    <h2>3일 체크리스트</h2>
+    <div class="prog"><div class="track"><div class="fill" id="fill"></div></div><span id="progText">0 / 0</span></div>
+    <div id="days" style="display:grid;gap:12px"></div>
+    <button class="reset" type="button" id="reset">체크 전부 지우기</button>
+  </section>
+
+  <footer>시험 정보와 힌트는 수업 녹취(9/10–10/15)와 교재 684쪽 필기를 바탕으로 했다. 각 페이지는 새 탭으로 열린다. 체크 상태는 이 기기의 브라우저에만 저장된다.</footer>
+</div>
+
+<script>
+(function () {
+  const DAYS = [
+    { t: '1일차 · 22장 + 23장', d: '23장 배점이 가장 크니 첫날에 확실히 잡는다.', items: [
+      ['①', '22·23장 용어 외우기', '전기장, 전기력선, 전기 선속, 가우스 면 등. 가리기 모드로 확인'],
+      ['②', '22·23장 공식과 단위 유도', 'N/C = V/m, 선속 N·m²/C 단위가 어떻게 나오는지'],
+      ['③', '22.10 쿨롱 힘 합성 · 22.5 속도 세 방법', '22.5는 24.2와 함께 비교할 수 있게'],
+      ['③', '23.11(15) 가우스 · 23.3 ↔ 23.7 비교', '원판 적분과 가우스 법칙 풀이를 나란히 써 보기'],
+      ['④', '추가 연습 22장 4문제 + 23장 4문제', '']
+    ]},
+    { t: '2일차 · 24장 + 25장', d: '전위는 전기장과 미분·적분 관계, 축전기는 C = Q/ΔV에서 출발.', items: [
+      ['①', '24·25장 용어 외우기', '전위, 전위차, 등전위면, 전기 용량, 유전 상수'],
+      ['②', '24·25장 공식과 단위 유도', 'V = J/C, F = C/V, 에너지 ½CΔV²'],
+      ['③', '24.7(8) · 24.18(24) · 24.2', '24.2를 22.5와 비교해서 한 번 더 쓰기'],
+      ['③', '25.18(22) · 25.8 (f에 숫자 넣어서)', 'f = ½, ⅓ 넣고 C 계산'],
+      ['④', '추가 연습 24장 4문제 + 25장 4문제', '']
+    ]},
+    { t: '3일차 · 26장 + 27장 + 전체 복습', d: 'RC 식은 안 줄 수 있으니 유도까지. 마지막에 비교 문제 두 개 다시.', items: [
+      ['①', '26·27장 용어 외우기', '전류 밀도, 전도도, 저항률, 기전력, 시상수'],
+      ['②', '26·27장 공식과 단위 유도', 'J = σE → ΔV = IR, τ = RC의 단위가 s인 이유'],
+      ['③', 'J = σE 유도 · 직육면체 저항', '세 방향으로 흘릴 때 R 각각'],
+      ['③', '27.20(22) 키르히호프 · 27.23(25) RC', 'RC 충전·방전 식을 빈 종이에 유도'],
+      ['④', '추가 연습 26장 4문제 + 27장 4문제', ''],
+      ['①', '비교 탭 9쌍 훑기', '']
+    ]},
+    { t: '시험 전날 밤 · 당일', d: '새 문제는 풀지 않는다. 외운 것을 확인만 한다.', items: [
+      ['②', '시험 직전 요약 한 번 읽기', ''],
+      ['①', '★ 용어만 가리고 말로 설명해 보기', ''],
+      ['③', '22.5 ↔ 24.2, 23.3 ↔ 23.7 풀이 흐름만 다시 보기', ''],
+      ['', '계산기, 신분증, 필기구 챙기기', '강의실 확인: 6반 A224 · 14반 M117 · 8시 D202']
+    ]}
+  ];
+
+  const KEY = 'hub-check';
+  let done = {};
+  try { done = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { done = {}; }
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(done)); } catch (e) {} };
+
+  const daysEl = document.getElementById('days');
+  function render() {
+    let total = 0, n = 0;
+    daysEl.innerHTML = DAYS.map((day, di) => {
+      let c = 0;
+      const rows = day.items.map((it, ii) => {
+        const id = di + '-' + ii, on = !!done[id];
+        total++; if (on) { n++; c++; }
+        return `<label class="item${on ? ' done' : ''}"><input type="checkbox" data-id="${id}"${on ? ' checked' : ''}><span>${it[0] ? `<span class="tag">${it[0]}</span>` : ''}${it[1]}${it[2] ? `<small>${it[2]}</small>` : ''}</span></label>`;
+      }).join('');
+      return `<div class="card day"><div class="day-head"><h3>${day.t}</h3><span class="cnt">${c} / ${day.items.length}</span></div><p>${day.d}</p>${rows}</div>`;
+    }).join('');
+    document.getElementById('fill').style.width = (total ? n / total * 100 : 0) + '%';
+    document.getElementById('progText').textContent = n + ' / ' + total;
+  }
+  daysEl.addEventListener('change', e => {
+    const id = e.target.dataset.id; if (!id) return;
+    if (e.target.checked) done[id] = 1; else delete done[id];
+    save(); render();
+  });
+  document.getElementById('reset').addEventListener('click', () => {
+    if (!confirm('체크를 전부 지울까요?')) return;
+    done = {}; save(); render();
+  });
+  render();
+
+  // D-day: 2026-10-22 19:00 KST
+  const exam = new Date('2026-10-22T19:00:00+09:00');
+  const kst = d => new Date(d.getTime() + 9 * 3600e3).toISOString().slice(0, 10);
+  const days = Math.round((Date.parse(kst(exam)) - Date.parse(kst(new Date()))) / 864e5);
+  const dd = document.getElementById('dday');
+  if (days > 0) dd.textContent = 'D-' + days;
+  else if (days === 0) dd.textContent = 'D-DAY';
+  else { dd.textContent = '끝'; document.getElementById('ddayText').textContent = '10월 22일 시험이 끝났다. 수고했어!'; }
+})();
+</script>
