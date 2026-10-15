@@ -105,6 +105,12 @@ body.drill .def.revealed dd { filter: none; user-select: auto; }
 .formulas th { font-weight: 500; color: var(--muted); font-size: .9rem; width: 34%; }
 .formulas tr:last-child th, .formulas tr:last-child td { border-bottom: 0; }
 .table-scroll { overflow-x: auto; }
+.formulas .uh { color: var(--muted); font-size: .85rem; }
+.formulas td.unit { color: var(--accent); white-space: nowrap; width: 1%; }
+.units { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 12px; }
+.unit-card { background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 14px 16px; display: grid; gap: 6px; min-width: 0; }
+.unit-card h4 { margin: 0; font-family: var(--font-display); font-size: 1.02rem; }
+.ucheck { font-size: .92rem; color: var(--muted); }
 
 /* figure panels */
 .panel { background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; padding: 18px; display: grid; gap: 14px; min-width: 0; }
@@ -157,6 +163,8 @@ footer { margin-top: 48px; color: var(--muted); font-size: .85rem; border-top: 1
   .sec-head p { grid-column: 1; }
   .formulas th { width: auto; display: block; border-bottom: 0; padding-bottom: 0; }
   .formulas td { display: block; }
+  .formulas td.unit { width: auto; padding-top: 0; }
+  .formulas thead { display: none; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
@@ -240,15 +248,64 @@ footer { margin-top: 48px; color: var(--muted); font-size: .85rem; border-top: 1
     </div>
     <div class="table-scroll">
       <table class="formulas">
-        <tr><th>쿨롱 상수</th><td>\(k_e = \dfrac{1}{4\pi\varepsilon_0} = 8.99\times10^{9}\ \mathrm{N\,m^2/C^2},\quad \varepsilon_0 = 8.85\times10^{-12}\ \mathrm{C^2/N\,m^2}\)</td></tr>
-        <tr><th>두 전하 사이의 힘 (벡터)</th><td>\(\vec F_{12} = k_e\dfrac{q_1q_2}{r^2}\,\hat r_{12},\qquad \vec F_{12} = -\vec F_{21}\)</td></tr>
-        <tr><th>여러 전하 (중첩)</th><td>\(\vec F_1 = \vec F_{21} + \vec F_{31} + \vec F_{41} + \cdots\)</td></tr>
-        <tr><th>점전하의 전기장</th><td>\(\vec E = \dfrac{\vec F_e}{q_0} = k_e\dfrac{q}{r^2}\,\hat r\)</td></tr>
-        <tr><th>전기장 안의 전하</th><td>\(\vec F_e = q\vec E = m\vec a \;\Rightarrow\; \vec a = \dfrac{q\vec E}{m}\) (균일하면 등가속도)</td></tr>
-        <tr><th>등가속도 운동</th><td>\(v_f^2 = v_i^2 + 2a(x_f - x_i),\quad x_f = x_i + v_i t + \tfrac12 a t^2\)</td></tr>
-        <tr><th>평형</th><td>\(\sum \vec F = 0\) — "힘이 없다"보다 "평형이다"로 쓴다</td></tr>
-        <tr><th>쌍극자 (멀리, \(y \gg a\))</th><td>\(E \approx k_e\dfrac{2aq}{y^3}\)</td></tr>
+        <thead><tr><th>이름</th><td class="uh">식</td><td class="uh">단위</td></tr></thead>
+        <tr><th>쿨롱 상수</th><td>\(k_e = \dfrac{1}{4\pi\varepsilon_0} = 8.99\times10^{9}\)<br>\(\varepsilon_0 = 8.85\times10^{-12}\)</td><td class="unit">\(\mathrm{N\,m^2/C^2}\)<br>\(\mathrm{C^2/(N\,m^2)}\)</td></tr>
+        <tr><th>두 전하 사이의 힘 (벡터)</th><td>\(\vec F_{12} = k_e\dfrac{q_1q_2}{r^2}\,\hat r_{12},\quad \vec F_{12} = -\vec F_{21}\)</td><td class="unit">\(\mathrm{N}\)</td></tr>
+        <tr><th>여러 전하 (중첩)</th><td>\(\vec F_1 = \vec F_{21} + \vec F_{31} + \vec F_{41} + \cdots\)</td><td class="unit">\(\mathrm{N}\)</td></tr>
+        <tr><th>점전하의 전기장</th><td>\(\vec E = \dfrac{\vec F_e}{q_0} = k_e\dfrac{q}{r^2}\,\hat r\)</td><td class="unit">\(\mathrm{N/C} = \mathrm{V/m}\)</td></tr>
+        <tr><th>전기장 안의 전하</th><td>\(\vec F_e = q\vec E = m\vec a \;\Rightarrow\; \vec a = \dfrac{q\vec E}{m}\)</td><td class="unit">\(\mathrm{m/s^2}\)</td></tr>
+        <tr><th>등가속도 운동</th><td>\(v_f^2 = v_i^2 + 2a(x_f - x_i)\)<br>\(x_f = x_i + v_i t + \tfrac12 a t^2\)</td><td class="unit">\(\mathrm{m^2/s^2}\)<br>\(\mathrm{m}\)</td></tr>
+        <tr><th>22.5 결과 속력</th><td>\(v = \sqrt{2qEd/m}\)</td><td class="unit">\(\mathrm{m/s}\)</td></tr>
+        <tr><th>평형</th><td>\(\sum \vec F = 0\) — "힘이 없다"보다 "평형이다"로 쓴다</td><td class="unit">\(\mathrm{N}\)</td></tr>
+        <tr><th>쌍극자 (멀리, \(y \gg a\))</th><td>\(E \approx k_e\dfrac{2aq}{y^3}\)</td><td class="unit">\(\mathrm{N/C}\)</td></tr>
       </table>
+    </div>
+
+    <div class="sec-head" style="margin-top:12px">
+      <span class="sec-num">§2+</span>
+      <h3>단위가 나오는 과정</h3>
+      <p>단위는 외우지 말고 정의식에서 끌어낸다. 답의 단위를 맞춰 보면 식을 잘못 세웠는지 바로 알 수 있다. 기본 단위: N = kg·m/s², J = N·m, C = A·s, V = J/C.</p>
+    </div>
+    <div class="units">
+      <div class="unit-card">
+        <h4>전하량 \(q\): C (쿨롱)</h4>
+        <div class="math-scroll">\[I = \frac{dQ}{dt}\ \Rightarrow\ Q = It:\quad 1\ \mathrm C = 1\ \mathrm{A\cdot s}\]</div>
+        <p class="caption">접두어: \(\mu\mathrm C = 10^{-6}\ \mathrm C\), \(\mathrm{nC} = 10^{-9}\ \mathrm C\). 기본 전하 \(e = 1.60\times10^{-19}\ \mathrm C\).</p>
+      </div>
+      <div class="unit-card">
+        <h4>쿨롱 상수 \(k_e\): N·m²/C²</h4>
+        <div class="math-scroll">\[F = k_e\frac{q_1q_2}{r^2}\ \Rightarrow\ k_e = \frac{Fr^2}{q_1q_2}:\quad \frac{\mathrm N\cdot\mathrm m^2}{\mathrm C\cdot\mathrm C} = \mathrm{N\,m^2/C^2}\]</div>
+        <p class="caption">\(\varepsilon_0 = \dfrac{1}{4\pi k_e}\)이므로 단위는 역수 \(\mathrm{C^2/(N\,m^2)}\). (\(4\pi\)는 단위 없음)</p>
+      </div>
+      <div class="unit-card">
+        <h4>힘 \(F\): N</h4>
+        <div class="math-scroll">\[k_e\frac{q_1q_2}{r^2}:\quad \frac{\mathrm{N\,m^2}}{\mathrm{C^2}}\cdot\frac{\mathrm C\cdot\mathrm C}{\mathrm m^2} = \mathrm N\]</div>
+        <p class="caption">C²과 m²이 지워진다. 그래서 거리는 반드시 m로 바꿔 넣는다(cm 그대로 넣으면 10⁴배 틀린다).</p>
+      </div>
+      <div class="unit-card">
+        <h4>전기장 \(E\): N/C = V/m</h4>
+        <div class="math-scroll">\[E = \frac{F}{q_0}:\quad \frac{\mathrm N}{\mathrm C}\]</div>
+        <div class="math-scroll">\[\frac{\mathrm V}{\mathrm m} = \frac{\mathrm{J/C}}{\mathrm m} = \frac{\mathrm{N\cdot m}}{\mathrm{C\cdot m}} = \frac{\mathrm N}{\mathrm C}\]</div>
+        <p class="caption">22장에서는 N/C(단위 전하당 힘). 24장에서 \(\Delta V = Ed\), 즉 \(E = \Delta V/d\)가 되면서 V/m로 바꿔 쓴다고 교수님이 예고했다(녹취 9/8, 9/22).</p>
+      </div>
+      <div class="unit-card">
+        <h4>가속도 \(a = qE/m\): m/s²</h4>
+        <div class="math-scroll">\[\frac{\mathrm C\cdot(\mathrm{N/C})}{\mathrm{kg}} = \frac{\mathrm N}{\mathrm{kg}} = \frac{\mathrm{kg\cdot m/s^2}}{\mathrm{kg}} = \mathrm{m/s^2}\]</div>
+      </div>
+      <div class="unit-card">
+        <h4>속력 \(v = \sqrt{2qEd/m}\): m/s</h4>
+        <div class="math-scroll">\[\sqrt{\frac{\mathrm C\cdot(\mathrm{N/C})\cdot\mathrm m}{\mathrm{kg}}} = \sqrt{\frac{\mathrm{N\cdot m}}{\mathrm{kg}}} = \sqrt{\frac{\mathrm{kg\,m^2/s^2}}{\mathrm{kg}}} = \mathrm{m/s}\]</div>
+        <p class="caption">근호 안은 \(qEd\) = 일(J)을 질량으로 나눈 것. \(\tfrac12mv^2 = qEd\)의 단위 J = J와 같은 이야기다.</p>
+      </div>
+      <div class="unit-card">
+        <h4>일 \(W = F\Delta x\): J</h4>
+        <div class="math-scroll">\[\mathrm N\cdot\mathrm m = \mathrm J = \mathrm{kg\,m^2/s^2},\qquad \tfrac12mv^2:\ \mathrm{kg}\cdot\mathrm{(m/s)^2} = \mathrm J\]</div>
+      </div>
+      <div class="unit-card">
+        <h4>쌍극자 전기장 \(k_e\dfrac{2aq}{y^3}\): N/C</h4>
+        <div class="math-scroll">\[\frac{\mathrm{N\,m^2}}{\mathrm{C^2}}\cdot\frac{\mathrm m\cdot\mathrm C}{\mathrm m^3} = \frac{\mathrm N}{\mathrm C}\]</div>
+        <p class="caption">분자에 거리 \(a\)가 하나 더 붙으니 분모가 \(y^3\)이어야 단위가 맞는다. 단위로 지수를 검산할 수 있다.</p>
+      </div>
     </div>
   </section>
 
@@ -313,6 +370,8 @@ footer { margin-top: 48px; color: var(--muted); font-size: .85rem; border-top: 1
             <div class="math-scroll">\[\vec F_2 = \underbrace{+89.9\,\hat i}_{q_1\text{가 밀어냄}} + \underbrace{67.4\,\hat i}_{q_3\text{가 당김}} = +157\,\hat i\ \mathrm N\]</div>
             <div class="math-scroll">\[\vec F_3 = \underbrace{-43.2\,\hat i}_{q_1\text{이 당김}} + \underbrace{(-67.4\,\hat i)}_{q_2\text{가 당김}} = -111\,\hat i\ \mathrm N\]</div>
           </li>
+          <li>단위 확인 (첫 번째 식):
+            <div class="math-scroll">\[\frac{\mathrm{N\,m^2}}{\mathrm{C^2}}\cdot\frac{(10^{-6}\,\mathrm C)(10^{-6}\,\mathrm C)}{(\mathrm m)^2} \to \mathrm N,\qquad \mu\mathrm C \to 10^{-6}\,\mathrm C,\ \ 3.00\ \mathrm{cm} \to 0.0300\ \mathrm m\]</div></li>
           <li>검산: 내력만 있으므로 세 힘의 합은 0이어야 한다. \(-46.7 + 157.3 - 110.6 \approx 0\) ✓</li>
         </ol>
         <p class="answer" style="margin-top:12px">(a) 46.7 N, 왼쪽 &nbsp;·&nbsp; (b) 157 N, 오른쪽 &nbsp;·&nbsp; (c) 111 N, 왼쪽</p>
@@ -351,7 +410,8 @@ footer { margin-top: 48px; color: var(--muted); font-size: .85rem; border-top: 1
           </tbody>
         </table>
       </div>
-      <p class="answer">세 방법 모두 \(\displaystyle v_B = \sqrt{\frac{2qEd}{m}}\)</p>
+      <p class="answer">세 방법 모두 \(\displaystyle v_B = \sqrt{\frac{2qEd}{m}}\ \ [\mathrm{m/s}]\)</p>
+      <p class="ucheck">단위 확인: \(\sqrt{\mathrm{C\cdot(N/C)\cdot m/kg}} = \sqrt{\mathrm{N\,m/kg}} = \sqrt{\mathrm{m^2/s^2}} = \mathrm{m/s}\). 근호 안의 \(qEd\)는 전기장이 한 일(J)이다.</p>
 
       <details class="sol">
         <summary>풀이 ①, ②를 답안처럼 써 보기</summary>
@@ -425,9 +485,12 @@ footer { margin-top: 48px; color: var(--muted); font-size: .85rem; border-top: 1
         <div class="svg-box"><svg id="ex226svg" viewBox="0 0 520 170" role="img" aria-label="전자의 포물선 궤적"></svg></div>
         <details class="sol"><summary>풀이</summary>
           <ol class="steps">
-            <li>(A) \(a_y = -\dfrac{eE}{m_e} = -\dfrac{(1.60\times10^{-19})(200)}{9.11\times10^{-31}} = -3.51\times10^{13}\ \mathrm{m/s^2}\)</li>
-            <li>(B) x방향은 등속: \(t = \dfrac{\ell}{v_x} = \dfrac{0.100}{3.00\times10^6} = 3.33\times10^{-8}\ \mathrm s\)</li>
-            <li>(C) \(y_f = \tfrac12 a_y t^2 = \tfrac12(-3.51\times10^{13})(3.33\times10^{-8})^2 = -1.95\ \mathrm{cm}\)</li>
+            <li>(A) \(a_y = -\dfrac{eE}{m_e} = -\dfrac{(1.60\times10^{-19}\,\mathrm C)(200\,\mathrm{N/C})}{9.11\times10^{-31}\,\mathrm{kg}} = -3.51\times10^{13}\ \mathrm{m/s^2}\)
+              <span class="ucheck">— 단위: C·(N/C)/kg = N/kg = m/s²</span></li>
+            <li>(B) x방향은 등속: \(t = \dfrac{\ell}{v_x} = \dfrac{0.100\,\mathrm m}{3.00\times10^6\,\mathrm{m/s}} = 3.33\times10^{-8}\ \mathrm s\)
+              <span class="ucheck">— 단위: m ÷ (m/s) = s</span></li>
+            <li>(C) \(y_f = \tfrac12 a_y t^2 = \tfrac12(-3.51\times10^{13}\,\mathrm{m/s^2})(3.33\times10^{-8}\,\mathrm s)^2 = -0.0195\ \mathrm m = -1.95\ \mathrm{cm}\)
+              <span class="ucheck">— 단위: (m/s²)·s² = m</span></li>
           </ol>
           <p class="trap" style="margin-top:10px">좌표 원점을 들어오는 점에 잡았으므로 아래쪽이 음수다. 계산에서 마이너스가 나와도 당황하지 말 것.</p>
         </details>
@@ -463,8 +526,9 @@ footer { margin-top: 48px; color: var(--muted); font-size: .85rem; border-top: 1
       <label><input type="checkbox" id="c5"> 예제 22.5를 ① 힘 ② W = ΔK 두 방법으로 쓰고, ③ 에너지 보존과 무엇이 다른지 말할 수 있다</label>
       <label><input type="checkbox" id="c6"> 예제 22.2의 답을 벡터(î, ĵ) 형식으로 쓸 수 있다</label>
       <label><input type="checkbox" id="c7"> 예제 22.6에서 x는 등속, y는 등가속도로 나누어 풀 수 있다</label>
+      <label><input type="checkbox" id="c8"> k_e, E(N/C = V/m), a, v의 단위를 정의식에서 직접 끌어낼 수 있다</label>
     </div>
-    <p class="progress" id="progress">0 / 7</p>
+    <p class="progress" id="progress">0 / 8</p>
   </section>
 
   <footer>
