@@ -1,0 +1,453 @@
+<title>물리 중간고사 공식장</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+  svg: { fontCache: 'global' },
+  startup: { typeset: true }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js" defer></script>
+<style>
+/* Layout: 폰 한 손. 위에 고정 탭(요약·단위표·22~27장), 공식 카드마다 식 → 단위 → 단위 유도 → (필요하면) 유도 과정 */
+:root {
+  --paper: #f3f6fa;
+  --surface: #ffffff;
+  --ink: #17202d;
+  --muted: #586378;
+  --rule: #d6deea;
+  --accent: #17706a;
+  --accent-soft: #e2f1ef;
+  --warn: #9a5b00;
+  --warn-soft: #fbf0dc;
+  --font-display: "Gowun Batang", "Nanum Myeongjo", "AppleMyungjo", serif;
+  --font-body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0f131a; --surface: #161c26; --ink: #e5e9f1; --muted: #98a3b7; --rule: #2a3343;
+    --accent: #4cc2b5; --accent-soft: #15302e; --warn: #f0b45a; --warn-soft: #2f2516;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0f131a; --surface: #161c26; --ink: #e5e9f1; --muted: #98a3b7; --rule: #2a3343;
+  --accent: #4cc2b5; --accent-soft: #15302e; --warn: #f0b45a; --warn-soft: #2f2516;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  background: var(--paper); color: var(--ink);
+  font-family: var(--font-body); font-size: 16px; line-height: 1.7;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 72px;
+}
+.wrap { max-width: 720px; margin: 0 auto; }
+h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 700; text-wrap: balance; line-height: 1.3; margin: 0; }
+p { margin: 0; }
+button, input { font: inherit; color: inherit; }
+.eyebrow { font-family: var(--font-mono); font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+header.top { padding-block: 28px 14px; display: grid; gap: 8px; }
+header.top h1 { font-size: 1.75rem; }
+header.top p { color: var(--muted); font-size: .95rem; }
+
+.bar {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; background: var(--paper);
+  margin-left: calc(-1 * max(16px, env(safe-area-inset-left, 0px)));
+  margin-right: calc(-1 * max(16px, env(safe-area-inset-right, 0px)));
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 8px 10px; border-bottom: 1px solid var(--rule); display: grid; gap: 8px;
+}
+.tabs { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; }
+.tabs::-webkit-scrollbar { display: none; }
+.tab { flex: 0 0 auto; border: 1px solid var(--rule); background: var(--surface); border-radius: 999px; padding: 6px 13px; font-size: .9rem; color: var(--muted); cursor: pointer; min-height: 36px; }
+.tab[aria-selected="true"] { background: var(--accent); border-color: var(--accent); color: var(--surface); font-weight: 600; }
+.tools { display: flex; gap: 8px; }
+.toggle { border: 1px solid var(--rule); background: var(--surface); border-radius: 8px; padding: 7px 11px; font-size: .86rem; cursor: pointer; min-height: 38px; }
+.toggle[aria-pressed="true"] { background: var(--warn-soft); border-color: var(--warn); color: var(--warn); font-weight: 600; }
+.tab:focus-visible, .toggle:focus-visible, summary:focus-visible, .card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.meta-row { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; padding-block: 16px 6px; }
+.meta-row h2 { font-size: 1.25rem; }
+.count { font-family: var(--font-mono); font-size: .8rem; color: var(--muted); }
+.ch-note { font-size: .9rem; color: var(--muted); padding-bottom: 10px; }
+.list { display: grid; gap: 10px; }
+
+.card { background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; padding: 14px 15px; display: grid; gap: 9px; min-width: 0; }
+.card h3 { font-size: 1.05rem; }
+.card h3 .star { color: var(--warn); font-size: .8rem; margin-left: 4px; }
+.eq { overflow-x: auto; overflow-y: hidden; font-size: 1rem; padding-block: 2px; }
+.u-line { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: baseline; }
+.u-tag { font-family: var(--font-mono); font-size: .72rem; color: var(--surface); background: var(--accent); border-radius: 4px; padding: 1px 7px; }
+.u-val { color: var(--accent); font-weight: 600; }
+.u-derive { background: var(--paper); border-radius: 8px; padding: 8px 10px; font-size: .9rem; overflow-x: auto; overflow-y: hidden; }
+.u-derive .lbl { font-family: var(--font-mono); font-size: .72rem; color: var(--muted); display: block; margin-bottom: 2px; }
+.mean { font-size: .93rem; }
+.when { font-size: .86rem; color: var(--muted); }
+.prof { font-size: .86rem; color: var(--warn); }
+details.derive { border-top: 1px dashed var(--rule); padding-top: 8px; }
+details.derive > summary { cursor: pointer; color: var(--accent); font-weight: 600; font-size: .92rem; list-style: none; }
+details.derive > summary::-webkit-details-marker { display: none; }
+details.derive > summary::before { content: "▸ "; }
+details.derive[open] > summary::before { content: "▾ "; }
+ol.steps { margin: 8px 0 0; padding-left: 1.3em; display: grid; gap: 6px; font-size: .92rem; }
+ol.steps li { min-width: 0; overflow-x: auto; overflow-y: hidden; }
+
+body.drill .eq, body.drill .u-derive, body.drill .u-val { filter: blur(7px); user-select: none; }
+body.drill .card.revealed .eq, body.drill .card.revealed .u-derive, body.drill .card.revealed .u-val { filter: none; user-select: auto; }
+body.drill .card { cursor: pointer; }
+
+/* summary sheet */
+.sheet { background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; overflow: hidden; }
+.sheet h3 { font-size: 1rem; padding: 11px 14px; background: var(--accent-soft); color: var(--accent); font-family: var(--font-body); font-weight: 600; }
+.sheet ul { list-style: none; margin: 0; padding: 4px 14px 10px; }
+.sheet li { padding: 7px 0; border-bottom: 1px solid var(--rule); font-size: .93rem; overflow-x: auto; overflow-y: hidden; }
+.sheet li:last-child { border-bottom: 0; }
+.sheet .k { color: var(--muted); font-size: .8rem; display: block; }
+
+/* unit table */
+.utable { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; overflow: hidden; font-size: .92rem; }
+.utable th, .utable td { padding: 9px 11px; border-bottom: 1px solid var(--rule); text-align: left; vertical-align: top; }
+.utable thead th { color: var(--muted); font-weight: 500; font-size: .8rem; background: var(--paper); }
+.utable tr:last-child td { border-bottom: 0; }
+.utable td:first-child { font-weight: 600; white-space: nowrap; }
+.table-scroll { overflow-x: auto; }
+.tip { border-left: 3px solid var(--warn); background: var(--warn-soft); padding: 8px 11px; border-radius: 0 8px 8px 0; font-size: .9rem; }
+.mt { margin-top: 12px; }
+footer { margin-top: 36px; color: var(--muted); font-size: .82rem; border-top: 1px solid var(--rule); padding-top: 14px; }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <span class="eyebrow">일반물리 2 · 중간고사 10/22</span>
+    <h1>공식과 단위 유도</h1>
+    <p>단위는 외우지 말고 정의식에서 끌어낸다. 카드마다 식, 단위, 단위가 나오는 과정을 붙였고, 교수님이 "유도 과정을 알아 두라"고 한 식은 유도까지 넣었다.</p>
+  </header>
+
+  <div class="bar">
+    <div class="tabs" role="tablist" aria-label="탭" id="tabs"></div>
+    <div class="tools">
+      <button class="toggle" id="drill" type="button" aria-pressed="false">식 가리고 외우기</button>
+      <button class="toggle" id="openAll" type="button" aria-pressed="false">유도 전부 펼치기</button>
+    </div>
+  </div>
+
+  <main id="main"></main>
+
+  <footer>슬라이드 22~27장과 강의 녹취를 기준으로 정리했다. 단위 유도는 SI 기본 관계(N = kg·m/s², J = N·m, C = A·s, V = J/C)에서 출발한다.</footer>
+</div>
+
+<script>
+(function () {
+  /* ======================= 데이터 ======================= */
+  const NOTES = {
+    22: '힘은 벡터. 크기를 먼저 구하고 방향(척력·인력)을 따로 붙인 뒤 성분별로 더한다.',
+    23: '가우스 법칙은 대칭(구·원통·평면)일 때 쓴다. 가우스면을 어떻게 잡았는지가 풀이의 절반.',
+    24: '전위는 스칼라라 그냥 더한다. 전기장과 전위는 미분·적분 관계.',
+    25: '축전기 문제는 모두 Q = CΔV에서 출발한다. 직렬·병렬 공식이 저항과 반대.',
+    26: 'J = σE(물질)에서 ΔV = IR(회로)로 가는 유도가 핵심. 비저항 단위 Ω·m.',
+    27: '키르히호프 부호 규칙과 RC 결과식. RC 식은 시험에 안 줄 수도 있다.'
+  };
+
+  // f: 식, u: 단위, d: 단위 유도, m: 의미, w: 언제 쓰나, p: 교수님, x: 유도 과정(단계 배열)
+  const F = [
+    /* ---------------- 22 ---------------- */
+    { ch: 22, t: '쿨롱 상수와 진공의 유전율', f: '\\[k_e = \\frac{1}{4\\pi\\varepsilon_0} = 8.99\\times10^{9},\\qquad \\varepsilon_0 = 8.85\\times10^{-12}\\]',
+      u: 'kₑ: N·m²/C² · ε₀: C²/(N·m²)',
+      d: '\\(F = k_e\\dfrac{q_1q_2}{r^2}\\Rightarrow k_e = \\dfrac{Fr^2}{q_1q_2}:\\ \\dfrac{\\mathrm N\\cdot\\mathrm m^2}{\\mathrm C^2}\\). \\(\\varepsilon_0 = \\dfrac{1}{4\\pi k_e}\\)이므로 역수 \\(\\mathrm{C^2/(N\\,m^2)}\\) (4π는 단위 없음)' },
+    { ch: 22, t: '쿨롱 법칙', star: true, f: '\\[F_e = k_e\\frac{|q_1||q_2|}{r^2},\\qquad \\vec F_{12} = k_e\\frac{q_1q_2}{r^2}\\hat r_{12} = -\\vec F_{21}\\]',
+      u: 'N', d: '\\(\\dfrac{\\mathrm{N\\,m^2}}{\\mathrm{C^2}}\\cdot\\dfrac{\\mathrm C\\cdot\\mathrm C}{\\mathrm m^2} = \\mathrm N\\)',
+      w: '연습 22장 10번처럼 점전하 여러 개. 거리는 반드시 m, μC는 10⁻⁶ C로 바꿔 넣는다.' },
+    { ch: 22, t: '중첩 원리', f: '\\[\\vec F_1 = \\vec F_{21} + \\vec F_{31} + \\vec F_{41} + \\cdots\\]', u: 'N',
+      d: '같은 단위(N)끼리 벡터로 더한다.', w: '예제 22.2: 성분 분해 후 \\(\\vec F_3 = (-1.1\\,\\hat i + 7.9\\,\\hat j)\\ \\mathrm N\\) 형식으로 답한다.' },
+    { ch: 22, t: '전기장의 정의', star: true, f: '\\[\\vec E \\equiv \\frac{\\vec F_e}{q_0}\\]', u: 'N/C = V/m',
+      d: '\\(\\dfrac{\\mathrm N}{\\mathrm C}\\). 24장에서 \\(\\dfrac{\\mathrm V}{\\mathrm m} = \\dfrac{\\mathrm{J/C}}{\\mathrm m} = \\dfrac{\\mathrm{N\\cdot m}}{\\mathrm{C\\cdot m}} = \\dfrac{\\mathrm N}{\\mathrm C}\\)로 바뀐다.',
+      p: '22장에서는 N/C, 회로로 들어가면 V/m로 바꿔 쓴다고 했다 (9/8).' },
+    { ch: 22, t: '점전하의 전기장', f: '\\[\\vec E = k_e\\frac{q}{r^2}\\hat r\\]', u: 'N/C',
+      d: '\\(\\dfrac{\\mathrm{N\\,m^2}}{\\mathrm{C^2}}\\cdot\\dfrac{\\mathrm C}{\\mathrm m^2} = \\dfrac{\\mathrm N}{\\mathrm C}\\)' },
+    { ch: 22, t: '쌍극자의 전기장 (멀리)', f: '\\[E = k_e\\frac{2qa}{(a^2 + y^2)^{3/2}}\\ \\xrightarrow{\\ y\\gg a\\ }\\ E \\approx k_e\\frac{2qa}{y^3}\\]', u: 'N/C',
+      d: '\\(\\dfrac{\\mathrm{N\\,m^2}}{\\mathrm{C^2}}\\cdot\\dfrac{\\mathrm C\\cdot\\mathrm m}{\\mathrm m^3} = \\dfrac{\\mathrm N}{\\mathrm C}\\) — 분자에 거리 a가 하나 더 있으니 분모가 3제곱이어야 단위가 맞는다.',
+      x: ['두 전하의 크기는 같고 거리 \\(r = \\sqrt{a^2 + y^2}\\)도 같다: \\(E_1 = E_2 = k_e\\dfrac{q}{a^2 + y^2}\\)', 'y성분은 상쇄, x성분만 남는다: \\(E = 2k_e\\dfrac{q}{a^2 + y^2}\\cos\\theta\\)', '\\(\\cos\\theta = \\dfrac{a}{\\sqrt{a^2 + y^2}}\\) 대입 → \\(E = k_e\\dfrac{2qa}{(a^2 + y^2)^{3/2}}\\)', '멀리서 보면 \\(a^2\\) 무시 → \\(E \\approx k_e\\dfrac{2qa}{y^3}\\)'] },
+    { ch: 22, t: '전기장 속 전하의 가속도', f: '\\[\\vec F_e = q\\vec E = m\\vec a\\ \\Rightarrow\\ \\vec a = \\frac{q\\vec E}{m}\\]', u: 'm/s²',
+      d: '\\(\\dfrac{\\mathrm C\\cdot(\\mathrm{N/C})}{\\mathrm{kg}} = \\dfrac{\\mathrm N}{\\mathrm{kg}} = \\dfrac{\\mathrm{kg\\,m/s^2}}{\\mathrm{kg}} = \\mathrm{m/s^2}\\)',
+      w: '전기장이 균일하면 가속도가 일정 → 등가속도 운동 공식을 그대로 쓴다.' },
+    { ch: 22, t: '등가속도 운동 (22.5 ①, 22.6)', f: '\\[v_f^2 = v_i^2 + 2a(x_f - x_i),\\qquad x_f = x_i + v_it + \\tfrac12at^2,\\qquad v_f = v_i + at\\]',
+      u: 'm²/s² · m · m/s', d: '\\((\\mathrm{m/s^2})\\cdot\\mathrm m = \\mathrm{m^2/s^2}\\), \\((\\mathrm{m/s^2})\\cdot\\mathrm s^2 = \\mathrm m\\)',
+      w: '예제 22.6: x는 등속(\\(t = \\ell/v_x\\)), y는 등가속(\\(y = \\tfrac12a_yt^2\\)).' },
+    { ch: 22, t: '일-에너지 정리 (22.5 ②)', star: true, f: '\\[W = F\\Delta x = \\Delta K = \\tfrac12mv_f^2 - \\tfrac12mv_i^2\\]', u: 'J',
+      d: '\\(\\mathrm N\\cdot\\mathrm m = \\mathrm J = \\mathrm{kg\\,m^2/s^2}\\), \\(\\tfrac12mv^2:\\ \\mathrm{kg\\cdot(m/s)^2} = \\mathrm J\\)',
+      p: '운동 에너지는 운동량 mv를 속도로 적분해서 나온다: \\(\\int mv\\,dv = \\tfrac12mv^2\\) (9/10).' },
+    { ch: 22, t: '평행판 사이에서 가속된 속력 (22.5 결과)', star: true, f: '\\[v_B = \\sqrt{\\frac{2qEd}{m}}\\]', u: 'm/s',
+      d: '\\(\\sqrt{\\dfrac{\\mathrm C\\cdot(\\mathrm{N/C})\\cdot\\mathrm m}{\\mathrm{kg}}} = \\sqrt{\\dfrac{\\mathrm{N\\,m}}{\\mathrm{kg}}} = \\sqrt{\\dfrac{\\mathrm{kg\\,m^2/s^2}}{\\mathrm{kg}}} = \\mathrm{m/s}\\)',
+      m: '근호 안의 qEd는 전기장이 한 일(J). 세 가지 방법 모두 이 값이 나온다.',
+      x: ['① 힘: \\(a = qE/m\\), \\(v^2 = 0 + 2ad\\) → \\(v = \\sqrt{2ad} = \\sqrt{2qEd/m}\\)', '② 비고립계: \\(qEd = \\tfrac12mv^2 - 0\\) → 같은 결과', '③ 고립계(24장): \\(\\tfrac12mv^2 + q\\Delta V = 0,\\ \\Delta V = -Ed\\) → 같은 결과'] },
+
+    /* ---------------- 23 ---------------- */
+    { ch: 23, t: '전하 밀도와 미소 전하', f: '\\[dq = \\lambda\\,dx = \\sigma\\,dA = \\rho\\,dV\\]', u: 'λ: C/m · σ: C/m² · ρ: C/m³',
+      d: '전하량(C)을 길이(m)·넓이(m²)·부피(m³)로 나눈 것.', w: '연속 분포는 dq를 밀도로 바꾼 뒤 적분한다: \\(\\vec E = k_e\\int\\dfrac{dq}{r^2}\\hat r\\)' },
+    { ch: 23, t: '전기선속', star: true, f: '\\[\\Phi_E = EA\\cos\\theta = \\vec E\\cdot\\vec A,\\qquad \\Phi_E = \\oint\\vec E\\cdot d\\vec A\\]', u: 'N·m²/C',
+      d: '\\(\\dfrac{\\mathrm N}{\\mathrm C}\\cdot\\mathrm m^2 = \\mathrm{N\\,m^2/C}\\)', m: '스칼라. θ는 전기장과 면의 법선 사이 각. 들어갔다 나가면 알짜 0 (예제 23.4).' },
+    { ch: 23, t: '가우스 법칙', star: true, f: '\\[\\oint\\vec E\\cdot d\\vec A = \\frac{q_{\\text{in}}}{\\varepsilon_0}\\]', u: 'N·m²/C',
+      d: '\\(\\dfrac{\\mathrm C}{\\mathrm{C^2/(N\\,m^2)}} = \\dfrac{\\mathrm{N\\,m^2}}{\\mathrm C}\\) — 좌변(선속)과 같다.',
+      w: '연습 23장 11(15): 곡면 모양과 상관없이 안에 든 전하만 센다. \\(\\Phi_{S_1} = -Q/\\varepsilon_0,\\ \\Phi_{S_2} = 0,\\ \\Phi_{S_3} = -2Q/\\varepsilon_0,\\ \\Phi_{S_4} = 0\\)',
+      x: ['점전하 q를 반지름 r인 구로 감싼다. 구면 어디서나 \\(E = k_eq/r^2\\), \\(\\vec E\\parallel d\\vec A\\)', '\\(\\oint E\\,dA = E\\cdot4\\pi r^2 = k_e\\dfrac{q}{r^2}\\cdot4\\pi r^2 = 4\\pi k_eq\\)', '\\(k_e = \\dfrac{1}{4\\pi\\varepsilon_0}\\) 대입 → \\(\\dfrac{q}{\\varepsilon_0}\\). r이 지워졌다 = 기하학적 모양과 무관.'] },
+    { ch: 23, t: '구 대칭 (예제 23.5)', f: '\\[E = k_e\\frac{Q}{r^2}\\ (r > a),\\qquad E = k_e\\frac{Q}{a^3}r\\ (r < a)\\]', u: 'N/C',
+      d: '외부: 점전하와 같음. 내부: \\(\\dfrac{\\mathrm{N\\,m^2}}{\\mathrm{C^2}}\\cdot\\dfrac{\\mathrm C}{\\mathrm m^3}\\cdot\\mathrm m = \\dfrac{\\mathrm N}{\\mathrm C}\\)',
+      m: 'E–r 그래프: 내부는 직선 증가, r = a에서 최대(첨점: 연속이지만 미분 불가), 외부는 1/r²로 감소.',
+      x: ['내부(r < a): 가우스면 안 전하 \\(q_{\\text{in}} = \\rho\\cdot\\tfrac43\\pi r^3 = Q\\dfrac{r^3}{a^3}\\) (밀도 모르면 부피 비율로)', '\\(E\\cdot4\\pi r^2 = \\dfrac{q_{\\text{in}}}{\\varepsilon_0}\\) → \\(E = k_e\\dfrac{Q}{a^3}r\\)'] },
+    { ch: 23, t: '무한 직선 (원통 대칭, 예제 23.6)', f: '\\[E = \\frac{\\lambda}{2\\pi\\varepsilon_0 r} = 2k_e\\frac{\\lambda}{r}\\]', u: 'N/C',
+      d: '\\(\\dfrac{\\mathrm{C/m}}{\\mathrm{C^2/(N\\,m^2)}\\cdot\\mathrm m} = \\dfrac{\\mathrm{N\\,m^2}}{\\mathrm{C\\,m^2}} = \\dfrac{\\mathrm N}{\\mathrm C}\\)',
+      x: ['원통 가우스면(반지름 r, 길이 ℓ). 뚜껑은 E와 평행이라 선속 0 → 옆면만', '\\(E(2\\pi r\\ell) = \\dfrac{\\lambda\\ell}{\\varepsilon_0}\\) → \\(E = \\dfrac{\\lambda}{2\\pi\\varepsilon_0r}\\) (1/r로 감소)'] },
+    { ch: 23, t: '무한 평면 (예제 23.7)', star: true, f: '\\[E = \\frac{\\sigma}{2\\varepsilon_0}\\]', u: 'N/C',
+      d: '\\(\\dfrac{\\mathrm{C/m^2}}{\\mathrm{C^2/(N\\,m^2)}} = \\dfrac{\\mathrm N}{\\mathrm C}\\)',
+      m: '거리 항이 없다 → 위치와 상관없이 균일한 전기장.',
+      x: ['평면을 꿰뚫는 원통 가우스면. 옆면은 선속 0, 양쪽 뚜껑(각 넓이 A)만', '\\(2EA = \\dfrac{\\sigma A}{\\varepsilon_0}\\) → \\(E = \\dfrac{\\sigma}{2\\varepsilon_0}\\)'] },
+    { ch: 23, t: '평행판 두 장 사이', f: '\\[E = \\frac{\\sigma}{\\varepsilon_0}\\ (\\text{판 사이}),\\qquad E = 0\\ (\\text{바깥})\\]', u: 'N/C',
+      d: '위와 같음', m: '판 한 장의 2배이고 균일하다 → 평행판 축전기의 출발점.',
+      p: '강의 PDF 슬라이드에는 이 경우도 σ/2ε₀로 적혀 있지만, 판 사이는 σ/ε₀가 맞다. 수업에서도 "단면보다 크다"고 했다.' },
+    { ch: 23, t: '원판 직접 적분 (예제 23.3)', star: true, f: '\\[E_x = 2\\pi k_e\\sigma\\left[1 - \\frac{x}{\\sqrt{R^2 + x^2}}\\right]\\ \\xrightarrow{\\ R\\gg x\\ }\\ 2\\pi k_e\\sigma = \\frac{\\sigma}{2\\varepsilon_0}\\]', u: 'N/C',
+      d: '\\(\\dfrac{\\mathrm{N\\,m^2}}{\\mathrm{C^2}}\\cdot\\dfrac{\\mathrm C}{\\mathrm m^2} = \\dfrac{\\mathrm N}{\\mathrm C}\\) (괄호 안은 단위 없음)',
+      w: '23.7(가우스)과 비교 문제. 극한을 취하면 같은 값이 나온다는 것을 보여 준다.',
+      x: ['반지름 r, 폭 dr인 고리: \\(dq = \\sigma(2\\pi r\\,dr)\\)', '대칭이라 축 방향(x) 성분만: \\(dE_x = k_e\\dfrac{x\\,dq}{(r^2 + x^2)^{3/2}}\\)', '\\(E_x = k_ex\\pi\\sigma\\int_0^R\\dfrac{2r\\,dr}{(r^2 + x^2)^{3/2}} = 2\\pi k_e\\sigma\\left[1 - \\dfrac{x}{\\sqrt{R^2 + x^2}}\\right]\\)'] },
+    { ch: 23, t: '발산 (미분형)', f: '\\[\\nabla\\cdot\\vec E = \\frac{\\rho}{\\varepsilon_0}\\]', u: 'N/(C·m)',
+      d: '\\(\\dfrac{\\mathrm{C/m^3}}{\\mathrm{C^2/(N\\,m^2)}} = \\dfrac{\\mathrm N}{\\mathrm{C\\,m}}\\) (전기장을 거리로 미분한 단위)', m: '칠판 판서(10/15). 계산에는 안 쓰고 의미만.' },
+
+    /* ---------------- 24 ---------------- */
+    { ch: 24, t: '위치 에너지 변화와 전위차', star: true, f: '\\[\\Delta U = -q\\int_A^B\\vec E\\cdot d\\vec s,\\qquad \\Delta V = \\frac{\\Delta U}{q} = -\\int_A^B\\vec E\\cdot d\\vec s\\]', u: 'U: J · V: V = J/C',
+      d: '\\(\\mathrm C\\cdot\\dfrac{\\mathrm N}{\\mathrm C}\\cdot\\mathrm m = \\mathrm{N\\,m} = \\mathrm J\\), \\(\\dfrac{\\mathrm J}{\\mathrm C} = \\mathrm V\\)',
+      p: '위치 에너지는 음의 일(ΔU = −W). 선적분은 경로와 무관하고 위치만 본다(보존력).' },
+    { ch: 24, t: '균일한 전기장 속 전위차', star: true, f: '\\[\\Delta V = -Ed,\\qquad \\Delta U = q\\Delta V = -qEd\\]', u: 'V',
+      d: '\\(\\dfrac{\\mathrm V}{\\mathrm m}\\cdot\\mathrm m = \\mathrm V\\). 거꾸로 \\(E = \\Delta V/d\\)라서 전기장 단위가 V/m가 된다.',
+      w: '예제 24.1: \\(E = |\\Delta V|/d\\). 크기를 물으면 절댓값.' },
+    { ch: 24, t: '에너지 보존으로 속력 (예제 24.2)', star: true, f: '\\[\\Delta K + \\Delta U = 0:\\ \\left(\\tfrac12mv^2 - 0\\right) + e\\Delta V = 0\\ \\Rightarrow\\ v = \\sqrt{\\frac{-2e\\Delta V}{m}} = \\sqrt{\\frac{2eEd}{m}}\\]', u: 'm/s',
+      d: '22.5의 결과와 같은 단위 유도: \\(\\sqrt{\\mathrm{C\\cdot V/kg}} = \\sqrt{\\mathrm{J/kg}} = \\mathrm{m/s}\\)',
+      p: '"낼 거다"라고 한 문제. 숫자 없이 문자식까지만 (9/22). 대입하면 2.77×10⁶ m/s.' },
+    { ch: 24, t: '점전하의 전위', star: true, f: '\\[V = k_e\\frac{q}{r},\\qquad V = k_e\\sum_i\\frac{q_i}{r_i}\\]', u: 'V',
+      d: '\\(\\dfrac{\\mathrm{N\\,m^2}}{\\mathrm{C^2}}\\cdot\\dfrac{\\mathrm C}{\\mathrm m} = \\dfrac{\\mathrm{N\\,m}}{\\mathrm C} = \\dfrac{\\mathrm J}{\\mathrm C} = \\mathrm V\\)',
+      w: '연습 24장 7(8): 중점 \\(V = k_e\\dfrac{(5.00 - 3.00)\\times10^{-9}}{0.175} = 103\\ \\mathrm V\\)',
+      x: ['\\(\\Delta V = -\\int_{r_A}^{r_B}k_e\\dfrac{q}{r^2}dr = k_eq\\left[\\dfrac1{r_B} - \\dfrac1{r_A}\\right]\\)', '\\(r_A\\to\\infty\\)에서 V = 0으로 잡으면 \\(V = k_e\\dfrac{q}{r}\\)'] },
+    { ch: 24, t: '두 전하의 위치 에너지', star: true, f: '\\[U = k_e\\frac{q_1q_2}{r_{12}},\\qquad U = q_3V_P\\ (\\text{먼저 }V_P\\text{를 구한 뒤 곱하기})\\]', u: 'J',
+      d: '\\(\\dfrac{\\mathrm{N\\,m^2}}{\\mathrm{C^2}}\\cdot\\dfrac{\\mathrm C\\cdot\\mathrm C}{\\mathrm m} = \\mathrm{N\\,m} = \\mathrm J\\). 또는 \\(\\mathrm C\\cdot\\mathrm V = \\mathrm J\\)',
+      m: '연습 24장 7(8): \\(U = -3.85\\times10^{-7}\\ \\mathrm J\\). 음수 = 인력으로 구속, 떼려면 외부가 양의 일을 해야 한다.',
+      p: 'P점에 전하가 없다고 보고 V_P를 먼저 계산 → 전하 q를 곱한다. 쌍을 하나하나 묶으면 손해 (9/22, 10/15).' },
+    { ch: 24, t: '전위에서 전기장 구하기', star: true, f: '\\[E_x = -\\frac{dV}{dx},\\qquad \\vec E = -\\nabla V = -\\left(\\frac{\\partial V}{\\partial x}\\hat i + \\frac{\\partial V}{\\partial y}\\hat j + \\frac{\\partial V}{\\partial z}\\hat k\\right)\\]', u: 'V/m',
+      d: '\\(\\dfrac{\\mathrm V}{\\mathrm m} = \\dfrac{\\mathrm N}{\\mathrm C}\\)',
+      w: '연습 24장 18(24): V–x 그래프 기울기에 −를 붙이면 E_x. 1 cm = 0.01 m 주의 (30 V/1 cm → 3000 V/m).' },
+    { ch: 24, t: '전자볼트', f: '\\[1\\ \\mathrm{eV} = (1.60\\times10^{-19}\\ \\mathrm C)(1\\ \\mathrm V) = 1.60\\times10^{-19}\\ \\mathrm J\\]', u: 'eV',
+      d: '\\(\\mathrm C\\cdot\\mathrm V = \\mathrm C\\cdot\\dfrac{\\mathrm J}{\\mathrm C} = \\mathrm J\\)' },
+
+    /* ---------------- 25 ---------------- */
+    { ch: 25, t: '전기용량의 정의', star: true, f: '\\[C \\equiv \\frac{Q}{\\Delta V}\\qquad (Q = C\\Delta V)\\]', u: 'F = C/V',
+      d: '\\(\\dfrac{\\mathrm C}{\\mathrm V}\\equiv\\mathrm F\\). 실제 값은 μF(10⁻⁶), nF(10⁻⁹), pF(10⁻¹²)', p: '모든 축전기 문제의 출발점 (10/1).' },
+    { ch: 25, t: '평행판 축전기', star: true, f: '\\[C = \\frac{\\varepsilon_0A}{d}\\]', u: 'F',
+      d: '\\(\\dfrac{\\mathrm{C^2}}{\\mathrm{N\\,m^2}}\\cdot\\dfrac{\\mathrm m^2}{\\mathrm m} = \\dfrac{\\mathrm{C^2}}{\\mathrm{N\\,m}} = \\dfrac{\\mathrm C}{\\mathrm{N\\,m/C}} = \\dfrac{\\mathrm C}{\\mathrm{J/C}} = \\dfrac{\\mathrm C}{\\mathrm V} = \\mathrm F\\)',
+      p: '유도 과정을 알아 두라고 했다. d를 줄이면 C가 커진다 (키보드 원리).',
+      x: ['판 사이 전기장(23장): \\(E = \\dfrac{\\sigma}{\\varepsilon_0} = \\dfrac{Q}{\\varepsilon_0A}\\)', '균일하므로 \\(\\Delta V = Ed = \\dfrac{Qd}{\\varepsilon_0A}\\)', '\\(C = \\dfrac{Q}{\\Delta V} = \\dfrac{\\varepsilon_0A}{d}\\)'] },
+    { ch: 25, t: '병렬 연결', f: '\\[C_{\\text{eq}} = C_1 + C_2 + \\cdots\\]', u: 'F',
+      d: '같은 단위끼리 합', m: '전위차가 모두 같다(같은 높이). \\(Q = Q_1 + Q_2 = (C_1 + C_2)\\Delta V\\)' },
+    { ch: 25, t: '직렬 연결', f: '\\[\\frac{1}{C_{\\text{eq}}} = \\frac{1}{C_1} + \\frac{1}{C_2} + \\cdots\\]', u: 'F',
+      d: '역수끼리 합(1/F)한 뒤 다시 뒤집는다', m: '전하량이 모두 같다(호스 속 물). \\(\\Delta V = \\Delta V_1 + \\Delta V_2 = Q\\left(\\tfrac1{C_1} + \\tfrac1{C_2}\\right)\\)',
+      p: '저항과 공식이 반대. 복잡하면 부분부분 합산 (예제 25.3: 결과 6 μF).' },
+    { ch: 25, t: '저장된 에너지', star: true, f: '\\[U = \\frac{Q^2}{2C} = \\tfrac12Q\\Delta V = \\tfrac12C(\\Delta V)^2\\]', u: 'J',
+      d: '\\(\\dfrac{\\mathrm{C^2}}{\\mathrm{C/V}} = \\mathrm{C\\cdot V} = \\mathrm J\\), \\(\\mathrm F\\cdot\\mathrm V^2 = \\dfrac{\\mathrm C}{\\mathrm V}\\mathrm V^2 = \\mathrm{C\\,V} = \\mathrm J\\)',
+      p: '유도를 알아 두라고 별표 (10/1). Q–ΔV 그래프 아래 넓이.',
+      x: ['전하 q가 있을 때 dq를 더 옮기는 일: \\(dW = \\Delta V\\,dq = \\dfrac{q}{C}dq\\)', '\\(W = \\int_0^Q\\dfrac{q}{C}dq = \\dfrac{Q^2}{2C}\\)', 'Q = CΔV를 넣으면 \\(\\tfrac12C(\\Delta V)^2\\) (가장 흔히 씀)'] },
+    { ch: 25, t: '에너지 밀도', f: '\\[u_E = \\frac{U}{Ad} = \\tfrac12\\varepsilon_0E^2\\]', u: 'J/m³',
+      d: '\\(\\dfrac{\\mathrm{C^2}}{\\mathrm{N\\,m^2}}\\cdot\\dfrac{\\mathrm{N^2}}{\\mathrm{C^2}} = \\dfrac{\\mathrm N}{\\mathrm{m^2}} = \\dfrac{\\mathrm{N\\,m}}{\\mathrm{m^3}} = \\dfrac{\\mathrm J}{\\mathrm{m^3}}\\)',
+      m: 'A·d = 부피. 자기장 쪽 \\(\\tfrac12B^2/\\mu_0\\)와 짝 → 둘이 얽혀 빛(c)이 나온다 (10/1).',
+      x: ['\\(U = \\tfrac12C(\\Delta V)^2 = \\tfrac12\\dfrac{\\varepsilon_0A}{d}(Ed)^2 = \\tfrac12\\varepsilon_0E^2(Ad)\\)', '부피 Ad로 나누면 \\(u_E = \\tfrac12\\varepsilon_0E^2\\)'] },
+    { ch: 25, t: '판 사이의 힘 (연습 25장 18(22))', star: true, f: '\\[F = \\frac{dU}{dx} = \\frac{Q^2}{2\\varepsilon_0A}\\]', u: 'N',
+      d: '\\(\\dfrac{\\mathrm{C^2}}{\\mathrm{C^2/(N\\,m^2)}\\cdot\\mathrm m^2} = \\mathrm N\\)',
+      m: 'F = QE = Q²/ε₀A가 틀린 이유: 한 판이 만든 전기장은 그 판 자신에게 힘을 주지 않는다. 상대 판의 전기장은 E/2.',
+      x: ['간격 x일 때 \\(C = \\varepsilon_0A/x\\), \\(U = \\dfrac{Q^2}{2C} = \\dfrac{Q^2x}{2\\varepsilon_0A}\\)', '떼어 놓는 일 = 저장 에너지: \\(U = \\int F\\,dx\\)', '\\(F = \\dfrac{dU}{dx} = \\dfrac{Q^2}{2\\varepsilon_0A}\\)'] },
+    { ch: 25, t: '유전체를 넣으면', star: true, f: '\\[C = \\kappa C_0,\\quad \\Delta V = \\frac{\\Delta V_0}{\\kappa},\\quad E = \\frac{E_0}{\\kappa},\\quad U = \\frac{U_0}{\\kappa}\\ (Q\\text{ 일정})\\]', u: 'κ: 단위 없음',
+      d: '\\(\\kappa = C/C_0\\): F/F → 단위 없음', m: '전위차·전기장은 감소, 용량은 증가. 장점 3가지: 용량 증가, 최대 작동 전압 증가, 기계적 지지.' },
+    { ch: 25, t: '일부만 채운 축전기 (예제 25.8)', star: true, f: '\\[C = \\frac{\\kappa}{f + \\kappa(1 - f)}C_0\\]', u: 'F',
+      d: '분수는 단위 없음 × \\(C_0\\)(F)',
+      p: 'f에 1/2, 1/3을 넣어 연습하라고 했다. f = 1/2 → \\(C = \\dfrac{2\\kappa}{1 + \\kappa}C_0\\). 확인: f = 0 → C₀, f = 1 → κC₀.',
+      x: ['유전체 부분과 빈 부분을 직렬 축전기 두 개로 본다', '\\(C_1 = \\dfrac{\\kappa\\varepsilon_0A}{fd},\\quad C_2 = \\dfrac{\\varepsilon_0A}{(1 - f)d}\\)', '\\(\\dfrac1C = \\dfrac{fd}{\\kappa\\varepsilon_0A} + \\dfrac{(1 - f)d}{\\varepsilon_0A} = \\dfrac{f + \\kappa(1 - f)}{\\kappa}\\cdot\\dfrac{d}{\\varepsilon_0A}\\)', '뒤집으면 \\(C = \\dfrac{\\kappa}{f + \\kappa(1 - f)}\\cdot\\dfrac{\\varepsilon_0A}{d}\\)'] },
+    { ch: 25, t: '전기 쌍극자 모멘트', f: '\\[p \\equiv 2aq\\]', u: 'C·m', d: '\\(\\mathrm C\\cdot\\mathrm m\\)', m: '방향은 −q에서 +q로.' },
+
+    /* ---------------- 26 ---------------- */
+    { ch: 26, t: '전류', star: true, f: '\\[I_{\\text{avg}} = \\frac{\\Delta Q}{\\Delta t},\\qquad I = \\frac{dQ}{dt}\\]', u: 'A = C/s', d: '\\(\\dfrac{\\mathrm C}{\\mathrm s}\\equiv\\mathrm A\\) (SI 기본 단위로 약속)' },
+    { ch: 26, t: '미시적 전류 (유동 속도)', f: '\\[I = nqv_dA\\]', u: 'A',
+      d: '\\(\\dfrac{1}{\\mathrm m^3}\\cdot\\mathrm C\\cdot\\dfrac{\\mathrm m}{\\mathrm s}\\cdot\\mathrm m^2 = \\dfrac{\\mathrm C}{\\mathrm s} = \\mathrm A\\)',
+      x: ['단면 A, 길이 Δx 안의 전하: \\(\\Delta Q = (nA\\Delta x)q\\)', '\\(\\Delta x = v_d\\Delta t\\) 대입: \\(\\Delta Q = nAv_d\\Delta t\\,q\\)', 'Δt로 나누면 \\(I = nqv_dA\\)'] },
+    { ch: 26, t: '전류 밀도', f: '\\[J \\equiv \\frac{I}{A} = nqv_d\\]', u: 'A/m²', d: '\\(\\dfrac{\\mathrm A}{\\mathrm m^2}\\)' },
+    { ch: 26, t: '물질의 옴 법칙', star: true, f: '\\[J = \\sigma E\\]', u: 'σ: 1/(Ω·m)',
+      d: '\\(\\sigma = \\dfrac JE:\\ \\dfrac{\\mathrm{A/m^2}}{\\mathrm{V/m}} = \\dfrac{\\mathrm A}{\\mathrm{V\\,m}} = \\dfrac{1}{(\\mathrm{V/A})\\mathrm m} = \\dfrac{1}{\\Omega\\cdot\\mathrm m}\\)',
+      m: '드루드 모형: \\(\\sigma = \\dfrac{nq^2\\tau}{m}\\) (n, 충돌 사이 평균 시간 τ에 의존).' },
+    { ch: 26, t: '물질 → 회로의 옴 법칙 유도', star: true, f: '\\[\\Delta V = \\left(\\frac{\\ell}{\\sigma A}\\right)I = RI,\\qquad R = \\frac{\\ell}{\\sigma A} = \\rho\\frac{\\ell}{A}\\]', u: 'R: Ω',
+      d: '\\(\\Omega\\cdot\\mathrm m\\cdot\\dfrac{\\mathrm m}{\\mathrm m^2} = \\Omega\\)',
+      p: '교재 필기 "물질 → 회로 유도". 단면적이 크면 R 감소(통로 넓음), 길이가 길면 R 증가(충돌 많음).',
+      x: ['길이 ℓ인 도선 양 끝 전위차: \\(\\Delta V = E\\ell\\)', '\\(J = \\sigma E\\)에서 \\(E = J/\\sigma\\) → \\(\\Delta V = \\dfrac{\\ell}{\\sigma}J\\)', '\\(J = I/A\\) 대입 → \\(\\Delta V = \\left(\\dfrac{\\ell}{\\sigma A}\\right)I\\)', '괄호를 R로 정의: \\(\\Delta V = RI\\), \\(\\rho = 1/\\sigma\\)이므로 \\(R = \\rho\\ell/A\\)'] },
+    { ch: 26, t: '저항의 정의와 비저항', star: true, f: '\\[R \\equiv \\frac{\\Delta V}{I},\\qquad \\rho = \\frac1\\sigma\\]', u: 'R: Ω = V/A · ρ: Ω·m',
+      d: '\\(R:\\ \\dfrac{\\mathrm V}{\\mathrm A}\\equiv\\Omega\\). \\(\\rho = R\\dfrac{A}{\\ell}:\\ \\Omega\\cdot\\dfrac{\\mathrm m^2}{\\mathrm m} = \\Omega\\cdot\\mathrm m\\)',
+      p: '비저항 단위 Ω·m는 꼭 기억 (10/6).' },
+    { ch: 26, t: '저항의 온도 의존성', f: '\\[\\rho = \\rho_0[1 + \\alpha(T - T_0)],\\qquad R = R_0[1 + \\alpha(T - T_0)]\\]', u: 'α: 1/°C',
+      d: '괄호 안이 단위 없어야 하므로 \\(\\alpha\\Delta T\\)가 무차원 → α는 1/°C', m: '금속은 온도↑ → 저항↑. 반도체는 반대.' },
+    { ch: 26, t: '전력', star: true, f: '\\[P = I\\Delta V = I^2R = \\frac{(\\Delta V)^2}{R}\\]', u: 'W = J/s',
+      d: '\\(\\mathrm A\\cdot\\mathrm V = \\dfrac{\\mathrm C}{\\mathrm s}\\cdot\\dfrac{\\mathrm J}{\\mathrm C} = \\dfrac{\\mathrm J}{\\mathrm s} = \\mathrm W\\). \\(\\mathrm A^2\\cdot\\dfrac{\\mathrm V}{\\mathrm A} = \\mathrm{A\\,V} = \\mathrm W\\)',
+      w: '직렬(전류 같음)이면 I²R, 병렬(전압 같음)이면 V²/R이 편하다.',
+      x: ['\\(P = \\dfrac{dU}{dt} = \\dfrac{d}{dt}(Q\\Delta V) = \\dfrac{dQ}{dt}\\Delta V = I\\Delta V\\)', '\\(\\Delta V = IR\\) 대입 → \\(I^2R = (\\Delta V)^2/R\\)'] },
+    { ch: 26, t: '전기와 열 연결 (예제 26.5)', f: '\\[\\frac{(\\Delta V)^2}{R}\\Delta t = mc\\Delta T\\ \\Rightarrow\\ R = \\frac{(\\Delta V)^2\\Delta t}{mc\\Delta T}\\]', u: 'Ω',
+      d: '\\(\\dfrac{\\mathrm V^2\\cdot\\mathrm s}{\\mathrm{kg}\\cdot\\frac{\\mathrm J}{\\mathrm{kg\\,°C}}\\cdot\\mathrm{°C}} = \\dfrac{\\mathrm V^2\\,\\mathrm s}{\\mathrm J} = \\dfrac{\\mathrm V^2}{\\mathrm W} = \\dfrac{\\mathrm V^2}{\\mathrm{V\\,A}} = \\Omega\\)',
+      m: '전기요금 = P·Δt (kWh). 1 kWh = 3.6×10⁶ J.' },
+
+    /* ---------------- 27 ---------------- */
+    { ch: 27, t: '단자 전압', f: '\\[\\Delta V = \\varepsilon - Ir,\\qquad I = \\frac{\\varepsilon}{R + r}\\]', u: 'V · A',
+      d: '\\(\\mathrm A\\cdot\\Omega = \\mathrm A\\cdot\\dfrac{\\mathrm V}{\\mathrm A} = \\mathrm V\\)', m: '보통 내부 저항 r은 무시하고 ε를 그대로 쓴다. 최대 전력은 R = r일 때.' },
+    { ch: 27, t: '저항의 직렬·병렬', f: '\\[\\text{직렬 } R_{\\text{eq}} = R_1 + R_2,\\qquad \\text{병렬 } \\frac{1}{R_{\\text{eq}}} = \\frac1{R_1} + \\frac1{R_2}\\]', u: 'Ω',
+      d: '같은 단위끼리 합 / 역수끼리 합', m: '직렬은 전류 같음, 병렬은 전압 같음. 축전기와 반대.' },
+    { ch: 27, t: '키르히호프 법칙', star: true, f: '\\[\\sum_{\\text{분기점}} I = 0\\ (\\text{전하 보존}),\\qquad \\sum_{\\text{닫힌 고리}}\\Delta V = 0\\ (\\text{에너지 보존})\\]', u: 'A · V',
+      d: '분기점 식은 A끼리, 고리 식은 V끼리(IR도 V, ε도 V) 맞아야 한다.',
+      m: '부호: 저항을 전류 방향으로 지나면 −IR, 반대면 +IR. 전지를 −→+로 지나면 +ε, +→−면 −ε.',
+      w: '연습 27장 20(22): 13.0I₁ + 18.0I₂ = 30.0, 18.0I₂ − 5.00I₃ = −24.0, I₁ = I₂ + I₃ → I₁ = 2.88 A, I₂ = −0.416 A(실제 방향 반대), I₃ = 3.30 A',
+      p: '문제에 그려진 화살표 방향을 그대로 쓴다. 고치지 마라 (10/15).' },
+    { ch: 27, t: '시간 상수', star: true, f: '\\[\\tau = RC\\]', u: 's',
+      d: '\\(\\Omega\\cdot\\mathrm F = \\dfrac{\\mathrm V}{\\mathrm A}\\cdot\\dfrac{\\mathrm C}{\\mathrm V} = \\dfrac{\\mathrm C}{\\mathrm A} = \\dfrac{\\mathrm C}{\\mathrm{C/s}} = \\mathrm s\\)',
+      w: '연습 27장 23(25): 닫기 전 \\(\\tau = (R_1 + R_2)C = 1.50\\ \\mathrm s\\), 닫은 후 \\(\\tau = R_2C = 1.00\\ \\mathrm s\\)',
+      p: '"시상수 구하세요"가 첫 질문일 수 있다. RC가 시간 차원이라는 것도 보여 줄 수 있어야.' },
+    { ch: 27, t: 'RC 충전', star: true, f: '\\[q(t) = C\\varepsilon\\left(1 - e^{-t/RC}\\right),\\qquad I(t) = \\frac{\\varepsilon}{R}e^{-t/RC}\\]', u: 'C · A',
+      d: '\\(C\\varepsilon:\\ \\mathrm F\\cdot\\mathrm V = \\mathrm C\\). \\(\\varepsilon/R:\\ \\mathrm V/\\Omega = \\mathrm A\\). 지수 \\(t/RC\\)는 s/s → 단위 없음(지수 안은 반드시 무차원).',
+      m: 't = τ에서 최대 전하의 약 63%. 다 차면 전류 0 (등전위, 끊긴 것과 같음).',
+      p: '수식을 안 줄 수도 있다 → 결과식 암기. 1계 미분방정식 유도까지 시키지는 않는다 (10/15).',
+      x: ['고리 법칙: \\(\\varepsilon - \\dfrac qC - IR = 0\\), \\(I = \\dfrac{dq}{dt}\\)', '변수 분리: \\(\\dfrac{dq}{q - C\\varepsilon} = -\\dfrac{dt}{RC}\\)', '적분: \\(\\ln\\dfrac{q - C\\varepsilon}{-C\\varepsilon} = -\\dfrac{t}{RC}\\) → \\(q = C\\varepsilon(1 - e^{-t/RC})\\)', '미분: \\(I = \\dfrac{dq}{dt} = \\dfrac{\\varepsilon}{R}e^{-t/RC}\\)'] },
+    { ch: 27, t: 'RC 방전', star: true, f: '\\[q(t) = Qe^{-t/RC},\\qquad I(t) = -\\frac{Q}{RC}e^{-t/RC}\\]', u: 'C · A',
+      d: '\\(\\dfrac{Q}{RC}:\\ \\dfrac{\\mathrm C}{\\mathrm s} = \\mathrm A\\)',
+      x: ['고리 법칙: \\(-\\dfrac qC - IR = 0\\) → \\(\\dfrac{dq}{q} = -\\dfrac{dt}{RC}\\)', '\\(\\int_Q^q\\dfrac{dq}{q} = -\\dfrac{1}{RC}\\int_0^tdt\\) → \\(q = Qe^{-t/RC}\\)'] },
+    { ch: 27, t: '방전 비율 문제 (예제 27.8)', f: '\\[\\frac{Q}{4} = Qe^{-t/RC}\\Rightarrow t = RC\\ln4 = 1.39\\tau;\\qquad U\\propto q^2:\\ \\frac14 = e^{-2t/RC}\\Rightarrow t = \\tfrac12RC\\ln4 = 0.693\\tau\\]', u: 's',
+      d: '\\(\\ln\\)은 단위 없음 × RC(s) = s', m: '지수를 없애려면 양변에 ln을 취한다. ln 2 ≈ 0.693, ln 3 ≈ 1.10, ln 4 ≈ 1.39.' },
+    { ch: 27, t: '저항에서 소모된 에너지 (예제 27.9)', f: '\\[E_R = \\int_0^\\infty I^2R\\,dt = \\tfrac12C\\varepsilon^2\\]', u: 'J',
+      d: '\\(\\mathrm A^2\\cdot\\Omega\\cdot\\mathrm s = \\mathrm W\\cdot\\mathrm s = \\mathrm J\\)', m: '축전기에 저장됐던 에너지가 전부 저항에서 열로 나간다. 충전할 때는 전지가 준 에너지의 절반이 저항, 절반이 축전기(연습 27장 30(44)).' }
+  ];
+
+  /* ---------------- 요약(시험 직전) ---------------- */
+  const SHEET = [
+    { h: '22 전기장', items: [['쿨롱', '\\(F = k_e\\dfrac{|q_1||q_2|}{r^2}\\) [N], \\(k_e = 8.99\\times10^9\\ \\mathrm{N\\,m^2/C^2}\\)'], ['전기장', '\\(E = F/q_0 = k_eq/r^2\\) [N/C = V/m]'], ['22.5 속력 (3가지 방법)', '\\(v = \\sqrt{2qEd/m}\\) [m/s] — 힘 / W = ΔK / ΔK + ΔU = 0']] },
+    { h: '23 가우스', items: [['가우스', '\\(\\oint\\vec E\\cdot d\\vec A = q_{\\text{in}}/\\varepsilon_0\\) [N·m²/C]'], ['구', '밖 \\(k_eQ/r^2\\), 안 \\(k_eQr/a^3\\)'], ['직선 · 평면 · 평행판', '\\(\\lambda/2\\pi\\varepsilon_0r\\) · \\(\\sigma/2\\varepsilon_0\\) · \\(\\sigma/\\varepsilon_0\\)'], ['23.3 원판 → 극한', '\\(2\\pi k_e\\sigma[1 - x/\\sqrt{R^2 + x^2}]\\to\\sigma/2\\varepsilon_0\\)']] },
+    { h: '24 전위', items: [['전위차', '\\(\\Delta V = -\\int\\vec E\\cdot d\\vec s = -Ed\\) [V = J/C]'], ['점전하', '\\(V = k_eq/r\\), \\(U = k_eq_1q_2/r = qV\\) [J]'], ['미분 관계', '\\(E_x = -dV/dx\\) [V/m]'], ['24.2', '\\(\\tfrac12mv^2 + e\\Delta V = 0\\Rightarrow v = \\sqrt{2eEd/m}\\)']] },
+    { h: '25 축전기', items: [['정의 · 평행판', '\\(Q = C\\Delta V\\), \\(C = \\varepsilon_0A/d\\) [F = C/V]'], ['연결', '병렬 합, 직렬 역수 합 (저항과 반대)'], ['에너지', '\\(U = Q^2/2C = \\tfrac12C\\Delta V^2\\) [J], \\(u = \\tfrac12\\varepsilon_0E^2\\) [J/m³]'], ['유전체', '\\(C = \\kappa C_0\\), 장점: 용량↑ · 최대 전압↑ · 기계적 지지'], ['25.18 · 25.8', '\\(F = Q^2/2\\varepsilon_0A\\), \\(C = \\kappa C_0/[f + \\kappa(1 - f)]\\)']] },
+    { h: '26 전류·저항', items: [['전류', '\\(I = dQ/dt = nqv_dA\\) [A = C/s]'], ['옴 (물질 → 회로)', '\\(J = \\sigma E\\Rightarrow \\Delta V = IR,\\ R = \\rho\\ell/A\\)'], ['단위', 'R [Ω = V/A], ρ [Ω·m], σ [1/(Ω·m)]'], ['전력', '\\(P = I\\Delta V = I^2R = \\Delta V^2/R\\) [W]']] },
+    { h: '27 회로', items: [['키르히호프', '\\(\\sum I = 0\\) (전하 보존), \\(\\sum\\Delta V = 0\\) (에너지 보존)'], ['부호', '저항 전류 방향 −IR, 전지 −→+ 는 +ε'], ['RC', '\\(\\tau = RC\\) [s], 충전 \\(q = C\\varepsilon(1 - e^{-t/RC})\\), 방전 \\(q = Qe^{-t/RC}\\)'], ['63% · ln', 't = τ에서 63% 충전, 비율 문제는 ln (ln 4 = 1.39)']] }
+  ];
+
+  /* ---------------- 단위표 ---------------- */
+  const UNITS = [
+    ['N (뉴턴)', '힘', 'kg·m/s²', '\\(F = ma\\)'],
+    ['J (줄)', '에너지·일', 'N·m = kg·m²/s²', '\\(W = F\\Delta x\\)'],
+    ['C (쿨롱)', '전하량', 'A·s', '\\(Q = It\\)'],
+    ['A (암페어)', '전류', 'C/s', '\\(I = dQ/dt\\)'],
+    ['V (볼트)', '전위·전위차', 'J/C', '\\(V = U/q\\)'],
+    ['N/C = V/m', '전기장', '(J/C)/m = N/C', '\\(E = F/q,\\ \\Delta V = Ed\\)'],
+    ['F (패럿)', '전기용량', 'C/V', '\\(C = Q/\\Delta V\\)'],
+    ['Ω (옴)', '저항', 'V/A', '\\(R = \\Delta V/I\\)'],
+    ['Ω·m', '비저항', 'Ω·m²/m', '\\(\\rho = RA/\\ell\\)'],
+    ['W (와트)', '전력', 'J/s = A·V', '\\(P = I\\Delta V\\)'],
+    ['s', '시간 상수', 'Ω·F = C/A', '\\(\\tau = RC\\)'],
+    ['eV', '에너지', '1.60×10⁻¹⁹ J', '\\(e\\times1\\ \\mathrm V\\)'],
+    ['kWh', '전기요금 에너지', '3.6×10⁶ J', '\\(P\\Delta t\\)']
+  ];
+  const PREFIX = [['G (기가)', '10⁹'], ['M (메가)', '10⁶'], ['k (킬로)', '10³'], ['c (센티)', '10⁻²'], ['m (밀리)', '10⁻³'], ['μ (마이크로)', '10⁻⁶'], ['n (나노)', '10⁻⁹'], ['p (피코)', '10⁻¹²'], ['Å (옹스트롬)', '10⁻¹⁰ m']];
+
+  /* ======================= 렌더 ======================= */
+  const store = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
+  let tab = store.get('formula-tab') || 'sum';
+  const TABS = [['sum', '시험 직전 요약'], ['units', '단위표'], ['22', '22장'], ['23', '23장'], ['24', '24장'], ['25', '25장'], ['26', '26장'], ['27', '27장']];
+  const main = document.getElementById('main');
+  const tabsEl = document.getElementById('tabs');
+  let allOpen = false;
+
+  function renderTabs() {
+    tabsEl.innerHTML = '';
+    TABS.forEach(([k, label]) => {
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'tab'; b.setAttribute('role', 'tab');
+      b.setAttribute('aria-selected', String(k === tab)); b.textContent = label;
+      b.addEventListener('click', () => { tab = k; store.set('formula-tab', k); render(); window.scrollTo({ top: 0 }); });
+      tabsEl.appendChild(b);
+      if (k === tab) setTimeout(() => b.scrollIntoView({ inline: 'center', block: 'nearest' }), 0);
+    });
+  }
+
+  function card(c) {
+    return `<article class="card" tabindex="0">
+      <h3>${c.t}${c.star ? '<span class="star">★</span>' : ''}</h3>
+      <div class="eq">${c.f}</div>
+      <div class="u-line"><span class="u-tag">단위</span><span class="u-val">${c.u}</span></div>
+      <div class="u-derive"><span class="lbl">단위가 나오는 과정</span>${c.d}</div>
+      ${c.m ? `<p class="mean">${c.m}</p>` : ''}
+      ${c.w ? `<p class="when">문제에서: ${c.w}</p>` : ''}
+      ${c.p ? `<p class="prof">교수님: ${c.p}</p>` : ''}
+      ${c.x ? `<details class="derive"${allOpen ? ' open' : ''}><summary>유도 과정</summary><ol class="steps">${c.x.map(s => `<li>${s}</li>`).join('')}</ol></details>` : ''}
+    </article>`;
+  }
+
+  function render() {
+    renderTabs();
+    let h = '';
+    if (tab === 'sum') {
+      h += `<div class="meta-row"><h2>시험 직전 요약</h2><span class="count">2분 컷</span></div>
+        <p class="ch-note">시험장 가는 길에 이것만 본다. 대괄호 안이 단위.</p><div class="list">`;
+      SHEET.forEach(s => {
+        h += `<section class="sheet"><h3>${s.h}</h3><ul>${s.items.map(i => `<li><span class="k">${i[0]}</span>${i[1]}</li>`).join('')}</ul></section>`;
+      });
+      h += `</div><p class="tip mt">단위 검산 습관: 답의 단위가 묻는 양과 다르면 식을 잘못 세운 것. 거리는 m, 전하는 C, 용량은 F로 바꿔 넣는다.</p>`;
+    } else if (tab === 'units') {
+      h += `<div class="meta-row"><h2>단위표와 접두어</h2></div>
+        <p class="ch-note">모든 단위 유도는 이 표의 관계를 이어 붙이는 것뿐이다.</p>
+        <div class="table-scroll"><table class="utable"><thead><tr><th>단위</th><th>물리량</th><th>기본 단위로</th><th>나오는 식</th></tr></thead><tbody>
+        ${UNITS.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join('')}
+        </tbody></table></div>
+        <div class="meta-row"><h2>접두어</h2></div>
+        <div class="table-scroll"><table class="utable"><thead><tr><th>접두어</th><th>배수</th></tr></thead><tbody>
+        ${PREFIX.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join('')}
+        </tbody></table></div>
+        <p class="tip mt">교수님: "기가, 메가, 마이크로, 나노 4개 정도는 알아야 한다." 축전기는 μF·nF·pF가 흔하다 (10/1). 1 Å은 원자 하나 크기.</p>`;
+    } else {
+      const ch = +tab;
+      const list = F.filter(c => c.ch === ch);
+      const names = { 22: '22장 전기장', 23: '23장 가우스 법칙', 24: '24장 전위', 25: '25장 전기용량과 유전체', 26: '26장 전류와 저항', 27: '27장 직류 회로' };
+      h += `<div class="meta-row"><h2>${names[ch]}</h2><span class="count">공식 ${list.length}개</span></div>
+        <p class="ch-note">${NOTES[ch]}</p><div class="list">${list.map(card).join('')}</div>`;
+    }
+    main.innerHTML = h;
+    if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([main]).catch(() => {});
+  }
+
+  main.addEventListener('click', e => {
+    if (e.target.closest('summary') || e.target.closest('details')) return;
+    const c = e.target.closest('.card');
+    if (c && document.body.classList.contains('drill')) c.classList.toggle('revealed');
+  });
+  main.addEventListener('keydown', e => {
+    if ((e.key === 'Enter' || e.key === ' ') && e.target.classList && e.target.classList.contains('card') && document.body.classList.contains('drill')) {
+      e.preventDefault(); e.target.classList.toggle('revealed');
+    }
+  });
+  const drill = document.getElementById('drill');
+  drill.addEventListener('click', () => {
+    const on = !document.body.classList.contains('drill');
+    document.body.classList.toggle('drill', on);
+    drill.setAttribute('aria-pressed', String(on));
+    drill.textContent = on ? '가리는 중' : '식 가리고 외우기';
+    main.querySelectorAll('.card').forEach(c => c.classList.remove('revealed'));
+  });
+  const openAll = document.getElementById('openAll');
+  openAll.addEventListener('click', () => {
+    allOpen = !allOpen;
+    openAll.setAttribute('aria-pressed', String(allOpen));
+    openAll.textContent = allOpen ? '유도 접기' : '유도 전부 펼치기';
+    main.querySelectorAll('details.derive').forEach(d => { d.open = allOpen; });
+  });
+
+  render();
+})();
+</script>
