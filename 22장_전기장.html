@@ -96,6 +96,8 @@ button { font: inherit; cursor: pointer; }
 body.drill .def dd { filter: blur(6px); user-select: none; cursor: pointer; transition: filter .2s; }
 body.drill .def.revealed dd { filter: none; user-select: auto; }
 .star { color: var(--warn); font-family: var(--font-mono); font-size: .8rem; margin-left: 6px; }
+.src { justify-self: start; font-family: var(--font-mono); font-size: .74rem; color: var(--muted); border: 1px solid var(--rule); border-radius: 4px; padding: 1px 7px; }
+.src.own { color: var(--warn); border-color: var(--warn); }
 
 /* formula table */
 .formulas { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; }
@@ -195,29 +197,37 @@ footer { margin-top: 48px; color: var(--muted); font-size: .85rem; border-top: 1
     </div>
     <dl class="defs">
       <div class="def"><dt>쿨롱 법칙<span class="star">★</span></dt>
-        <dd>두 점전하 사이의 전기력은 두 전하량의 곱에 비례하고 거리의 제곱에 반비례하며, 두 전하를 잇는 직선 방향으로 작용한다.</dd>
-        <span class="note">\(F_e = k_e \dfrac{|q_1||q_2|}{r^2}\), 같은 부호는 척력, 다른 부호는 인력</span></div>
+        <dd>두 점전하 사이에 작용하는 정전기력의 크기는 \(F_e = k_e \dfrac{|q_1||q_2|}{r^2}\)이다. 힘은 두 전하를 잇는 방향의 벡터(\(\vec F_{12} = k_e\frac{q_1q_2}{r^2}\hat r_{12}\))이고, \(\vec F_{12} = -\vec F_{21}\)이다.</dd>
+        <span class="note">\(k_e = 1/4\pi\varepsilon_0\). 셋 이상이면 벡터 합: \(\vec F_1 = \vec F_{21} + \vec F_{31} + \cdots\)</span>
+        <span class="src">슬라이드 22.3 · 수식 그대로</span></div>
       <div class="def"><dt>전하의 특성<span class="star">★</span></dt>
         <dd>양전하와 음전하 두 종류가 있다. 같은 종류끼리는 밀어내고 다른 종류끼리는 당긴다. 고립계에서 전하량은 보존되고, 기본 전하 \(e\)의 정수배로만 존재한다(양자화).</dd>
-        <span class="note">\(e = 1.60\times10^{-19}\ \mathrm{C}\), \(Q = ne\)</span></div>
+        <span class="note">\(e = 1.60\times10^{-19}\ \mathrm{C}\), \(Q = ne\)</span>
+        <span class="src">슬라이드 22.1 · 그대로</span></div>
       <div class="def"><dt>전기장<span class="star">★</span></dt>
         <dd>원천 전하가 주변 공간에 만드는 영역. 그 점에 놓인 시험 전하가 받는 단위 전하당 전기력으로 정의한다.</dd>
-        <span class="note">\(\vec E \equiv \vec F_e / q_0\), 단위 N/C (= V/m)</span></div>
+        <span class="note">\(\vec E \equiv \vec F_e / q_0\), 단위 N/C (= V/m)</span>
+        <span class="src">슬라이드 22.4 + 녹취 9/8·9/17</span></div>
       <div class="def"><dt>원천 전하와 시험 전하</dt>
         <dd>전기장은 원천 전하가 만든다. 시험 전하는 전기장이 있는지 알아내는 검출기 역할만 하고, 전기장을 만들지 않는다.</dd>
-        <span class="note">아무 말이 없으면 그 점에 +1 C가 있다고 생각한다.</span></div>
+        <span class="note">아무 말이 없으면 그 점에 +1 C가 있다고 생각한다.</span>
+        <span class="src">슬라이드 22.4 + 녹취 9/8</span></div>
       <div class="def"><dt>전기력선</dt>
         <dd>전기장을 눈으로 보이게 그린 선. 각 점의 접선이 전기장 방향이고, 선의 밀도가 전기장의 세기를 나타낸다.</dd>
-        <span class="note">+에서 나와 −로 들어간다. 나오는 선 수 ∝ 전하량. 서로 교차하지 않는다.</span></div>
+        <span class="note">+에서 나와 −로 들어간다. 나오는 선 수 ∝ 전하량. 서로 교차하지 않는다(꼬인 위치는 가능).</span>
+        <span class="src">슬라이드 22.5 · 그대로</span></div>
       <div class="def"><dt>전기적 차폐</dt>
-        <dd>전기장이 0이 되어 전기적 영향이 없는 빈 공간. 같은 부호 전하 사이에서 전기력선이 서로 밀어내 생긴다.</dd>
-        <span class="note">전자레인지 차폐 같은 응용</span></div>
+        <dd>같은 부호(+, +) 전하의 전기력선이 서로 튕겨 나가 전기장이 존재하지 않는 빈 공간이 생기는 것. 전기장이 없으므로 전기적인 역할이 전혀 없다(수학적으로 \(E = 0\)).</dd>
+        <span class="note">전자레인지 전자기파 차폐 같은 응용</span>
+        <span class="src">녹취 9/8·9/10 · 교수님 표현</span></div>
       <div class="def"><dt>일 (에너지 쪽 도구)</dt>
         <dd>한 에너지가 다른 형태로 전환될 때, 전환되는 에너지의 양을 정량화한 것.</dd>
-        <span class="note">\(W = F\Delta x\). 운동 에너지로 바뀌면 \(W = \Delta K\)</span></div>
+        <span class="note">\(W = F\Delta x\). 운동 에너지로 바뀌면 \(W = \Delta K\)</span>
+        <span class="src">녹취 9/10 · 교수님 정의</span></div>
       <div class="def"><dt>고립계와 비고립계</dt>
         <dd>고립계는 에너지가 계 밖으로 드나들지 않아 역학적 에너지가 보존되는 계(\(\Delta K + \Delta U = 0\)). 비고립계는 외부가 일을 해 주는 계로, 일-에너지 정리(\(W = \Delta K\))를 쓴다.</dd>
-        <span class="note">22.5 풀이법 ②와 ③을 가르는 기준</span></div>
+        <span class="note">22.5 풀이법 ②와 ③을 가르는 기준</span>
+        <span class="src own">녹취 9/10·9/22 · 문장은 정리본</span></div>
     </dl>
   </section>
 
