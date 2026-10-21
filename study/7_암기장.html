@@ -1,0 +1,521 @@
+<title>시험 전 암기장</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+  svg: { fontCache: 'global' },
+  startup: { typeset: false }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js" defer></script>
+<style>
+
+:root {
+  --paper: #f3f6fa;
+  --surface: #ffffff;
+  --ink: #17202d;
+  --muted: #586378;
+  --rule: #d6deea;
+  --accent: #17706a;
+  --accent-soft: #e2f1ef;
+  --warn: #9a5b00;
+  --warn-soft: #fbf0dc;
+  --pos: #c62f3a;
+  --neg: #2b5fc7;
+  --pos-soft: #fbe6e7;
+  --neg-soft: #e5ecfb;
+  --font-display: "Gowun Batang", "Nanum Myeongjo", "AppleMyungjo", serif;
+  --font-body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0f131a; --surface: #161c26; --ink: #e5e9f1; --muted: #98a3b7; --rule: #2a3343;
+    --accent: #4cc2b5; --accent-soft: #15302e; --warn: #f0b45a; --warn-soft: #2f2516; --pos: #ff6f73; --neg: #6ea2ff;
+    --pos-soft: #3a1c20; --neg-soft: #182540;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0f131a; --surface: #161c26; --ink: #e5e9f1; --muted: #98a3b7; --rule: #2a3343;
+  --accent: #4cc2b5; --accent-soft: #15302e; --warn: #f0b45a; --warn-soft: #2f2516; --pos: #ff6f73; --neg: #6ea2ff;
+  --pos-soft: #3a1c20; --neg-soft: #182540;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  background: var(--paper); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.7;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 72px;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--paper); }
+.wrap { max-width: 760px; margin: 0 auto; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 700; text-wrap: balance; line-height: 1.3; margin: 0; }
+p { margin: 0; }
+button { font: inherit; color: inherit; }
+.eyebrow { font-family: var(--font-mono); font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+header.top { padding-block: 28px 14px; display: grid; gap: 8px; }
+header.top h1 { font-size: 1.75rem; }
+header.top p { color: var(--muted); font-size: .95rem; }
+
+.bar {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 9; background: var(--paper);
+  margin-left: calc(-1 * max(16px, env(safe-area-inset-left, 0px)));
+  margin-right: calc(-1 * max(16px, env(safe-area-inset-right, 0px)));
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 8px 10px; border-bottom: 1px solid var(--rule);
+}
+.tabs { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; max-width: 760px; margin: 0 auto; }
+.tabs::-webkit-scrollbar { display: none; }
+.tab { flex: 0 0 auto; border: 1px solid var(--rule); background: var(--surface); border-radius: 999px; padding: 6px 13px; font-size: .9rem; color: var(--muted); cursor: pointer; min-height: 38px; }
+.tab[aria-selected="true"] { background: var(--accent); border-color: var(--accent); color: var(--surface); font-weight: 600; }
+.tab .n { font-family: var(--font-mono); font-size: .75rem; margin-left: 5px; opacity: .85; }
+.tab:focus-visible, .btn:focus-visible, .seg button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* 시험지 머리 */
+.sheet-head { margin-top: 18px; background: var(--surface); border: 1px solid var(--ink); border-radius: 4px; display: grid; }
+.sheet-head .row1 { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; padding: 14px 16px 10px; border-bottom: 1px solid var(--rule); }
+.sheet-head h2 { font-size: 1.25rem; }
+.sheet-head .meta { font-family: var(--font-mono); font-size: .8rem; color: var(--muted); }
+.sheet-head .desc { padding: 10px 16px; font-size: .92rem; color: var(--muted); border-bottom: 1px solid var(--rule); }
+.score-row { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center; padding: 12px 16px; }
+.score-num { font-family: var(--font-mono); font-size: 1.6rem; font-weight: 500; line-height: 1; font-variant-numeric: tabular-nums; }
+.score-num small { font-size: .9rem; color: var(--muted); }
+.score-sub { font-size: .8rem; color: var(--muted); margin-top: 4px; }
+.track { height: 6px; border-radius: 999px; background: var(--rule); overflow: hidden; margin-top: 8px; }
+.fill { height: 100%; background: var(--accent); width: 0; transition: width .2s; }
+.head-btns { display: flex; flex-direction: column; gap: 6px; }
+.btn { border: 1px solid var(--rule); background: var(--surface); border-radius: 8px; padding: 6px 12px; font-size: .86rem; cursor: pointer; min-height: 38px; }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--surface); font-weight: 600; }
+.btn.ghost { background: transparent; }
+
+.qlist { display: grid; gap: 16px; margin-top: 16px; }
+.q { background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; padding: 16px 15px; display: grid; gap: 12px; min-width: 0; }
+.q-head { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+.q-no { font-family: var(--font-display); font-weight: 700; font-size: 1.3rem; }
+.chip { font-family: var(--font-mono); font-size: .72rem; padding: 1px 8px; border-radius: 4px; background: var(--accent-soft); color: var(--accent); }
+.chip.pts { background: var(--paper); color: var(--ink); border: 1px solid var(--rule); }
+.chip.src { background: var(--warn-soft); color: var(--warn); }
+.q-stem { font-size: .96rem; overflow-x: auto; overflow-y: hidden; min-width: 0; }
+.note { overflow-x: auto; overflow-y: hidden; min-width: 0; }
+.fig { overflow-x: auto; }
+.fig svg { display: block; width: 100%; height: auto; max-width: 440px; margin: 0 auto; }
+.parts { display: grid; gap: 10px; }
+.part { border-top: 1px solid var(--rule); padding-top: 10px; display: grid; gap: 8px; min-width: 0; }
+.pq { display: grid; grid-template-columns: 1.8rem 1fr auto; gap: 6px; align-items: baseline; }
+.plabel { font-family: var(--font-mono); font-weight: 500; color: var(--accent); }
+.ptext { min-width: 0; overflow-x: auto; overflow-y: hidden; font-size: .95rem; }
+.ppts { font-family: var(--font-mono); font-size: .75rem; color: var(--muted); white-space: nowrap; }
+.pctrl { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; padding-left: 1.8rem; }
+.seg { display: inline-flex; border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; }
+.seg button { border: 0; background: transparent; padding: 5px 10px; font-size: .8rem; cursor: pointer; min-height: 36px; color: var(--muted); }
+.seg button + button { border-left: 1px solid var(--rule); }
+.seg button[aria-pressed="true"][data-v="1"] { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+.seg button[aria-pressed="true"][data-v="0.5"] { background: var(--warn-soft); color: var(--warn); font-weight: 600; }
+.seg button[aria-pressed="true"][data-v="0"] { background: var(--pos-soft); color: var(--pos); font-weight: 600; }
+.pans { margin-left: 1.8rem; border-left: 3px solid var(--accent); background: var(--accent-soft); padding: 10px 12px; border-radius: 0 8px 8px 0; font-size: .93rem; display: grid; gap: 6px; overflow-x: auto; overflow-y: hidden; min-width: 0; }
+.pans .u { font-size: .85rem; color: var(--muted); }
+.note { border-left: 3px solid var(--warn); background: var(--warn-soft); padding: 9px 12px; border-radius: 0 8px 8px 0; font-size: .9rem; display: grid; gap: 4px; }
+.note b { color: var(--warn); }
+.overview { margin-top: 16px; background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; padding: 14px 15px; display: grid; gap: 8px; }
+.overview h3 { font-size: 1.05rem; }
+.table-scroll { overflow-x: auto; }
+.mini { width: 100%; border-collapse: collapse; font-size: .88rem; }
+.mini th, .mini td { border-bottom: 1px solid var(--rule); padding: 6px 8px; text-align: left; vertical-align: top; }
+.mini thead th { color: var(--muted); font-weight: 500; font-size: .78rem; }
+footer { margin-top: 32px; color: var(--muted); font-size: .8rem; border-top: 1px solid var(--rule); padding-top: 14px; }
+
+/* svg */
+.s-ink { stroke: var(--ink); fill: none; }
+.s-mut { stroke: var(--muted); fill: none; }
+.s-acc { stroke: var(--accent); fill: none; }
+.s-warn { stroke: var(--warn); fill: none; }
+.s-pos { stroke: var(--pos); fill: none; }
+.s-neg { stroke: var(--neg); fill: none; }
+.f-ink { fill: var(--ink); }
+.f-mut { fill: var(--muted); }
+.f-acc { fill: var(--accent); }
+.f-pos { fill: var(--pos); }
+.f-neg { fill: var(--neg); }
+.f-warn { fill: var(--warn); }
+.f-surf { fill: var(--surface); }
+.f-possoft { fill: var(--pos-soft); }
+.f-negsoft { fill: var(--neg-soft); }
+.f-accsoft { fill: var(--accent-soft); }
+.t { font-family: var(--font-mono); font-size: 12px; }
+.t-s { font-family: var(--font-mono); font-size: 10.5px; }
+@media (prefers-reduced-motion: reduce) { .fill { transition: none; } }
+/* 암기장: 물리량 탭 → 정의 카드 → 상황별 공식 표 → 유도 뼈대 → 함정. 가리기 모드에서 식 칸만 흐리게 */
+.consts { margin-top: 14px; background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; padding: 12px 14px; display: grid; gap: 6px; }
+.consts h3 { font-size: 1rem; }
+.cgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 4px 14px; font-size: .86rem; }
+.cgrid div { min-width: 0; overflow-x: auto; overflow-y: hidden; }
+.toolbar { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; align-items: center; }
+.toolbar .hint { font-size: .8rem; color: var(--muted); }
+.btn[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--surface); font-weight: 600; }
+.sec { display: grid; gap: 14px; margin-top: 16px; }
+.sec-title { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.sec-title h2 { font-size: 1.35rem; }
+.sec-title .ch { font-family: var(--font-mono); font-size: .78rem; color: var(--accent); }
+.block { background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; padding: 14px 14px; display: grid; gap: 10px; min-width: 0; }
+.block h3 { font-size: 1rem; display: flex; gap: 8px; align-items: baseline; }
+.block h3 .tagx { font-family: var(--font-mono); font-size: .7rem; padding: 1px 7px; border-radius: 4px; background: var(--accent-soft); color: var(--accent); font-weight: 500; }
+.block h3 .tagx.w { background: var(--warn-soft); color: var(--warn); }
+.def { display: grid; gap: 4px; border-left: 3px solid var(--accent); padding: 2px 0 2px 11px; }
+.def .term { font-weight: 600; }
+.def .txt { font-size: .93rem; }
+.def .math { font-size: .93rem; overflow-x: auto; overflow-y: hidden; }
+.ftable { width: 100%; border-collapse: collapse; font-size: .9rem; }
+.ftable th, .ftable td { border-bottom: 1px solid var(--rule); padding: 7px 6px; text-align: left; vertical-align: top; }
+.ftable thead th { color: var(--muted); font-weight: 500; font-size: .76rem; }
+.ftable td.sit { width: 38%; }
+.ftable td.ex { font-family: var(--font-mono); font-size: .74rem; color: var(--muted); white-space: nowrap; }
+.ftable td.f, .def .math, .steps li .m { min-width: 0; }
+.fcell { overflow-x: auto; overflow-y: hidden; max-width: 100%; }
+.steps { margin: 0; padding-left: 1.3rem; display: grid; gap: 6px; font-size: .92rem; }
+.steps li { padding-left: 2px; }
+.steps .m { display: block; overflow-x: auto; overflow-y: hidden; }
+.trap { border-left: 3px solid var(--warn); background: var(--warn-soft); padding: 8px 11px; border-radius: 0 8px 8px 0; font-size: .9rem; display: grid; gap: 4px; }
+.trap b { color: var(--warn); }
+body.drill .hide { filter: blur(7px); cursor: pointer; user-select: none; transition: filter .15s; }
+body.drill .hide.shown { filter: none; }
+@media (prefers-reduced-motion: reduce) { body.drill .hide { transition: none; } }
+
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <span class="eyebrow">일반물리 2 · 중간고사 10/22 (목) 19:00</span>
+    <h1>시험 전 암기장</h1>
+    <p>정의, 상황별 공식, 유도 뼈대만 물리량별로 모았다. 답안 첫 줄에 쓸 정의는 초록 줄, 틀리기 쉬운 곳은 노란 상자. <b>가리기</b>를 켜면 식이 흐려지고, 누르면 하나씩 보인다.</p>
+  </header>
+  <div class="bar"><div class="tabs" role="tablist" aria-label="물리량 선택" id="tabs"></div></div>
+  <section class="consts">
+    <h3>상수 (계산기 없이)</h3>
+    <div class="cgrid">
+      <div>\(k_e\approx9\times10^9\ \mathrm{N\cdot m^2/C^2}\)</div>
+      <div>\(\varepsilon_0 = 8.85\times10^{-12}\ \mathrm{C^2/N\cdot m^2}\)</div>
+      <div>\(k_e = 1/4\pi\varepsilon_0\)</div>
+      <div>\(e = 1.6\times10^{-19}\ \mathrm C\)</div>
+      <div>\(m_e = 9.11\times10^{-31}\ \mathrm{kg}\)</div>
+      <div>\(m_p = 1.67\times10^{-27}\ \mathrm{kg}\)</div>
+      <div>\(\sqrt2\approx1.41,\ \sqrt3\approx1.73\)</div>
+      <div>\(\ln2\approx0.693,\ e^{-1}\approx0.368\)</div>
+    </div>
+  </section>
+  <div class="toolbar"><button class="btn" type="button" id="drill" aria-pressed="false">가리기</button><button class="btn ghost" type="button" id="allTab">전체 보기</button><span class="hint">가리기 중에는 식을 눌러 하나씩 확인</span></div>
+  <main id="main"></main>
+  <footer>출처: 강의 슬라이드 22–27장, 교재 예제·연습문제, 2025 족보, 수업 녹취(9/8–10/15). 생략 범위(25.6절 쌍극자 회전, 27.5절 가정용 배선, 27.9)는 용어만 남겼다.</footer>
+</div>
+<script>
+(function () {
+  const R = String.raw;
+  const SECS = [
+  { k: 'E', name: '전기장 E', ch: '22·23장',
+    defs: [
+      { t: '쿨롱의 법칙', txt: '두 점전하 사이 정전기력의 크기는 전하량의 곱에 비례하고 거리의 제곱에 반비례하며, 두 전하를 잇는 방향으로 작용한다. 같은 부호는 척력, 다른 부호는 인력.', m: R`\(\vec F_{12} = k_e\dfrac{q_1q_2}{r^2}\hat r_{12}\), 여러 전하면 중첩 \(\vec F = \sum\vec F_i\) (벡터 합)` },
+      { t: '전기장', txt: '원천 전하(source)가 주변 공간에 만드는 성질. 그 점의 시험 전하(test, 원천을 흐트러뜨리지 않는 작은 양전하)가 받는 힘을 시험 전하량으로 나눈 값. 시험 전하와 무관하다.', m: R`\(\vec E\equiv\dfrac{\vec F_e}{q_0}\quad[\mathrm{N/C = V/m}]\)` },
+      { t: '전기력선', txt: '양전하에서 나와 음전하로 들어가고, 접선이 그 점의 E 방향, 선의 밀도가 E의 크기. 서로 교차하지 않는다.' }
+    ],
+    tables: [
+      { title: '상황별 E', rows: [
+        ['점전하', R`\(\vec E = k_e\dfrac{q}{r^2}\hat r\)`, '22.4'],
+        ['점전하 여러 개', R`\(\vec E = k_e\sum\dfrac{q_i}{r_i^2}\hat r_i\) (벡터 합, 대칭 성분 상쇄)`, '22.4'],
+        ['연속 분포', R`\(\vec E = k_e\int\dfrac{dq}{r^2}\hat r,\ dq = \lambda dx,\ \sigma dA,\ \rho dV\)`, '23.1'],
+        ['막대 끝 연장선 (거리 a)', R`\(E = \dfrac{k_eQ}{a(\ell + a)}\)`, '23.1'],
+        ['고리 중심축', R`\(E_x = \dfrac{k_eQx}{(a^2+x^2)^{3/2}}\)`, '23.2'],
+        ['원판 중심축', R`\(E_x = 2\pi k_e\sigma\left[1 - \dfrac{x}{\sqrt{R^2+x^2}}\right]\)`, '23.3'],
+        ['무한 평면 (판 하나)', R`\(E = \dfrac{\sigma}{2\varepsilon_0}\) (거리 무관)`, '23.7'],
+        ['평행판 사이 / 도체 표면 밖', R`\(E = \dfrac{\sigma}{\varepsilon_0}\)`, '24·25장'],
+        ['무한 직선 (선전하)', R`\(E = \dfrac{\lambda}{2\pi\varepsilon_0r} = \dfrac{2k_e\lambda}{r}\)`, '23.6'],
+        ['균일 대전 구 (부도체)', R`\(r \lt a:\ k_e\dfrac{Qr}{a^3},\quad r\ge a:\ k_e\dfrac{Q}{r^2}\)`, '23.5'],
+        ['균일 대전 원통 내부', R`\(E = \dfrac{\rho r}{2\varepsilon_0}\)`, '연습 23.24'],
+        ['도체 내부 (정전기 평형)', R`\(E = 0\)`, '24.8'],
+        ['쌍극자 수직이등분선, 먼 곳', R`\(E \approx k_e\dfrac{2aq}{y^3}\)`, '22.4'],
+        ['전위에서 구하기', R`\(E_x = -\dfrac{dV}{dx}\)`, '24.4절'],
+        ['전기장 속 전하의 가속도', R`\(\vec a = \dfrac{q\vec E}{m}\)`, '22.5·22.6']
+      ]}
+    ],
+    derivs: [
+      { title: '연속 분포 적분 5단계', steps: [
+        R`조각 하나를 고른다 (막대: dx, 고리: ds, 원판: 반지름 r·폭 dr인 고리)`,
+        R`dq를 쓴다: \(dq = \lambda dx\) (선), \(\sigma\,dA\) (면, 원판은 \(\sigma2\pi r\,dr\)), \(\rho\,dV\) (부피)`,
+        R`P에서 조각까지 거리 \(r\)을 적분 변수로 쓴다`,
+        R`\(dE = k_e\,dq/r^2\), 대칭으로 지워지는 성분을 먼저 뺀다`,
+        R`적분 범위 = 전하가 실제로 있는 곳. 상수는 적분 밖으로`
+      ]},
+      { title: 'dq를 바꿀까, 그냥 Q일까', steps: [
+        R`조각을 옮겨도 P까지 거리가 같다(고리) → \(\int dq = Q\)로 끝`,
+        R`거리가 조각마다 다르다(막대, 원판) → dq를 그 변수(dx, dr)로 바꿔 적분`
+      ]}
+    ],
+    traps: [ R`cm → m, μC → 10⁻⁶ C를 먼저 바꾼다. 최종 답은 \(\hat i,\hat j\) 벡터와 N/C.`, R`근사: 더해진 작은 값은 버리고(1 − x/R → 1), 곱해진 작은 값은 남긴다(고리 \(x\ll a\): \(k_eQx/a^3\)).` ] },
+
+  { k: 'F', name: '선속·가우스', ch: '23장',
+    defs: [
+      { t: '전기선속', txt: '어떤 면을 통과하는 전기력선의 수에 비례하는 양.', m: R`\(\Phi_E = \int\vec E\cdot d\vec A\) (균일·평면이면 \(EA\cos\theta\)) \([\mathrm{N\cdot m^2/C}]\), 닫힌 면에서 \(d\vec A\)는 바깥 방향` },
+      { t: '가우스 법칙', txt: '닫힌 면을 지나는 알짜 선속은 면 안의 알짜 전하를 ε₀로 나눈 값이다. 면의 모양·크기와 면 밖 전하에 무관하다. 항상 성립하지만, E를 구하는 데 쓸 수 있는 건 대칭이 있을 때뿐.', m: R`\(\oint\vec E\cdot d\vec A = \dfrac{q_{\text{in}}}{\varepsilon_0}\)` },
+      { t: '정전기 평형 도체', txt: '① 내부 E = 0 ② 남는 전하는 표면에 ③ 표면 바로 밖 E는 표면에 수직, 크기 σ/ε₀ ④ 도체 전체가 등전위.' }
+    ],
+    tables: [
+      { title: '상황별 선속', rows: [
+        ['균일 장, 평면', R`\(\Phi = EA\cos\theta\)`, '23.2절'],
+        ['닫힌 면', R`\(\Phi = q_{\text{in}}/\varepsilon_0\)`, '23.11'],
+        ['닫힌 면 안에 전하 없음 (균일 장 속 정육면체·원통·구)', R`\(\Phi = 0\) (들어온 만큼 나감)`, '23.4·23.16'],
+        ['정육면체 중심 전하, 면 하나', R`\(\Phi = q/6\varepsilon_0\) (중심에서 벗어나면 면마다 달라짐, 전체는 그대로)`, '23.12'],
+        ['면마다 E가 주어진 정육면체', R`나가면 +EA, 들어오면 −EA로 합 → \(q_{\text{in}} = \varepsilon_0\Phi\)`, '23.25']
+      ]},
+      { title: '가우스 면 고르기', rows: [
+        ['점·구 대칭', R`동심 구: \(E\cdot4\pi r^2\)`, '23.5'],
+        ['직선·원통 대칭', R`동축 원통: 옆면 \(E\cdot2\pi rL\), 뚜껑 0`, '23.6'],
+        ['평면', R`평면을 꿰뚫는 원통: 뚜껑 2개 \(2EA\), 옆면 0`, '23.7'],
+        ['도체 표면', R`반쯤 박은 원통: 안쪽 뚜껑 0(E=0) → \(EA\) → \(\sigma/\varepsilon_0\)`, '24.6절']
+      ]}
+    ],
+    derivs: [
+      { title: '가우스 면 조건 4가지', steps: [
+        R`E 크기가 면 위에서 일정 → \(E\oint dA\)`,
+        R`\(\vec E\parallel d\vec A\) → \(E\,dA\)`,
+        R`\(\vec E\perp d\vec A\) → 0`,
+        R`그 면에서 E 자체가 0 (도체 안, 평행판 바깥) → 0`
+      ]},
+      { title: '구 내부 E (부도체)', steps: [
+        R`가우스 면: 반지름 \(r \lt a\)인 동심 구, 좌변 \(E\cdot4\pi r^2\)`,
+        R`면 안에 든 것만: \(q_{\text{in}} = \rho\cdot\tfrac43\pi r^3 = Q\dfrac{r^3}{a^3}\)`,
+        R`\(E = \dfrac{Qr^3}{4\pi\varepsilon_0a^3r^2} = k_e\dfrac{Qr}{a^3}\) (전하 ∝ r³, 넓이 ∝ r² → E ∝ r)`
+      ]}
+    ],
+    traps: [ R`면 밖 전하는 선속에는 0이지만 면 위 E에는 영향을 준다(23.13). 정육면체는 E가 면 위에서 일정하지 않아 가우스로 E를 못 구한다.`, R`σ/2ε₀(판 하나, 뚜껑 2개)와 σ/ε₀(도체 표면·평행판, 뚜껑 1개)를 구분.` ] },
+
+  { k: 'V', name: '전위 V', ch: '24장',
+    defs: [
+      { t: '전위차', txt: '시험 전하를 A에서 B로 옮길 때 단위 전하당 전기적 위치 에너지 변화.', m: R`\(\Delta V = V_B - V_A = \dfrac{\Delta U}{q_0} = -\int_A^B\vec E\cdot d\vec s\quad[\mathrm{V = J/C}]\)` },
+      { t: '전위', txt: '기준점(무한대, V = 0)에 대한 전위차. 원천 전하가 만든 공간의 스칼라 성질로 시험 전하와 무관. 위치 에너지 U는 계의 성질, V는 공간의 성질. 전압 = 전위차.' },
+      { t: '등전위면', txt: '전위가 같은 점들의 면. 전기장은 등전위면에 수직이고, 등전위면 위로 전하를 옮기는 일은 0.' },
+      { t: '전자볼트', txt: '전자 하나가 1 V 전위차를 지날 때 얻는 에너지.', m: R`\(1\ \mathrm{eV} = 1.6\times10^{-19}\ \mathrm J\)` }
+    ],
+    tables: [
+      { title: '상황별 V', rows: [
+        ['균일한 전기장, E 방향으로 d', R`\(\Delta V = -Ed\) (E 방향 = 전위가 내려가는 방향)`, '24.1·24.2'],
+        ['일반', R`\(\Delta V = -\int\vec E\cdot d\vec s\)`, '24.1절'],
+        ['점전하', R`\(V = k_e\dfrac qr\)`, '24.3절'],
+        ['점전하 여러 개', R`\(V = k_e\sum\dfrac{q_i}{r_i}\) (스칼라, 부호째 더함)`, '24.3·연습 24.7'],
+        ['연속 분포', R`\(V = k_e\int\dfrac{dq}{r}\)`, '24.5절'],
+        ['쌍극자 (±q, 간격 2a)', R`수직이등분선 위 \(V = 0\), 축 위 \(V = \dfrac{2k_eqa}{x^2 - a^2}\)`, '24.4'],
+        ['고리 중심축', R`\(V = \dfrac{k_eQ}{\sqrt{a^2+x^2}}\)`, '24.5'],
+        ['원판 중심축', R`\(V = 2\pi k_e\sigma\left[\sqrt{R^2+x^2} - x\right]\)`, '24.6'],
+        ['유한 선전하 수직 위 (끝에서 거리 a)', R`\(V = k_e\dfrac Q\ell\ln\dfrac{\ell + \sqrt{a^2+\ell^2}}{a}\)`, '24.7'],
+        ['원통 축전기 사이', R`\(\Delta V = 2k_e\lambda\ln\dfrac ba\)`, '25.1'],
+        ['도체', R`전체가 등전위, 내부 V = 표면 V (전하 Q인 반지름 R 구: \(k_eQ/R\))`, '24.6절'],
+        ['V에서 E 구하기', R`\(E_x = -\dfrac{dV}{dx}\) (V–x 그래프 기울기의 반대)`, '연습 24.18']
+      ]}
+    ],
+    derivs: [
+      { title: '점전하의 전위', steps: [
+        R`\(\vec E\cdot d\vec s = k_e\dfrac{q}{r^2}\hat r\cdot d\vec s\), 그런데 \(\hat r\cdot d\vec s = ds\cos\theta = dr\)`,
+        R`\(V_B - V_A = -k_eq\int_{r_A}^{r_B}\dfrac{dr}{r^2} = k_eq\left[\dfrac1{r_B} - \dfrac1{r_A}\right]\) (경로 무관 = 보존력)`,
+        R`\(r_A\to\infty,\ V_A = 0\) → \(V = k_eq/r\)`
+      ]},
+      { title: '구 껍질 문제의 V (24.8 / 족보 2번)', steps: [
+        R`바깥부터: \(r\ge c\): \(V = k_eq_{\text{전체}}/r\)`,
+        R`도체 속: 일정 (경계값 그대로)`,
+        R`빈 공간: 각 면 전하의 전위를 더한다(껍질 면 전하는 그 안쪽에서 \(k_eq/\text{반지름}\)로 일정)`,
+        R`경계에서 연속인지 검산`
+      ]}
+    ],
+    traps: [ R`E는 벡터(성분 분해), V는 스칼라(부호째 더하기).`, R`(a) 중간점 거리와 (b) 두 전하 사이 거리를 헷갈리지 말 것 (연습 24.7).` ] },
+
+  { k: 'U', name: '위치 에너지 U', ch: '22·24·25장',
+    defs: [
+      { t: '전기적 위치 에너지', txt: '전기력은 보존력이라 위치 에너지를 정의할 수 있다. 전기력이 한 일의 반대만큼 변한다. 전하-전기장 계(전하 쌍)의 성질.', m: R`\(\Delta U = -W_{\text{전기력}} = -q\int\vec E\cdot d\vec s = q\Delta V\quad[\mathrm J]\)` }
+    ],
+    tables: [
+      { title: '상황별 U', rows: [
+        ['균일 장, E 방향으로 d', R`\(\Delta U = q\Delta V = -qEd\)`, '24.2·연습 24.5'],
+        ['점전하 두 개', R`\(U = k_e\dfrac{q_1q_2}{r}\) (U < 0 인력·묶임, U > 0 척력)`, '연습 24.7'],
+        ['점전하 여러 개', R`\(U = k_e\left(\dfrac{q_1q_2}{r_{12}} + \dfrac{q_1q_3}{r_{13}} + \dfrac{q_2q_3}{r_{23}}\right)\) 모든 쌍 한 번씩`, '24.3절'],
+        ['전하를 무한대에서 점 P로', R`\(\Delta U = qV_P\)`, '24.3'],
+        ['축전기', R`\(U = \dfrac{Q^2}{2C} = \tfrac12Q\Delta V = \tfrac12C(\Delta V)^2\)`, '25.5'],
+        ['전기장 속 에너지 밀도', R`\(u_E = \tfrac12\varepsilon_0E^2\ [\mathrm{J/m^3}],\ U = \int u_E\,dV\)`, '25.4절']
+      ]},
+      { title: '같이 쓰는 관계', rows: [
+        ['외부가 천천히 옮김', R`\(W_{\text{ext}} = \Delta U\)`, '24.3절'],
+        ['고립계', R`\(\Delta K + \Delta U = 0\)`, '24.2'],
+        ['비고립계 (입자만)', R`\(W = \Delta K\)`, '22.5']
+      ]}
+    ],
+    derivs: [
+      { title: '22.5 속도 세 가지 (비교 문제)', steps: [
+        R`① 힘: \(a = qE/m\), \(v^2 = 2ad\) → \(v = \sqrt{2qEd/m}\)`,
+        R`② 비고립계(계 = 입자, 장은 외부): \(qEd = \tfrac12mv^2\)`,
+        R`③ 고립계(계 = 입자 + 장): \(\tfrac12mv^2 + q(-Ed) = 0\) (24.2)`,
+        R`②와 ③의 차이: 전기장 효과를 일 W로 넣느냐, 위치 에너지 U로 넣느냐`
+      ]},
+      { title: '축전기 에너지 (½의 이유)', steps: [
+        R`충전 중 전압이 0 → ΔV로 오른다: \(dW = \Delta V\,dq = \dfrac qC dq\)`,
+        R`\(W = \int_0^Q\dfrac qC dq = \dfrac{Q^2}{2C}\) (그래프 삼각형 넓이)`,
+        R`평행판: \(\tfrac12C(Ed)^2 = \tfrac12\varepsilon_0(Ad)E^2\) → 부피 Ad로 나누면 \(u_E = \tfrac12\varepsilon_0E^2\)`
+      ]}
+    ],
+    traps: [ R`음전하는 전위가 높은 쪽으로 갈 때 U가 줄어든다. 부호를 꼭 넣어 계산.`, R`쌍극자 \(U = -\vec p\cdot\vec E\)는 25.6절이라 생략.` ] },
+
+  { k: 'C', name: '전기용량 C', ch: '25장',
+    defs: [
+      { t: '전기용량', txt: '도체에 저장되는 전하는 전위차에 비례하며, 그 비례 상수(단위 전위차당 저장 전하). 모양·간격·사이 물질로만 정해지고 Q, ΔV와 무관.', m: R`\(C\equiv\dfrac{Q}{\Delta V}\quad[\mathrm{F = C/V}]\)` },
+      { t: '유전 상수', txt: '유전체가 분극되어 내부 전기장을 1/κ로 줄이는 정도. 그래서 C는 κ배, 같은 Q면 E와 ΔV는 1/κ.', m: R`\(\kappa = \dfrac{C}{C_0} = \dfrac{\varepsilon}{\varepsilon_0}\ge1\) (단위 없음)` },
+      { t: '유전체 장점 3가지', txt: '① 전기용량 증가 ② 최대 사용 전압 증가(절연 내력) ③ 두 판 사이 기계적 지지(간격을 좁게).' },
+      { t: '용어만 (25.6 생략)', txt: '쌍극자 모멘트 p = 2aq (−q → +q 방향). 극성 분자: 물처럼 +와 −의 중심이 원래 떨어진 분자. 비극성 분자: 외부 장에서 분극이 유도됨.' }
+    ],
+    tables: [
+      { title: '상황별 C', rows: [
+        ['평행판', R`\(C_0 = \dfrac{\varepsilon_0A}{d}\)`, '25.2절'],
+        ['유전체 꽉 채움', R`\(C = \kappa C_0\)`, '25.5절'],
+        ['유전체 두께 fd만', R`\(C = \dfrac{\kappa C_0}{f + \kappa(1-f)}\) (직렬, 위치 무관)`, '25.8'],
+        ['금속판 두께 a 삽입', R`\(C = \dfrac{\varepsilon_0A}{d - a}\) (직렬, 위치 무관)`, '25.7'],
+        ['원통형 (길이 ℓ)', R`\(C = \dfrac{\ell}{2k_e\ln(b/a)}\)`, '25.1'],
+        ['구형 (반지름 a, b)', R`\(C = \dfrac{ab}{k_e(b - a)}\)`, '25.2'],
+        ['고립된 도체 구', R`\(C = \dfrac{R}{k_e} = 4\pi\varepsilon_0R\)`, '25.1절'],
+        ['직렬', R`\(\dfrac1C = \sum\dfrac1{C_i}\), 같은 Q, 전압 나뉨`, '25.3'],
+        ['병렬', R`\(C = \sum C_i\), 같은 ΔV, 전하 나뉨`, '25.3'],
+        ['반대 극성 연결', R`\(\Delta V_f = \dfrac{C_1 - C_2}{C_1 + C_2}\Delta V_i\), 에너지 비 \(\left(\frac{C_1-C_2}{C_1+C_2}\right)^2\)`, '25.4'],
+        ['평행판 사이 힘', R`\(F = \dfrac{Q^2}{2\varepsilon_0A}\) (상대 판의 \(\sigma/2\varepsilon_0\)만)`, '연습 25.18']
+      ]}
+    ],
+    derivs: [
+      { title: '축전기 C 구하는 4단계', steps: [
+        R`가우스 법칙으로 두 도체 사이 E (23장)`,
+        R`\(\Delta V = -\int\vec E\cdot d\vec s\) (E가 r에 따라 변하면 적분, 평행판은 Ed)`,
+        R`\(C = Q/|\Delta V|\)`,
+        R`Q가 약분되는지 확인 (모양만 남아야 함)`
+      ]},
+      { title: '유전체 넣으면 κ배', steps: [
+        R`Q 고정: \(E = E_0/\kappa = \sigma/\kappa\varepsilon_0\)`,
+        R`\(\Delta V = Ed = \Delta V_0/\kappa\)`,
+        R`\(C = Q/\Delta V = \kappa C_0\)`
+      ]}
+    ],
+    traps: [ R`직렬·병렬은 저항과 반대. 전기장 따라 위아래로 쌓이면 직렬, 판 따라 옆으로 나뉘면 병렬.`, R`반대 극성 연결: 전하는 빼기(보존), 에너지는 ½CV²라 더하기, 연결 후 열로 손실.` ] },
+
+  { k: 'I', name: '전류·저항', ch: '26장',
+    defs: [
+      { t: '전류', txt: '단면을 단위 시간에 지나는 전하량. 방향은 양전하가 움직이는 방향.', m: R`\(I = \dfrac{dQ}{dt}\quad[\mathrm{A = C/s}]\)` },
+      { t: '전류 밀도', txt: '단위 넓이당 전류.', m: R`\(J = \dfrac IA = nqv_d\quad[\mathrm{A/m^2}]\)` },
+      { t: '옴의 법칙 (두 관점)', txt: '미시(물질): 전류 밀도가 전기장에 비례. 거시(회로): 전위차가 전류에 비례.', m: R`\(\vec J = \sigma\vec E,\qquad \Delta V = IR\)` },
+      { t: '저항 · 비저항 · 전도도', txt: '저항 R(Ω = V/A): 도선(모양 포함)이 전류를 방해하는 정도. 비저항 ρ(Ω·m): 모양과 무관한 물질 고유의 방해 정도. 전도도 σ = 1/ρ: 전류를 잘 흘리는 정도.' },
+      { t: '유동 속도', txt: '전기장 때문에 자유 전자가 무작위 운동 위에 얻는 평균 속도. 매우 느리다(~10⁻⁴ m/s).' },
+      { t: '초전도체', txt: '임계 온도 아래에서 저항이 0이 되는 물질 (용어만).' }
+    ],
+    tables: [
+      { title: '상황별 공식', rows: [
+        ['전류와 유동 속도', R`\(I = nqv_dA\) → \(v_d = \dfrac{I}{nqA}\) (n 크면 v_d 작음)`, '26.1'],
+        ['저항', R`\(R = \rho\dfrac LA\)`, '26.2'],
+        ['직육면체', R`전류 방향 길이 = L, 그에 수직한 면 = A, 비는 \((L_1/L_2)^2\)`, '10/6 힌트'],
+        ['드루드 모형', R`\(v_d = \dfrac{qE}{m}\tau,\ \sigma = \dfrac{nq^2\tau}{m}\)`, '26.3절'],
+        ['온도', R`\(\rho = \rho_0[1 + \alpha(T - T_0)]\), \(R\)도 같은 꼴`, '26.4절'],
+        ['전력', R`\(P = I\Delta V = I^2R = \dfrac{(\Delta V)^2}{R}\ [\mathrm W]\)`, '26.6절']
+      ]}
+    ],
+    derivs: [
+      { title: 'J = σE → R = ρL/A (족보 5번)', steps: [
+        R`길이 L, 단면적 A인 균일한 도선: \(E = \Delta V/L,\ J = I/A\)`,
+        R`\(J = \sigma E\)에 대입: \(I/A = \sigma\Delta V/L\)`,
+        R`\(\Delta V = \dfrac{L}{\sigma A}I\) → \(R = \dfrac{L}{\sigma A} = \rho\dfrac LA,\ \rho = 1/\sigma\)`
+      ]},
+      { title: 'I = nqv_dA', steps: [
+        R`길이 \(\Delta x\) 부피 \(A\Delta x\) 안의 전하 \(\Delta Q = (nA\Delta x)q\)`,
+        R`\(\Delta x = v_d\Delta t\) → \(I = \Delta Q/\Delta t = nqv_dA\)`
+      ]}
+    ],
+    traps: [ R`색 코드와 초전도체 세부는 생략.`, R`정전기 평형 도체는 E = 0, 전류가 흐르는 도선은 E ≠ 0 (그래서 J = σE).` ] },
+
+  { k: 'K', name: '회로·RC', ch: '27장',
+    defs: [
+      { t: '기전력', txt: '전지가 단위 전하에 해 주는 일. 힘이 아니라 볼트 단위. 전류가 0일 때 단자 사이 최대 전압.', m: R`\(\varepsilon\ [\mathrm V]\)` },
+      { t: '단자 전압', txt: '전지 양단의 실제 전위차. 전류가 흐르면 내부 저항에서 Ir만큼 떨어진다. 열린 회로면 기전력과 같다.', m: R`\(\Delta V = \varepsilon - Ir = IR,\quad I = \dfrac{\varepsilon}{R + r}\)` },
+      { t: '키르히호프 법칙', txt: '분기점 법칙: 들어오는 전류 = 나가는 전류 ← 전하 보존. 고리 법칙: 닫힌 고리 전위차의 합 = 0 ← 에너지 보존. 그리고 전기력은 보존력(∮E·ds = 0).', m: R`\(\sum I = 0,\qquad \sum\Delta V = 0\)` },
+      { t: '시간 상수', txt: '충전 시 최대 전하의 63.2 %, 방전 시 처음의 36.8 %가 되는 데 걸리는 시간.', m: R`\(\tau = RC\quad[\Omega\cdot\mathrm F = \mathrm s]\)` }
+    ],
+    tables: [
+      { title: '상황별 공식', rows: [
+        ['저항 직렬', R`\(R = \sum R_i\), 같은 I, 전압 나뉨`, '27.3'],
+        ['저항 병렬', R`\(\dfrac1R = \sum\dfrac1{R_i}\), 같은 ΔV, 전류 나뉨`, '27.4'],
+        ['고리 부호: 저항', R`전류 방향으로 지나면 \(-IR\), 반대면 \(+IR\)`, '27.3절'],
+        ['고리 부호: 전지', R`− → + 로 지나면 \(+\varepsilon\), + → − 면 \(-\varepsilon\)`, '27.3절'],
+        ['전류가 음수로 나오면', R`가정한 방향이 반대 (크기는 그대로)`, '연습 27.20'],
+        ['RC 충전', R`\(q = C\varepsilon(1 - e^{-t/RC}),\quad i = \dfrac\varepsilon Re^{-t/RC}\)`, '27.7'],
+        ['RC 방전', R`\(q = Qe^{-t/RC},\quad i = -\dfrac{Q}{RC}e^{-t/RC}\)`, '27.8'],
+        ['절반이 되는 시간', R`\(t = \tau\ln2\approx0.693\,\tau\)`, '연습 27.23'],
+        ['충전 에너지', R`전지 \(Q\varepsilon\) = 축전기 \(\tfrac12C\varepsilon^2\) + 저항 열 \(\tfrac12C\varepsilon^2\)`, '27.4절']
+      ]}
+    ],
+    derivs: [
+      { title: 'RC 충전 유도 (식 안 줄 수 있음)', steps: [
+        R`고리 법칙: \(\varepsilon - iR - \dfrac qC = 0,\ i = \dfrac{dq}{dt}\)`,
+        R`\(\dfrac{dq}{C\varepsilon - q} = \dfrac{dt}{RC}\), 0부터 적분: \(-\ln\dfrac{C\varepsilon - q}{C\varepsilon} = \dfrac t{RC}\)`,
+        R`\(q = C\varepsilon(1 - e^{-t/RC})\), 미분해서 \(i = (\varepsilon/R)e^{-t/RC}\)`
+      ]},
+      { title: 'RC 방전 유도', steps: [
+        R`전지 없음: \(\dfrac qC - iR = 0\), 축전기 전하가 줄므로 \(i = -\dfrac{dq}{dt}\)`,
+        R`\(\dfrac{dq}{q} = -\dfrac{dt}{RC}\) → \(q = Qe^{-t/RC}\)`
+      ]},
+      { title: '키르히호프 풀이 순서', steps: [
+        R`가지마다 전류와 방향을 가정해 그림에 표시`,
+        R`분기점 하나에 \(\sum I = 0\)`,
+        R`독립 고리마다 부호 규칙으로 \(\sum\Delta V = 0\)`,
+        R`연립해서 풀고, 음수면 방향만 반대로 해석`
+      ]}
+    ],
+    traps: [ R`회로 계산은 내부 저항 무시(기전력 그대로)지만 기전력 vs 단자 전압 정의는 작년에 4점.`, R`27.9 저항기 에너지, 27.5 가정용 배선은 생략.` ] }
+  ];
+
+  const store = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
+  const fromHash = (location.hash || '').slice(1);
+  let tab = SECS.some(s => s.k === fromHash) || fromHash === 'all' ? fromHash : (store.get('memo-tab') || 'E');
+  if (!(SECS.some(s => s.k === tab) || tab === 'all')) tab = 'E';
+  let drill = store.get('memo-drill') === '1';
+  const main = document.getElementById('main');
+  const tabsEl = document.getElementById('tabs');
+  const typeset = n => { if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([n]).catch(() => {}); };
+
+  function secHTML(s) {
+    const defs = s.defs.map(d => `<div class="def"><span class="term">${d.t}</span><span class="txt">${d.txt}</span>${d.m ? `<span class="math hide">${d.m}</span>` : ''}</div>`).join('');
+    const tables = s.tables.map(t => `<div class="block"><h3>${t.title}<span class="tagx">상황 → 식</span></h3><div class="table-scroll"><table class="ftable"><thead><tr><th>상황</th><th>식</th><th>예제</th></tr></thead><tbody>${t.rows.map(r => `<tr><td class="sit">${r[0]}</td><td class="f"><div class="fcell hide">${r[1]}</div></td><td class="ex">${r[2]}</td></tr>`).join('')}</tbody></table></div></div>`).join('');
+    const derivs = s.derivs.map(d => `<div class="block"><h3>${d.title}<span class="tagx">유도</span></h3><ol class="steps">${d.steps.map(x => `<li><span class="m hide">${x}</span></li>`).join('')}</ol></div>`).join('');
+    const traps = s.traps.length ? `<div class="trap">${s.traps.map(x => `<span><b>주의</b> ${x}</span>`).join('')}</div>` : '';
+    return `<section class="sec" id="sec-${s.k}"><div class="sec-title"><h2>${s.name}</h2><span class="ch">${s.ch}</span></div>
+      <div class="block"><h3>정의<span class="tagx w">답안 첫 줄</span></h3>${defs}</div>${tables}${derivs}${traps}</section>`;
+  }
+
+  function renderTabs() {
+    tabsEl.innerHTML = '';
+    SECS.concat([{ k: 'all', name: '전체' }]).forEach(s => {
+      const b = document.createElement('button');
+      b.className = 'tab'; b.type = 'button'; b.setAttribute('role', 'tab'); b.setAttribute('aria-selected', String(s.k === tab));
+      b.textContent = s.name;
+      b.addEventListener('click', () => go(s.k));
+      tabsEl.appendChild(b);
+      if (s.k === tab) setTimeout(() => b.scrollIntoView({ inline: 'center', block: 'nearest' }), 0);
+    });
+  }
+  function go(k) { tab = k; store.set('memo-tab', k); try { history.replaceState(null, '', '#' + k); } catch (e) {} render(); window.scrollTo({ top: 0 }); }
+  function render() {
+    renderTabs();
+    main.innerHTML = (tab === 'all' ? SECS : SECS.filter(s => s.k === tab)).map(secHTML).join('');
+    typeset(main);
+  }
+  function setDrill(on) { drill = on; document.body.classList.toggle('drill', on); const b = document.getElementById('drill'); b.setAttribute('aria-pressed', String(on)); b.textContent = on ? '가리기 끄기' : '가리기'; store.set('memo-drill', on ? '1' : '0'); main.querySelectorAll('.hide.shown').forEach(x => x.classList.remove('shown')); }
+  document.getElementById('drill').addEventListener('click', () => setDrill(!drill));
+  document.getElementById('allTab').addEventListener('click', () => go('all'));
+  main.addEventListener('click', e => { if (!drill) return; const h = e.target.closest('.hide'); if (h) h.classList.toggle('shown'); });
+  window.addEventListener('hashchange', () => { const h = location.hash.slice(1); if ((SECS.some(s => s.k === h) || h === 'all') && h !== tab) { tab = h; render(); } });
+  setDrill(drill);
+  render();
+  window.addEventListener('load', () => { if (window.MathJax && MathJax.startup && MathJax.startup.promise) MathJax.startup.promise.then(() => typeset(document.body)); });
+})();
+</script>
